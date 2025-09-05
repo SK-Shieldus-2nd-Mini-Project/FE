@@ -1,0 +1,97 @@
+/* signup.css */
+
+/* 회원가입 폼 카드 */
+.signup-container {
+  background-color: #ffffff;
+  padding: 50px 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  width: 400px; /* 조금 넓게 */
+  max-width: 90%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto;
+}
+
+.signup-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* 제목 */
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 35px;
+  color: #333;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+/* 입력창 */
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="date"],
+.signup-container input[type="file"] {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-container input:focus {
+  border-color: #74ebd5;
+  outline: none;
+  box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+}
+
+/* 버튼 */
+.signup-container button {
+  width: 100%;
+  padding: 14px;
+  background: #74ebd5;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.signup-container button:hover {
+  background: #4ac2b1;
+}
+
+/* 링크 및 안내 문구 */
+.signup-container p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.signup-container .link {
+  color: #74ebd5;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signup-container .link:hover {
+  text-decoration: underline;
+}
+
+/* 파일 업로드 스타일 */
+.signup-container input[type="file"] {
+  padding: 6px;
+  font-size: 14px;
+}
+
+/* 반응형 처리 */
+@media (max-width: 400px) {
+  .signup-container {
+    padding: 40px 20px;
+  }
+}

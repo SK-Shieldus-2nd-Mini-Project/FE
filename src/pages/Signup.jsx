@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import '../assets/signup.css'
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -26,53 +27,17 @@ function Signup() {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h2>회원가입</h2>
-        <form onSubmit={handleSignup}>
-          <input
-            type="text"
-            name="username"
-            placeholder="아이디"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="비밀번호"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="nickname"
-            placeholder="닉네임"
-            value={formData.nickname}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="date"
-            name="birthdate"
-            value={formData.birthdate}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="file"
-            name="profileImage"
-            onChange={handleChange}
-            accept="image/*"
-          />
-          <button type="submit">회원가입</button>
-        </form>
-        <p>
-          이미 계정이 있으신가요? <Link to="/login">로그인</Link>
-        </p>
-      </div>
+    <div className="signup-container">
+      <h2>회원가입</h2>
+      <form onSubmit={handleSignup}>
+        <input type="text" name="username" placeholder="아이디" value={formData.username} onChange={handleChange} required />
+        <input type="password" name="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
+        <input type="text" name="nickname" placeholder="닉네임" value={formData.nickname} onChange={handleChange} required />
+        <input type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} required />
+        <input type="file" name="profileImage" onChange={handleChange} accept="image/*" />
+        <button type="submit">회원가입</button>
+      </form>
+      <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
     </div>
   );
 }
