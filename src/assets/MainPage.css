@@ -1,0 +1,151 @@
+/* --- 메인 컨테이너 --- */
+.main-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* 섹션 간 간격 */
+}
+
+/* --- 배너 섹션 --- */
+.banner {
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* 그라데이션 배경 */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.banner-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+}
+
+/* --- 필터 섹션 --- */
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  flex-wrap: wrap; /* 창 크기가 작을 때 줄바꿈 */
+  gap: 15px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.filters input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.search-btn,
+.create-group-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+
+.search-btn {
+  background-color: #3498db;
+}
+.search-btn:hover {
+  background-color: #2980b9;
+}
+
+.create-group-btn {
+  background-color: #3498db;
+}
+.create-group-btn:hover {
+  background-color: #2980b9;
+}
+
+
+/* --- 모임 목록 섹션 --- */
+.group-list-section h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* --- 모임 카드 --- */
+.group-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.group-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.group-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover; /* 이미지가 비율에 맞게 채워지도록 */
+}
+
+.group-card .group-info {
+  padding: 15px;
+}
+
+.group-card h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  /* 텍스트가 길어지면 ...으로 표시 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.group-card span {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+}
