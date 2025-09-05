@@ -1,0 +1,38 @@
+nav {
+  background-color: #666666; /* A dark slate blue color */
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+nav ul {
+  list-style-type: none; 
+  margin: 0;
+  padding: 0;
+  display: flex; 
+  justify-content: flex-start; 
+  gap: 10px; 
+}
+
+nav ul li a {
+  display: block; 
+  color: white;
+  text-align: center;
+  padding: 18px 20px;
+  text-decoration: none; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+nav ul li a:hover {
+  background-color: #3498db; 
+  color: white;
+}
+
+nav ul li a.active {
+    background-color: #2980b9;
+}
+
+.right-nav {
+  margin-left: auto; 
+  display: flex;
+}
