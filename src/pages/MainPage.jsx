@@ -3,6 +3,7 @@ import '../assets/MainPage.css';
 import { Link } from 'react-router-dom';
 import TrueFocus from '../components/TrueFocus.jsx';
 import GroupForm from '../components/GroupForm.jsx';
+import { motion } from 'framer-motion';
 
 // 임시 데이터
 const dummyGroups = [
@@ -54,6 +55,27 @@ const focusFont = {
     fontFamily: "'KakaoSmallSans-Bold', sans-serif",
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // 자식 요소들이 0.2초 간격으로 나타남
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: -20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export default function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,9 +83,12 @@ export default function MainPage() {
   const allGroups = dummyGroups;
 
   return (
-    <main className="main-container">
-      {/* TrueFocus */}
-      <section className="focus-keywords-section">
+    <motion.main 
+    className="main-container"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible">
+      <motion.section className="focus-keywords-section" variants={itemVariants}>
         <TrueFocus 
           text="런닝 자전거 축구"
           manualMode={false}
@@ -76,10 +101,10 @@ export default function MainPage() {
           textAlign="center"
           font={focusFont}
         />
-      </section>
+      </motion.section>
 
       {/* 필터 섹션 */}
-      <section className="filter-section">
+      <motion.section className="filter-section" variants={itemVariants}>
         <div className="filters">
           <select name="region">
             <option value="">지역 선택</option>
@@ -102,10 +127,10 @@ export default function MainPage() {
         <button className="create-group-btn" onClick={() => setIsModalOpen(true)}>
           모임 모집하기
         </button>
-      </section>
+      </motion.section>
 
       {/* 추천 모임 */}
-      <section className="group-list-section">
+      <motion.section className="group-list-section" variants={itemVariants}>
         <h2>추천 모임</h2>
         <div className="group-grid">
           {recommendedGroups.map(group => (
@@ -121,10 +146,10 @@ export default function MainPage() {
             </Link>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* 전체 모임 */}
-      <section className="group-list-section">
+      <motion.section className="group-list-section" variants={itemVariants}>
         <h2>전체 모임</h2>
         <div className="group-grid">
           {allGroups.map(group => (
@@ -140,7 +165,7 @@ export default function MainPage() {
             </Link>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* --- 모달 --- */}
       {isModalOpen && (
@@ -151,6 +176,6 @@ export default function MainPage() {
           </div>
         </div>
       )}
-    </main>
+    </motion.main>
   );
 }
