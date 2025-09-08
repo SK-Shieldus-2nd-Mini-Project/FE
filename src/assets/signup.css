@@ -9,7 +9,7 @@
   width: 400px; /* 조금 넓게 */
   max-width: 90%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 .signup-container:hover {
