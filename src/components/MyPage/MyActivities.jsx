@@ -68,9 +68,6 @@ export default function MyActivities() {
               <span className="group-name">{app.groupName}</span>
               <span className="status-badge">{app.status}</span>
             </div>
-            <div className="card-body">
-              <p>{app.description || "설명 없음"}</p>
-            </div>
           </div>
         ))}
       </div>
