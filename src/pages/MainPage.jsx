@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/MainPage.css';
 import TrueFocus from '../components/TrueFocus.jsx';
-import GroupForm from '../components/Group/GroupForm.jsx';
+import GroupForm from '../components/GroupForm.jsx';
 
 // 임시 데이터
 const dummyGroups = [
