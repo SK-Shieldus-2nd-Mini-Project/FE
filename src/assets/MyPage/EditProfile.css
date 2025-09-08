@@ -1,0 +1,106 @@
+.edit-profile-form {
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* 프로필 이미지 섹션 */
+.profile-image-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-image-preview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-image-preview img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+}
+
+/* 파일 인풋은 숨김 */
+.profile-image-preview input[type="file"] {
+    display: none;
+}
+
+.image-upload-button {
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.image-upload-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* 버튼 그룹 */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.save-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+.cancel-button:hover {
+    background-color: #c7c7c7;
+}

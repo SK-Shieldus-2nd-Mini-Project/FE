@@ -1,0 +1,146 @@
+.mypage-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 30px;
+  min-height: 600px; /* 헤더, 푸터 높이 제외 */
+}
+
+/* --- 사이드바 --- */
+.mypage-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.profile-summary {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 20px;
+}
+
+.profile-summary .profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-summary h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile-summary p {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.mypage-sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mypage-sidebar nav li {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mypage-sidebar nav li:hover {
+  background-color: #e9ecef;
+}
+
+.mypage-sidebar nav li.active {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+/* --- 콘텐츠 영역 --- */
+.mypage-content {
+  flex-grow: 1;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.content-panel h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* '내 활동' 탭 리스트 스타일 */
+.status-list {
+    list-style: none;
+    padding: 0;
+}
+.status-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+}
+.status-list .group-name {
+    font-weight: 500;
+}
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+.status-list li.status-approved .status-badge { background-color: #2ecc71; }
+.status-list li.status-pending .status-badge { background-color: #f39c12; }
+.status-list li.status-rejected .status-badge { background-color: #e74c3c; }
+
+
+/* '관리자' 탭 메뉴 스타일 */
+.admin-menu {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.admin-menu-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+}
+.admin-menu-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.admin-menu-item p {
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+.admin-menu-item button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
