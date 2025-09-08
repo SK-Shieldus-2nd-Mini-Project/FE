@@ -1,45 +1,62 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import '../assets/signup.css'
+import Modal from "../components/Modal"; // 모달 컴포넌트 import
 
-function Signup() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    nickname: "",
-    birthdate: "",
-    profileImage: null,
-  });
+export default function Signup() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", message: "" });
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+  // 가입 성공 시 모달 열기
+  const handleSignupSuccess = () => {
+    setModalContent({
+      title: "가입 완료",
+      message: "회원가입이 성공적으로 완료되었습니다!",
+    });
+    setIsModalOpen(true);
   };
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    console.log("회원가입 데이터:", formData);
-    alert('회원가입 되었습니다.');
+  // 신청 성공 시 모달 열기
+  const handleApplicationSuccess = () => {
+    setModalContent({
+      title: "신청 완료",
+      message: "모임 신청이 성공적으로 완료되었습니다!",
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  // 예시: 가입 버튼 클릭 시 handleSignupSuccess 호출
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // TODO: 실제 회원가입 로직 구현
+    handleSignupSuccess(); // 성공 시 모달 열기
+  };
+
+  // 예시: 신청 버튼 클릭 시 handleApplicationSuccess 호출
+  const handleApply = () => {
+    // TODO: 실제 신청 로직 구현
+    handleApplicationSuccess();
   };
 
   return (
-    <div className="signup-container">
+    <div>
       <h2>회원가입</h2>
-      <form onSubmit={handleSignup}>
-        <input type="text" name="username" placeholder="아이디" value={formData.username} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
-        <input type="text" name="nickname" placeholder="닉네임" value={formData.nickname} onChange={handleChange} required />
-        <input type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} required />
-        <input type="file" name="profileImage" onChange={handleChange} accept="image/*" />
+      <form onSubmit={handleSubmit}>
+        {/* input, label 등 회원가입 폼 */}
         <button type="submit">회원가입</button>
       </form>
-      <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
+
+      <button onClick={handleApply}>모임 신청</button>
+
+      {/* 모달 */}
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          title={modalContent.title}
+          message={modalContent.message}
+        />
+      )}
     </div>
   );
 }
-
-export default Signup;
