@@ -17,15 +17,23 @@ function Login() {
     const userAccount = users[username];
 
     if (userAccount && userAccount.password === password) {
-      // 로그인 성공 시 사용자 정보 전체를 넘겨줌
-      dispatch(loginSuccess({
+      // --- JWT 연동 부분 ---
+      // 1. 여기서 나중에 백엔드 API를 호출해야됨
+      // 2. 지금은 성공시 가짜 토큰을 생성
+      const fakeJwtToken = `fake-jwt-token-for-${username}-${new Date().getTime()}`;
+
+      const userData = {
         username: username,
         nickname: userAccount.nickname,
         role: userAccount.role,
         hasCreatedGroup: userAccount.hasCreatedGroup,
         birthdate: userAccount.birthdate,
         profileImage: userAccount.profileImage,
-      }));
+      };
+
+      // 로그인 성공 시 사용자 정보 전체를 넘겨줌
+      dispatch(loginSuccess({user : userData, token: fakeJwtToken}));
+      
       alert('로그인 되었습니다.');
       navigate('/mypage'); // 마이페이지로 이동
     } else {
