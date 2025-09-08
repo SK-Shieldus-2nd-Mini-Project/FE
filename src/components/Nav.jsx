@@ -18,7 +18,11 @@ function Nav() {
     return (
         <nav className='main-nav'>
             <ul>
-                <li><Link to="/">로고</Link></li>
+                <li>
+                    <Link to="/" className='logo-li'>
+                        <img src="/public/logo.png" alt="오운고" className='logo' />
+                    </Link>
+                    </li>
                 <div className='right-nav'>
                     {isAuthenticated ? (
                         <>
