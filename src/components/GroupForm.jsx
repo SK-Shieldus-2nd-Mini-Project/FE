@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { validateGroupForm } from "../utils/validateGroupForm";
 import InputField from "./InputField";
 import Modal from "./Modal"; // 모달 컴포넌트 불러오기
 import './Modal.css'; // 모달 CSS 불러오기
@@ -26,6 +26,11 @@ function GroupForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const error = validateGroupForm(formData);
+    if (error) {
+      alert(error);
+      return;
+    }
     console.log("모임 생성 데이터:", formData);
 
     // 2. 모임 생성 성공 시 모달을 띄웁니다.
