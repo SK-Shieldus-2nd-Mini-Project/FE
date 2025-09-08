@@ -8,4 +8,5 @@ footer {
     position: relative;
     left: 0;
     bottom: 0;
+    user-select: none;
 }
