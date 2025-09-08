@@ -35,7 +35,6 @@ export default function Router() {
           element={<GroupCreation />}
 >>>>>>> 94bdc15 (update)
         />
-
         <Route
           path="/groups/:id"
           element={<GroupDetail />}
