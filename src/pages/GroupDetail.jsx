@@ -70,7 +70,7 @@ export default function GroupDetail() {
     // modal로 변경
     else {
       alert(`${currentUser.nickname}님, "${group.name}" 모임에 참가 신청되었습니다!`);
-      navigate("/mypage");
+      navigate("/mypage")
     }
   }
 
