@@ -38,7 +38,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   flex-wrap: wrap; /* 창 크기가 작을 때 줄바꿈 */
@@ -76,17 +76,17 @@
 }
 
 .search-btn {
-  background-color: #3498db;
+  background-color: #2f71ff;
 }
 .search-btn:hover {
-  background-color: #2980b9;
+  background-color: rgb(93, 144, 255);
 }
 
 .create-group-btn {
-  background-color: #3498db;
+  background-color: #2f71ff;
 }
 .create-group-btn:hover {
-  background-color: #2980b9;
+  background-color: rgb(93, 144, 255);
 }
 
 
