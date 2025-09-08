@@ -7,6 +7,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.form-title {
+  user-select: none;  
+  cursor: default;
+}
+
 .page-title {
     text-align: center;
     font-size: 24px;
@@ -24,12 +29,17 @@
 .input-field {
     display: flex;
     flex-direction: column;
+    user-select: none;  
+    cursor: default;
+    
 }
 
 .input-field label {
     font-weight: 600;
     margin-bottom: 6px;
     color: #444;
+    user-select: none;  
+    cursor: default;
 }
 
 .input-field input,

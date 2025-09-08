@@ -1,6 +1,6 @@
 import React from "react";
 import GroupForm from "../components/GroupForm";
-import "../assets/groupCreation.css";
+import "../assets/Group/GroupCreation.css";
 
 function GroupCreation() {
   return (

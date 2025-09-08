@@ -5,6 +5,7 @@ import Login from "../pages/Login.jsx"
 import Signup from '../pages/Signup.jsx'
 import MyPage from '../pages/MyPage.jsx'
 import GroupCreation from '../pages/GroupCreation.jsx'
+import GroupDetail from '../pages/GroupDetail.jsx'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
 import PrivateRoute from './PrivateRoute.jsx'
@@ -35,6 +36,11 @@ export default function Router() {
         <Route
           path="/groupcreation"
           element={<GroupCreation />}
+        />
+
+        <Route
+          path="/groups/:id"
+          element={<GroupDetail />}
         />
       </Routes>
       <Footer />
