@@ -9,6 +9,14 @@
   margin-top: 20px;
 }
 
+.card-image img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  display: block; /* 추가하면 img가 block으로 나와서 카드 영역에 맞게 표시 */
+}
+
 .activity-card {
   background-color: #f8f8f8;
   border-radius: 12px;
