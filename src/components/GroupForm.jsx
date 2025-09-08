@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateGroupForm } from "../utils/validateGroupForm";
 import InputField from "./InputField";
 
 function GroupForm() {
@@ -20,6 +21,11 @@ function GroupForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const error = validateGroupForm(formData);
+    if (error) {
+      alert(error);
+      return;
+    }
     console.log("모임 생성 데이터:", formData);
     alert("모임이 생성되었습니다!");
   };
