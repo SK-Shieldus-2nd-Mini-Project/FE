@@ -5,6 +5,7 @@
   margin: 40px auto;
   gap: 30px;
   min-height: 600px; /* 헤더, 푸터 높이 제외 */
+  
 }
 
 /* --- 사이드바 --- */
@@ -85,6 +86,7 @@
   margin-bottom: 25px;
   padding-bottom: 15px;
   border-bottom: 2px solid #e9ecef;
+  user-select: none;
 }
 
 /* '내 활동' 탭 리스트 스타일 */
@@ -100,9 +102,11 @@
     border-radius: 8px;
     margin-bottom: 10px;
     background-color: #f8f9fa;
+    
 }
 .status-list .group-name {
     font-weight: 500;
+    
 }
 .status-badge {
     padding: 5px 12px;
@@ -110,6 +114,7 @@
     font-size: 0.8rem;
     font-weight: bold;
     color: white;
+    user-select: none;
 }
 .status-list li.status-approved .status-badge { background-color: #2ecc71; }
 .status-list li.status-pending .status-badge { background-color: #f39c12; }
