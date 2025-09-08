@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import '../assets/Group/GroupDetail.css';
 
 export default function GroupDetail() {
   const { id } = useParams(); // URL에서 모임 id 가져오기
   const [group, setGroup] = useState(null);
+  const navigate = useNavigate();
+
+  const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
+  const currentUser = useSelector(state => state.auth.user);
 
   useEffect(() => {
     // 임시 데이터
@@ -55,6 +60,19 @@ export default function GroupDetail() {
     setGroup(foundGroup);
   }, [id]);
 
+  //로그인 확인 
+  const handleJoinClick = () => {
+    if (!isLoggedIn) {
+      // modal로 변경
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+    // modal로 변경
+    else {
+      alert(`${currentUser.nickname}님, "${group.name}" 모임에 참가 신청되었습니다!`);
+    }
+  }
+
   if (!group) return <p>로딩 중...</p>;
 
   return (
@@ -68,7 +86,7 @@ export default function GroupDetail() {
           <p>{group.description}</p>
           <p><strong>지역:</strong> {group.region} | <strong>종목:</strong> {group.sport}</p>
           <p><strong>참여 인원:</strong> {group.currentMembers} / {group.maxMembers}명</p>
-          <button className="join-btn">참여하기</button>
+          <button className="join-btn" onClick={handleJoinClick}>참여하기</button>
         </div>
       </div>
 
