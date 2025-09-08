@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../redux/authSlice";
+import Modal from "../components/Modal"; // 모달 컴포넌트 import
 import '../assets/signup.css';
+import '../assets/Modal.css'; // 모달 CSS import
 
-function Signup() {
+export default function Signup() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -12,6 +14,7 @@ function Signup() {
     birthdate: "",
     profileImage: null, // 파일 객체를 저장할 상태
   });
+  const [showModal, setShowModal] = useState(false); // 모달 표시 상태 추가
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,8 +22,8 @@ function Signup() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files[0] });
+    if (name === "profileImage") {
+      setFormData({ ...formData, profileImage: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -38,10 +41,15 @@ function Signup() {
           ...formData,
           profileImage: imageUrl,
       }));
-      
-      alert("회원가입 되었습니다. 로그인 페이지로 이동합니다.");
-      navigate("/login");
+
+      setShowModal(true);
     }
+  };
+
+  // 모달을 닫고 로그인 페이지로 이동하는 함수
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate("/login");
   };
 
   return (
@@ -65,9 +73,17 @@ function Signup() {
 
         <button type="submit">회원가입</button>
       </form>
+
       <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
+
+      {/* 회원가입 완료 모달 */}
+      <Modal
+        show={showModal}
+        title="회원가입 완료!"
+        message="성공적으로 가입되었습니다."
+        >
+          <button onClick={handleCloseModal} style={{ marginTop: '10px' }}>로그인 페이지로 이동</button>
+        </Modal>
     </div>
   );
 }
-
-export default Signup;
