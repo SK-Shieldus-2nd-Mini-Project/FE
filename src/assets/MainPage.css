@@ -44,7 +44,6 @@
   flex-wrap: wrap; /* 창 크기가 작을 때 줄바꿈 */
   gap: 15px;
   user-select: none;  
-  cursor: pointer;
 }
 
 .filters {
