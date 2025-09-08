@@ -10,6 +10,7 @@
   max-width: 90%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 100px auto;
+  user-select: none; 
 }
 
 .login-container:hover {
