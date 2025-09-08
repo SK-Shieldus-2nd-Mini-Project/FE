@@ -36,3 +36,6 @@
   margin-left: auto; 
   display: flex;
 }
+
+.logout-btn { background: none; border: none; color: white; cursor: pointer; padding: 18px 20px; font-size: 1rem; }
+.logout-btn:hover { background-color: #e74c3c; }
