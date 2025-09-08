@@ -39,6 +39,16 @@ export default function GroupDetail() {
         imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop',
         description: '등산 초보자를 위한 안전한 관악산 등반 모임입니다.',
       },
+      {
+        id: 4,
+        name: '한강 자전거 라이딩 모임',
+        region: '서울',
+        sport: '자전거',
+        currentMembers: 12,
+        maxMembers: 20,
+        imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop',
+        description: '라이딩 초보자를 위한 안전한 라이딩 모임입니다.',
+      }
     ];
 
     const foundGroup = dummyGroups.find(g => g.id === parseInt(id));
@@ -49,7 +59,7 @@ export default function GroupDetail() {
 
   return (
     <div className="group-detail-container">
-      <Link to="/" className="back-btn">← 뒤로가기</Link>
+      <Link to="/" className="back-btn">← 홈으로 가기</Link>
 
       <div className="group-header">
         <img src={group.imageUrl} alt={group.name} />
