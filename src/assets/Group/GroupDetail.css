@@ -1,0 +1,85 @@
+.group-detail-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: #2c3e50;
+}
+
+.group-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+  background-color: #fdfdfd;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.group-header img {
+  width: 320px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.group-header-info {
+  flex: 1;
+  min-width: 250px;
+}
+
+.group-header-info h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+}
+
+.group-header-info p {
+  margin: 10px 0;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
+
+.join-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.join-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.group-posts {
+  margin-top: 30px;
+}
+
+.group-posts h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.group-posts p {
+  color: #7f8c8d;
+}

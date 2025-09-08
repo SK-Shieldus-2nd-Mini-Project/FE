@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/MainPage.css';
+import { Link } from 'react-router-dom';
 import TrueFocus from '../components/TrueFocus.jsx';
 import GroupForm from '../components/GroupForm.jsx';
 
@@ -108,6 +109,7 @@ export default function MainPage() {
         <h2>추천 모임</h2>
         <div className="group-grid">
           {recommendedGroups.map(group => (
+            <Link to={`/groups/${group.id}`} key={group.id} className="group-card-link">
             <div key={group.id} className="group-card">
               <img src={group.imageUrl} alt={group.name} />
               <div className="group-info">
@@ -116,6 +118,7 @@ export default function MainPage() {
                 <span>{group.currentMembers} / {group.maxMembers}명</span>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -125,6 +128,7 @@ export default function MainPage() {
         <h2>전체 모임</h2>
         <div className="group-grid">
           {allGroups.map(group => (
+            <Link to={`/groups/${group.id}`} key={group.id} className="group-card-link">
             <div key={group.id} className="group-card">
               <img src={group.imageUrl} alt={group.name} />
               <div className="group-info">
@@ -133,6 +137,7 @@ export default function MainPage() {
                 <span>{group.currentMembers} / {group.maxMembers}명</span>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </section>

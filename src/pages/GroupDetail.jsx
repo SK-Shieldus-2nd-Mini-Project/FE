@@ -1,0 +1,71 @@
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import '../assets/Group/GroupDetail.css';
+
+export default function GroupDetail() {
+  const { id } = useParams(); // URL에서 모임 id 가져오기
+  const [group, setGroup] = useState(null);
+
+  useEffect(() => {
+    // 임시 데이터
+    const dummyGroups = [
+      {
+        id: 1,
+        name: '아침마다 함께 뛰어요! 조깅 크루',
+        region: '서울',
+        sport: '조깅',
+        currentMembers: 5,
+        maxMembers: 10,
+        imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop',
+        description: '건강한 아침 루틴을 함께 할 조깅 모임입니다.',
+      },
+      {
+        id: 2,
+        name: '주말 저녁 농구 한판 하실 분?',
+        region: '경기',
+        sport: '농구',
+        currentMembers: 8,
+        maxMembers: 12,
+        imageUrl: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1974&auto=format&fit=crop',
+        description: '주말 저녁 농구로 스트레스 풀고 싶은 분들을 모십니다.',
+      },
+      {
+        id: 3,
+        name: '등산 초보 모여라! 관악산 등반',
+        region: '서울',
+        sport: '등산',
+        currentMembers: 3,
+        maxMembers: 8,
+        imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop',
+        description: '등산 초보자를 위한 안전한 관악산 등반 모임입니다.',
+      },
+    ];
+
+    const foundGroup = dummyGroups.find(g => g.id === parseInt(id));
+    setGroup(foundGroup);
+  }, [id]);
+
+  if (!group) return <p>로딩 중...</p>;
+
+  return (
+    <div className="group-detail-container">
+      <Link to="/" className="back-btn">← 뒤로가기</Link>
+
+      <div className="group-header">
+        <img src={group.imageUrl} alt={group.name} />
+        <div className="group-header-info">
+          <h2>{group.name}</h2>
+          <p>{group.description}</p>
+          <p><strong>지역:</strong> {group.region} | <strong>종목:</strong> {group.sport}</p>
+          <p><strong>참여 인원:</strong> {group.currentMembers} / {group.maxMembers}명</p>
+          <button className="join-btn">참여하기</button>
+        </div>
+      </div>
+
+      <section className="group-posts">
+        <h3>게시글</h3>
+        <p>게시글이 아직 없습니다.</p>
+      </section>
+    </div>
+  );
+}
