@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { applyToGroup } from "../redux/applicationSlice";
 import '../assets/Group/GroupDetail.css';
 
 export default function GroupDetail() {
   const { id } = useParams(); // URL에서 모임 id 가져오기
   const [group, setGroup] = useState(null);
   const navigate = useNavigate();
-
+  
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
   const currentUser = useSelector(state => state.auth.user);
 
@@ -70,6 +72,7 @@ export default function GroupDetail() {
     // modal로 변경
     else {
       alert(`${currentUser.nickname}님, "${group.name}" 모임에 참가 신청되었습니다!`);
+      dispatch(applyToGroup({ groupId: group.id, groupName: group.name }));
       navigate("/mypage");
     }
   }
