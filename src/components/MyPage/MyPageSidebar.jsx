@@ -4,7 +4,7 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
   return (
     <aside className="mypage-sidebar">
       <div className="profile-summary">
-        <img src="/public/mymelody.png" alt="Profile" className="profile-image" />
+        <img src={user.profileImage || '/public/mymelody.png'} alt="Profile" className="profile-image" />
         <h3>{user.nickname}</h3>
         <p>{user.role === 'user' ? '관리자' : '일반 회원'}</p>
       </div>

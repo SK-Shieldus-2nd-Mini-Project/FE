@@ -1,15 +1,37 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import '../assets/login.css'
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../redux/authSlice";
+import '../assets/login.css';
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { users } = useSelector((state) => state.auth);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("로그인 시도:", { username, password });
-    alert('로그인 되었습니다.');
+    const userAccount = users[username];
+
+    if (userAccount && userAccount.password === password) {
+      // 로그인 성공 시 사용자 정보 전체를 넘겨줌
+      dispatch(loginSuccess({
+        username: username,
+        nickname: userAccount.nickname,
+        role: userAccount.role,
+        hasCreatedGroup: userAccount.hasCreatedGroup,
+        birthdate: userAccount.birthdate,
+        profileImage: userAccount.profileImage,
+      }));
+      alert('로그인 되었습니다.');
+      navigate('/mypage'); // 마이페이지로 이동
+    } else {
+      // 로그인 실패
+      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
+    }
   };
 
   return (

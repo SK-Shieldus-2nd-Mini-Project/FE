@@ -7,6 +7,7 @@ import MyPage from '../pages/MyPage.jsx'
 import GroupCreation from '../pages/GroupCreation.jsx'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
+import PrivateRoute from './PrivateRoute.jsx'
 
 export default function Router() {
   return (
@@ -25,10 +26,12 @@ export default function Router() {
           path="/signup"
           element={<Signup />}
         />
-        <Route
-          path="/mypage"
-          element={<MyPage />}
-        />
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/mypage"
+            element={<MyPage />}
+          />
+        </Route>
         <Route
           path="/groupcreation"
           element={<GroupCreation />}
