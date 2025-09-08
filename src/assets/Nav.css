@@ -22,6 +22,8 @@
   padding: 18px 20px;
   text-decoration: none; 
   transition: background-color 0.3s ease, color 0.3s ease; 
+  height: 100%;
+  justify-content: center;
 }
 
 .main-nav ul li a:hover {
@@ -39,4 +41,4 @@
 }
 
 .logout-btn { background: none; border: none; color: white; cursor: pointer; padding: 18px 20px; font-size: 1rem; }
-.logout-btn:hover { background-color: #e74c3c; }
+.logout-btn:hover { background-color: #e74c3c !important; }

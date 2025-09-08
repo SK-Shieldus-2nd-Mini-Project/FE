@@ -24,6 +24,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   users: initialUsers,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -33,10 +34,12 @@ const authSlice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.user = action.payload;
+      state.token = action.payload.token;
     },
     logout(state) {
       state.isAuthenticated = false;
       state.user = null;
+      state.token = null;
     },
     signup(state, action) {
         const { username, password, nickname, birthdate, profileImage } = action.payload;

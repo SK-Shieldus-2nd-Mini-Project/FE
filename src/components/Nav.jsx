@@ -23,7 +23,7 @@ function Nav() {
                     {isAuthenticated ? (
                         <>
                             <li><Link to="/mypage">마이페이지</Link></li>
-                            <li><button onClick={handleLogout} className="logout-btn">로그아웃</button></li>
+                            <li><a onClick={handleLogout} className="logout-btn">로그아웃</a></li>
                         </>
                     ) : (
                         <>
