@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../assets/MainPage.css'; // MainPage를 위한 CSS 파일을 import 합니다.
+import React, { useState } from 'react';
+import '../assets/MainPage.css';
 import TrueFocus from '../components/TrueFocus.jsx';
+import GroupForm from '../components/Group/GroupForm.jsx';
 
-// 임시 데이터 (나중에 API로 받아올 데이터)
+// 임시 데이터
 const dummyGroups = [
   {
     id: 1,
@@ -48,33 +48,36 @@ const dummyGroups = [
 ];
 
 const focusFont = {
-    fontSize: "3rem", // 폰트 크기를 키움
+    fontSize: "3rem",
     fontWeight: "bold",
-    fontFamily: "'KakaoSmallSans-Bold', sans-serif", // 적용된 폰트 사용
+    fontFamily: "'KakaoSmallSans-Bold', sans-serif",
 };
 
 export default function MainPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const recommendedGroups = dummyGroups.filter(group => group.recommended);
   const allGroups = dummyGroups;
 
   return (
     <main className="main-container">
+      {/* TrueFocus */}
       <section className="focus-keywords-section">
         <TrueFocus 
           text="런닝 자전거 축구"
-          manualMode={false} // 자동 순환 모드
+          manualMode={false}
           blurAmount={3}
           borderColor="#3498db"
           glowColor="rgba(52, 152, 219, 0.6)"
           animationDuration={0.4}
-          pauseBetweenAnimations={1.5} // 애니메이션 사이 1.5초 대기
+          pauseBetweenAnimations={1.5}
           textColor="#2c3e50"
           textAlign="center"
           font={focusFont}
         />
       </section>
 
-      {/* --- 필터링 및 검색 섹션 --- */}
+      {/* 필터 섹션 */}
       <section className="filter-section">
         <div className="filters">
           <select name="region">
@@ -93,44 +96,56 @@ export default function MainPage() {
           <input type="text" placeholder="모임 이름으로 검색" />
           <button className="search-btn">찾기</button>
         </div>
-        <Link to="/create-group" className="create-group-btn">
+
+        {/* 모임 생성 버튼 → 모달 오픈 */}
+        <button className="create-group-btn" onClick={() => setIsModalOpen(true)}>
           모임 모집하기
-        </Link>
+        </button>
       </section>
 
-      {/* --- 추천 모임 섹션 --- */}
+      {/* 추천 모임 */}
       <section className="group-list-section">
         <h2>추천 모임</h2>
         <div className="group-grid">
-          {recommendedGroups.map((group) => (
-            <Link to={`/group/${group.id}`} key={group.id} className="group-card">
+          {recommendedGroups.map(group => (
+            <div key={group.id} className="group-card">
               <img src={group.imageUrl} alt={group.name} />
               <div className="group-info">
                 <h3>{group.name}</h3>
                 <p># {group.region} # {group.sport}</p>
                 <span>{group.currentMembers} / {group.maxMembers}명</span>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
-      
-      {/* --- 전체 모임 섹션 --- */}
+
+      {/* 전체 모임 */}
       <section className="group-list-section">
         <h2>전체 모임</h2>
         <div className="group-grid">
-          {allGroups.map((group) => (
-            <Link to={`/group/${group.id}`} key={group.id} className="group-card">
+          {allGroups.map(group => (
+            <div key={group.id} className="group-card">
               <img src={group.imageUrl} alt={group.name} />
               <div className="group-info">
                 <h3>{group.name}</h3>
                 <p># {group.region} # {group.sport}</p>
                 <span>{group.currentMembers} / {group.maxMembers}명</span>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
+
+      {/* --- 모달 --- */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
+            <GroupForm />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

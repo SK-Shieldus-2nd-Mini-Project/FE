@@ -33,7 +33,8 @@
 }
 
 .input-field input,
-.input-field textarea {
+.input-field textarea,
+.input-field select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -41,13 +42,14 @@
 }
 
 .input-field input:focus,
-.input-field textarea:focus {
-    border-color: #4a90e2;
+.input-field textarea:focus,
+.input-field select:focus {
+    border-color: #74ebd5;
     outline: none;
 }
 
 .submit-btn {
-    background: #4a90e2;
+    background: #74ebd5;
     color: white;
     padding: 12px;
     border: none;
@@ -59,5 +61,42 @@
 }
 
 .submit-btn:hover {
-    background: #357ab8;
+    background: #11c7a5;
+}
+
+/* 모달 배경 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* 모달 박스 */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #333;
 }
