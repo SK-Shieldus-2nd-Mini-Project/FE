@@ -57,11 +57,21 @@ export default function Signup() {
     <div className="signup-container">
       <h2>회원가입</h2>
       <form onSubmit={handleSignup}>
-        <input type="text" name="username" placeholder="아이디" value={formData.username} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
-        <input type="text" name="nickname" placeholder="닉네임" value={formData.nickname} onChange={handleChange} required />
-        <input type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} required />
-        <input type="file" name="profileImage" onChange={handleChange} accept="image/*" />
+        <label htmlFor="username">아이디</label>
+        <input type="text" id="username" name="username" placeholder="아이디" onChange={handleChange} required />
+
+        <label htmlFor="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호" onChange={handleChange} required />
+
+        <label htmlFor="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname" placeholder="닉네임" onChange={handleChange} required />
+
+        <label htmlFor="birthdate">생년월일</label>
+        <input type="date" id="birthdate" name="birthdate" onChange={handleChange} required />
+
+        <label htmlFor="profileImage" style={{fontSize: '14px', color: '#555'}}>프로필 이미지</label>
+        <input type="file" id="profileImage" name="profileImage" onChange={handleChange} accept="image/*" />
+
         <button type="submit">회원가입</button>
       </form>
 
