@@ -7,8 +7,11 @@ export default function MyActivities() {
   const navigate = useNavigate();
 
   // 더미 데이터 예시
-  const myApplications = useSelector(state => state.applications.myApplications);
-  
+  const myApplications = useSelector(state => state.applications.myApplications) || [
+    { id: 1, groupName: "조깅 크루", status: "완료", imageUrl: "https://via.placeholder.com/250x140", description: "매일 아침 7시" },
+    { id: 2, groupName: "요가 모임", status: "대기", imageUrl: "https://via.placeholder.com/250x140", description: "주 2회" },
+    { id: 3, groupName: "조깅 크루", status: "대기", imageUrl: "https://via.placeholder.com/250x140", description: "중복 테스트" }
+  ];
 
   // 중복 제거 (groupName 기준, 완료 > 대기 > 거절 우선)
   const appMap = new Map();
@@ -37,7 +40,7 @@ export default function MyActivities() {
   }
 
   const handleCardClick = (groupId) => {
-    navigate(`/groups/${groupId}`); // 클릭 시 해당 그룹 상세/목록 페이지 이동
+    navigate(`/grouplist/${groupId}`); // 클릭 시 해당 그룹 상세/목록 페이지 이동
   }
 
   return (
@@ -59,11 +62,14 @@ export default function MyActivities() {
             style={{ cursor: "pointer" }}
           >
             <div className="card-image">
-              <img src={app.imageUrl} alt={app.groupName} />
+              <img src={app.imageUrl || "https://via.placeholder.com/250x140"} alt={app.groupName} />
             </div>
             <div className="card-header">
               <span className="group-name">{app.groupName}</span>
               <span className="status-badge">{app.status}</span>
+            </div>
+            <div className="card-body">
+              <p>{app.description || "설명 없음"}</p>
             </div>
           </div>
         ))}
