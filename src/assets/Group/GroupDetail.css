@@ -18,6 +18,11 @@
   color: #2c3e50;
 }
 
+.group-detail-container {
+  user-select: none;
+  cursor: default;
+}
+
 .group-header {
   display: flex;
   flex-wrap: wrap;
@@ -27,6 +32,8 @@
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  user-select: none;
+  cursor: default;
 }
 
 .group-header img {
@@ -34,23 +41,31 @@
   height: 220px;
   object-fit: cover;
   border-radius: 12px;
+  user-select: none;  
+  cursor: default;
 }
 
 .group-header-info {
   flex: 1;
   min-width: 250px;
+  user-select: none;  
+  cursor: default;
 }
 
 .group-header-info h2 {
   margin-top: 0;
   color: #2c3e50;
   font-size: 1.8rem;
+  user-select: none;  
+  cursor: default;
 }
 
 .group-header-info p {
   margin: 10px 0;
   color: #7f8c8d;
   line-height: 1.5;
+  user-select: none;  
+  cursor: default;
 }
 
 .join-btn {

@@ -26,6 +26,8 @@ function GroupForm() {
 
   return (
     <form className="group-form" onSubmit={handleSubmit}>
+      <h2 className="form-title">모임 모집하기</h2>
+      
       <InputField label="모임 이름" name="name" value={formData.name} onChange={handleChange} />
       <InputField label="모임 설명" name="description" value={formData.description} onChange={handleChange} type="textarea" />
       <InputField label="최대 인원" name="maxMembers" value={formData.maxMembers} onChange={handleChange} type="number" />
