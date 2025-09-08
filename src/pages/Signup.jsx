@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../redux/authSlice";
 import Modal from "../components/Modal"; // 모달 컴포넌트 import
 import '../assets/signup.css';
-import '../components/Modal.css'; // 모달 CSS import
+import '../assets/Modal.css'; // 모달 CSS import
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -42,7 +42,7 @@ export default function Signup() {
           profileImage: imageUrl,
       }));
 
-      setShowModal(true); // 회원가입 성공 시 모달 표시 
+      setShowModal(true);
     }
   };
 
@@ -70,7 +70,6 @@ export default function Signup() {
       {/* 회원가입 완료 모달 */}
       <Modal
         show={showModal}
-        onClose={handleCloseModal}
         title="회원가입 완료!"
         message="성공적으로 가입되었습니다."
         >

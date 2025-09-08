@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { validateGroupForm } from "../utils/validateGroupForm";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import InputField from "./InputField";
 import Modal from "./Modal"; // 모달 컴포넌트 불러오기
-import './Modal.css'; // 모달 CSS 불러오기
+import '../assets/Modal.css'; // 모달 CSS 불러오기
 
 function GroupForm() {
   const [formData, setFormData] = useState({
@@ -42,7 +42,7 @@ function GroupForm() {
     // 3. 모달을 닫는 함수
     setShowModal(false);
     // 4. 모달이 닫히면 메인 페이지로 이동
-    navigate("/mainpage"); 
+    navigate("/"); 
   };
 
   return (
