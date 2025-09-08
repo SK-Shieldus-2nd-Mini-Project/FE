@@ -3,7 +3,7 @@ import '../assets/Nav.css';
 
 function Nav() {
     return (
-        <nav>
+        <nav className='main-nav'>
             <ul>
                 <li>
                     <Link to="/">로고</Link>
