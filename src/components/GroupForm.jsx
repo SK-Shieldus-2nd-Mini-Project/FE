@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "./InputField";
-import GroupFormModal from "./GroupFormModal"; // 새 모달 import
+import GroupFormModal from "./GroupFormModal"; 
+import { validateGroupForm } from "../utils//validateGroupForm"; // 검증 함수 import
 import '../assets/Modal.css';
 
 function GroupForm() {
@@ -14,7 +15,7 @@ function GroupForm() {
     sport: "",
   });
 
-  const [showModal, setShowModal] = useState(false); // 모달 상태
+  const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,20 +29,20 @@ function GroupForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ 테스트용: validateGroupForm 잠시 주석
-    // const error = validateGroupForm(formData);
-    // if (error) {
-    //   alert(error);
-    //   return;
-    // }
+    // ✅ 검증 함수 사용
+    const error = validateGroupForm(formData);
+    if (error) {
+      alert(error);
+      return;
+    }
 
     console.log("모임 생성 데이터:", formData);
     setShowModal(true); // 모달 열기
   };
   
   const handleCloseModal = () => {
-    setShowModal(false); // 모달 닫기
-    navigate("/");       // 메인 페이지 이동
+    setShowModal(false); 
+    navigate("/");       
   };
 
   return (
@@ -105,48 +106,40 @@ function GroupForm() {
         <button type="submit" className="submit-btn">생성하기</button>
       </form>
 
-      {/* 모임 생성 완료 모달 */}
       <GroupFormModal
-  show={showModal}
-  onClose={handleCloseModal}
-  message="새로운 모임이 성공적으로 만들어졌습니다."
->
-  <div
-    className="modal-content"
-    style={{
-      padding: '40px 30px',       // 위아래 패딩 늘리기
-      borderRadius: '12px',
-      backgroundColor: '#fff',
-      textAlign: 'center',
-    }}
-  >
-    {/* 문구 영역 */}
-    <p style={{ 
-      fontSize: '18px', 
-      marginBottom: '30px',       // 버튼과 문구 사이 간격 조정
-    }}>
-      새로운 모임이 성공적으로 만들어졌습니다.
-    </p>
-
-    {/* 확인 버튼 */}
-    <button
-      onClick={handleCloseModal}
-      style={{
-        backgroundColor: '#3CD0B5',
-        color: '#fff',
-        fontWeight: 'bold',
-        border: 'none',
-        borderRadius: '8px',
-        padding: '12px 20px',    // 버튼 위아래 폭 늘림
-        fontSize: '16px',
-        cursor: 'pointer',
-      }}
-    >
-      확인
-    </button>
-  </div>
-</GroupFormModal>
-
+        show={showModal}
+        onClose={handleCloseModal}
+        message="새로운 모임이 성공적으로 만들어졌습니다."
+      >
+        <div
+          className="modal-content"
+          style={{
+            padding: '40px 30px',       
+            borderRadius: '12px',
+            backgroundColor: '#fff',
+            textAlign: 'center',
+          }}
+        >
+          <p style={{ fontSize: '18px', marginBottom: '30px' }}>
+            새로운 모임이 성공적으로 만들어졌습니다.
+          </p>
+          <button
+            onClick={handleCloseModal}
+            style={{
+              backgroundColor: '#3CD0B5',
+              color: '#fff',
+              fontWeight: 'bold',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '12px 20px',    
+              fontSize: '16px',
+              cursor: 'pointer',
+            }}
+          >
+            확인
+          </button>
+        </div>
+      </GroupFormModal>
     </>
   );
 }
