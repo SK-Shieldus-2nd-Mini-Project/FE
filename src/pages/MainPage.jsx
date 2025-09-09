@@ -12,13 +12,13 @@ const regionOptions = [
     "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구",
     "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"
 ];
-const sportOptions = ["조깅", "자전거", "농구", "등산"];
+const sportOptions = ["러닝", "자전거", "농구", "야구", "축구", "배드민턴", "족구", "테니스", "볼링", "탁구"];
 
 // 임시 데이터
 const dummyGroups = [
-    { id: 1, name: '아침마다 함께 뛰어요! 조깅 크루', region: '강남구', sport: '조깅', currentMembers: 5, maxMembers: 10, imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop', recommended: true },
+    { id: 1, name: '아침마다 함께 뛰어요! 러닝 크루', region: '강남구', sport: '러닝', currentMembers: 5, maxMembers: 10, imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop', recommended: true },
     { id: 2, name: '주말 저녁 농구 한판 하실 분?', region: '관악구', sport: '농구', currentMembers: 8, maxMembers: 12, imageUrl: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1974&auto=format&fit=crop', recommended: true },
-    { id: 3, name: '등산 초보 모여라! 관악산 등반', region: '강동구', sport: '등산', currentMembers: 3, maxMembers: 8, imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop', recommended: false },
+    { id: 3, name: '볼링 초보 모여라! ', region: '강동구', sport: '볼링', currentMembers: 3, maxMembers: 8, imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop', recommended: false },
     { id: 4, name: '한강 자전거 라이딩 모임', region: '종로구', sport: '자전거', currentMembers: 12, maxMembers: 20, imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop', recommended: false },
 ];
 
