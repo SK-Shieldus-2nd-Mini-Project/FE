@@ -5,14 +5,14 @@ import TrueFocus from '../components/TrueFocus.jsx';
 import GroupForm from '../components/GroupForm.jsx';
 import { motion } from 'framer-motion';
 import AnimatedFilterButton from '../components/AnimatedFilterButton';
-import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 추가
+import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
 
 const regionOptions = [
-    "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
+    "전체","강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
     "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구",
     "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"
 ];
-const sportOptions = ["조깅","농구", "등산", "자전거"];
+const sportOptions = ["조깅", "자전거", "농구", "등산"];
 
 // 임시 데이터
 const dummyGroups = [
@@ -41,13 +41,21 @@ export default function MainPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedSport, setSelectedSport] = useState(null);
+    
+    // ✅ 입력 값과 실제 검색어 분리
     const [searchText, setSearchText] = useState("");
+    const [searchQuery, setSearchQuery] = useState(""); 
 
-    // ✅ 커스텀 훅으로 필터링 처리
+    // ✅ 검색 버튼 누를 때만 searchQuery 업데이트
+    const handleSearch = () => {
+        setSearchQuery(searchText);
+    };
+
+    // ✅ 필터링 적용 (searchQuery만 반영됨)
     const filteredGroups = useFilteredGroups(dummyGroups, {
         region: selectedRegion,
         sport: selectedSport,
-        searchText,
+        searchText: searchQuery,
     });
 
     const recommendedGroups = filteredGroups.filter(group => group.recommended);
@@ -58,7 +66,7 @@ export default function MainPage() {
             {/* 키워드 애니메이션 */}
             <motion.section className="focus-keywords-section" variants={itemVariants}>
                 <TrueFocus
-                    text="런닝 자전거 농구"
+                    text="런닝 자전거 축구"
                     manualMode={false}
                     blurAmount={3}
                     borderColor="#3498db"
@@ -76,13 +84,17 @@ export default function MainPage() {
                 <div className="filters">
                     <AnimatedFilterButton buttonText="지역" options={regionOptions} onSelect={setSelectedRegion} />
                     <AnimatedFilterButton buttonText="종목 선택" options={sportOptions} onSelect={setSelectedSport} />
+                    
+                    {/* 검색창 + 버튼 */}
                     <input
                         type="text"
                         placeholder="모임 이름으로 검색"
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                     />
+                    <button className="search-btn" onClick={handleSearch}>찾기</button>
                 </div>
+
                 <button className="create-group-btn" onClick={() => setIsModalOpen(true)}>
                     모임 모집하기
                 </button>
