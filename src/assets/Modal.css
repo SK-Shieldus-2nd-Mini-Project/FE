@@ -14,9 +14,9 @@
 
 .modal-content {
   background: white;
-  padding: 24px 32px;
-  border-radius: 16px;
-  max-width: 400px;
+  padding: 40px 30px !important;
+  border-radius: 12px;
+  max-width: 450px;
   width: 90%;
   box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
   position: relative;
@@ -36,7 +36,6 @@
   box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
   background: #f0f8ff;
 }
-
 
 .modal-header {
   display: flex;

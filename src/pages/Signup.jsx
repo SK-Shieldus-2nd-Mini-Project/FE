@@ -1,89 +1,70 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../redux/authSlice";
-import Modal from "../components/Modal"; // 모달 컴포넌트 import
-import '../assets/signup.css';
-import '../assets/Modal.css'; // 모달 CSS import
+// src/components/SignupCompleteModal.jsx
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import '../assets/Modal.css';
 
-export default function Signup() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    nickname: "",
-    birthdate: "",
-    profileImage: null, // 파일 객체를 저장할 상태
-  });
-  const [showModal, setShowModal] = useState(false); // 모달 표시 상태 추가
-
-  const dispatch = useDispatch();
+const SignupCompleteModal = ({ show, onClose }) => {
   const navigate = useNavigate();
-  const { users } = useSelector((state) => state.auth);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profileImage") {
-      setFormData({ ...formData, profileImage: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+  if (!show) return null;
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    if (users[formData.username]) {
-      alert("이미 존재하는 아이디입니다.");
-    } else {
-      // 이미지를 임시 URL로 변환하여 Redux에 저장 (실제로는 서버에 업로드 후 URL을 받아와야 함)
-      const imageUrl = formData.profileImage ? URL.createObjectURL(formData.profileImage) : '/public/mymelody.png';
-      
-      dispatch(signup({
-          ...formData,
-          profileImage: imageUrl,
-      }));
-
-      setShowModal(true);
-    }
-  };
-
-  // 모달을 닫고 로그인 페이지로 이동하는 함수
-  const handleCloseModal = () => {
-    setShowModal(false);
-    navigate("/login");
+  const handleNavigate = () => {
+    navigate("/login"); // 로그인 페이지로 이동
+    onClose();           // 모달 닫기
   };
 
   return (
-    <div className="signup-container">
-      <h2>회원가입</h2>
-      <form onSubmit={handleSignup}>
-        <label htmlFor="username">아이디</label>
-        <input type="text" id="username" name="username" placeholder="아이디" onChange={handleChange} required />
+    <div className="modal-overlay" onClick={handleNavigate}>
+      <div 
+        className="modal-content" 
+        onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않음
+        style={{
+          backgroundColor: '#fff',
+          border: 'none',
+          padding: '30px',
+          borderRadius: '12px',
+          maxWidth: '400px',
+          textAlign: 'center',
+        }}
+      >
+        {/* 문구 영역 */}
+        <div style={{ marginBottom: '25px' }}>
+          <h2 style={{
+            fontSize: '24px',    // 회원가입 완료 제목 크기
+            fontWeight: 'bold',
+            marginBottom: '12px',
+          }}>
+            회원가입 완료
+          </h2>
+          <p style={{
+            fontSize: '18px',    // 성공 문구 크기
+            margin: 0,
+          }}>
+            성공적으로 가입되었습니다.
+          </p>
+        </div>
 
-        <label htmlFor="password">비밀번호</label>
-        <input type="password" id="password" name="password" placeholder="비밀번호" onChange={handleChange} required />
-
-        <label htmlFor="nickname">닉네임</label>
-        <input type="text" id="nickname" name="nickname" placeholder="닉네임" onChange={handleChange} required />
-
-        <label htmlFor="birthdate">생년월일</label>
-        <input type="date" id="birthdate" name="birthdate" onChange={handleChange} required />
-
-        <label htmlFor="profileImage" style={{fontSize: '14px', color: '#555'}}>프로필 이미지</label>
-        <input type="file" id="profileImage" name="profileImage" onChange={handleChange} accept="image/*" />
-
-        <button type="submit">회원가입</button>
-      </form>
-
-      <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
-
-      {/* 회원가입 완료 모달 */}
-      <Modal
-        show={showModal}
-        title="회원가입 완료!"
-        message="성공적으로 가입되었습니다."
-        >
-          <button onClick={handleCloseModal} style={{ marginTop: '10px' }}>로그인 페이지로 이동</button>
-        </Modal>
+        {/* 로그인 페이지로 이동 버튼 */}
+        <div>
+          <button 
+            onClick={handleNavigate}
+            style={{
+              backgroundColor: '#3CD0B5',
+              color: '#fff',
+              fontWeight: 'bold',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '10px 16px', // 버튼 크기 줄임
+              cursor: 'pointer',
+              fontSize: '16px',    // 글자 크기 적당히
+            }}
+          >
+            로그인 페이지로 이동
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default SignupCompleteModal;
