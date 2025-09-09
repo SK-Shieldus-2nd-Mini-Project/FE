@@ -80,7 +80,7 @@ export default function AnimatedFilterButton({ buttonText, options, onSelect }) 
             <motion.li
                 className="option-item"
                 variants={optionItemVariants}
-                onClick={() => handleSelect(null)}
+                onClick={() => handleSelect('전체')}
             >
                 전체
             </motion.li>
