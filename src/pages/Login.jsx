@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../redux/authSlice";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/authSlice"; // Thunk 액션 import
 import '../assets/login.css';
 
 function Login() {
@@ -10,35 +10,15 @@ function Login() {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { users } = useSelector((state) => state.auth);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const userAccount = users[username];
-
-    if (userAccount && userAccount.password === password) {
-      // --- JWT 연동 부분 ---
-      // 1. 여기서 나중에 백엔드 API를 호출해야됨
-      // 2. 지금은 성공시 가짜 토큰을 생성
-      const fakeJwtToken = `fake-jwt-token-for-${username}-${new Date().getTime()}`;
-
-      const userData = {
-        username: username,
-        nickname: userAccount.nickname,
-        role: userAccount.role,
-        hasCreatedGroup: userAccount.hasCreatedGroup,
-        birthdate: userAccount.birthdate,
-        profileImage: userAccount.profileImage,
-      };
-
-      // 로그인 성공 시 사용자 정보 전체를 넘겨줌
-      dispatch(loginSuccess({user : userData, token: fakeJwtToken}));
-      
+    try {
+      await dispatch(loginUser({ username, password })).unwrap();
       alert('로그인 되었습니다.');
       navigate('/mypage'); // 마이페이지로 이동
-    } else {
-      // 로그인 실패
-      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
+    } catch (error) {
+      alert(error.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   };
 

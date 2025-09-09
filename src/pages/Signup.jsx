@@ -1,11 +1,10 @@
-// src/pages/Signup.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../redux/authSlice";
-import SignupModal from "../components/SignupModal"; // 수정된 모달 import
+import { useDispatch } from "react-redux";
+import { signupUser } from "../redux/authSlice"; // Thunk 액션 import
+import SignupModal from "../components/SignupModal";
 import '../assets/signup.css';
-import '../assets/Modal.css'; // 기존 모달 CSS 그대로 사용
+import '../assets/Modal.css';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -13,38 +12,28 @@ export default function Signup() {
     password: "",
     nickname: "",
     birthdate: "",
-    profileImage: null,
+    // profileImage는 현재 백엔드에서 처리하지 않으므로 제외
   });
-  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { users } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profileImage") {
-      setFormData({ ...formData, profileImage: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (users[formData.username]) {
-      alert("이미 존재하는 아이디입니다.");
-    } else {
-      const imageUrl = formData.profileImage ? URL.createObjectURL(formData.profileImage) : '/public/mymelody.png';
-      dispatch(signup({
-        ...formData,
-        profileImage: imageUrl,
-      }));
-      setShowModal(true);
+    try {
+      await dispatch(signupUser(formData)).unwrap();
+      setShowModal(true); // 성공 시 모달 표시
+    } catch (error) {
+      alert(error.message || "회원가입 중 오류가 발생했습니다.");
     }
   };
 
-  // 모달을 닫고 로그인 페이지로 이동
   const handleCloseModal = () => {
     setShowModal(false);
     navigate("/login");
