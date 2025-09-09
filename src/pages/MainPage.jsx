@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import '../assets/MainPage.css';
-import { Link } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import TrueFocus from '../components/TrueFocus.jsx';
 import GroupForm from '../components/GroupForm.jsx';
 import { motion } from 'framer-motion';
 import AnimatedFilterButton from '../components/AnimatedFilterButton';
 import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
+import { useSelector } from "react-redux";
 
 const regionOptions = [
-    "전체","강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
+    "전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
     "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구",
     "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"
 ];
@@ -41,10 +42,14 @@ export default function MainPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedSport, setSelectedSport] = useState(null);
-    
+
+    // 로그인 인증
+    const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
+    const navigate = useNavigate();
+
     // ✅ 입력 값과 실제 검색어 분리
     const [searchText, setSearchText] = useState("");
-    const [searchQuery, setSearchQuery] = useState(""); 
+    const [searchQuery, setSearchQuery] = useState("");
 
     // ✅ 검색 버튼 누를 때만 searchQuery 업데이트
     const handleSearch = () => {
@@ -62,7 +67,7 @@ export default function MainPage() {
 
     return (
         <motion.main className="main-container" variants={containerVariants} initial="hidden" animate="visible">
-            
+
             {/* 키워드 애니메이션 */}
             <motion.section className="focus-keywords-section" variants={itemVariants}>
                 <TrueFocus
@@ -84,7 +89,7 @@ export default function MainPage() {
                 <div className="filters">
                     <AnimatedFilterButton buttonText="지역" options={regionOptions} onSelect={setSelectedRegion} />
                     <AnimatedFilterButton buttonText="종목 선택" options={sportOptions} onSelect={setSelectedSport} />
-                    
+
                     {/* 검색창 + 버튼 */}
                     <input
                         type="text"
@@ -95,7 +100,20 @@ export default function MainPage() {
                     <button className="search-btn" onClick={handleSearch}>찾기</button>
                 </div>
 
-                <button className="create-group-btn" onClick={() => setIsModalOpen(true)}>
+                {/* 모임 모집하기 버튼 */}
+                <button
+                    className="create-group-btn"
+                    onClick={() => {
+                        if (!isLoggedIn) {
+                            // 로그인 안 됐으면 alert 후 로그인 페이지로 이동
+                            alert("로그인이 필요합니다.");
+                            navigate("/login");
+                        } else {
+                            // 로그인 되어 있으면 모달 열기
+                            setIsModalOpen(true);
+                        }
+                    }}
+                >
                     모임 모집하기
                 </button>
             </motion.section>
