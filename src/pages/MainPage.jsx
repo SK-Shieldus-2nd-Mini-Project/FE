@@ -23,7 +23,7 @@ const dummyGroups = [
 ];
 
 const focusFont = {
-    fontSize: "2.5rem",
+    fontSize: "3.5rem",
     fontWeight: "1000",
     fontFamily: "'KakaoSmallSans-Bold', sans-serif",
 };
@@ -77,7 +77,7 @@ export default function MainPage() {
 
             {/* 키워드 애니메이션 */}
             <motion.section className="focus-keywords-section" variants={itemVariants}>
-                <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#2c3e50', fontFamily: 'KakaoSmallSans-Bold, sans-serif' }}>
+                <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#2c3e50', fontFamily: 'KakaoSmallSans-Bold, sans-serif' }}>
                     오늘&nbsp;
                     {/* <span style={{
                         background: '#beefffff',
