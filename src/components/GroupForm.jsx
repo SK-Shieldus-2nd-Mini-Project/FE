@@ -1,9 +1,9 @@
+// src/components/GroupForm.jsx
 import React, { useState } from "react";
-import InputField from "./InputField";
 import { useNavigate } from "react-router-dom";
-import Modal from "./Modal"; // 모달 컴포넌트 불러오기
-import '../assets/Modal.css'; // 모달 CSS 불러오기
-import { validateGroupForm } from '../utils/validateGroupForm';
+import InputField from "./InputField";
+import GroupFormModal from "./GroupFormModal"; // 새 모달 import
+import '../assets/Modal.css';
 
 function GroupForm() {
   const [formData, setFormData] = useState({
@@ -14,8 +14,8 @@ function GroupForm() {
     sport: "",
   });
 
-  const [showModal, setShowModal] = useState(false); // 1. 모달 표시 상태 추가
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const [showModal, setShowModal] = useState(false); // 모달 상태
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,27 +27,25 @@ function GroupForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const error = validateGroupForm(formData);
-    if (error) {
-      alert(error);
-      return;
-    }
-    console.log("모임 생성 데이터:", formData);
 
-    // 2. 모임 생성 성공 시 모달을 띄웁니다.
-    // 기존 alert()를 이 코드로 대체합니다.
-    setShowModal(true);
+    // ✅ 테스트용: validateGroupForm 잠시 주석
+    // const error = validateGroupForm(formData);
+    // if (error) {
+    //   alert(error);
+    //   return;
+    // }
+
+    console.log("모임 생성 데이터:", formData);
+    setShowModal(true); // 모달 열기
   };
   
   const handleCloseModal = () => {
-    // 3. 모달을 닫는 함수
-    setShowModal(false);
-    // 4. 모달이 닫히면 메인 페이지로 이동
-    navigate("/"); 
+    setShowModal(false); // 모달 닫기
+    navigate("/");       // 메인 페이지 이동
   };
 
   return (
-    <> {/* Fragment로 감싸기 */}
+    <>
       <form className="group-form" onSubmit={handleSubmit}>
         <h2 className="form-title">모임 모집하기</h2>
         
@@ -55,7 +53,6 @@ function GroupForm() {
         <InputField label="모임 설명" name="description" value={formData.description} onChange={handleChange} type="textarea" />
         <InputField label="최대 인원" name="maxMembers" value={formData.maxMembers} onChange={handleChange} type="number" />
 
-        {/* 지역 선택 */}
         <div className="input-field">
           <label htmlFor="region">지역</label>
           <select id="region" name="region" value={formData.region} onChange={handleChange}>
@@ -88,7 +85,6 @@ function GroupForm() {
           </select>
         </div>
 
-        {/* 종목 선택 */}
         <div className="input-field">
           <label htmlFor="sport">종목</label>
           <select id="sport" name="sport" value={formData.sport} onChange={handleChange}>
@@ -109,15 +105,48 @@ function GroupForm() {
         <button type="submit" className="submit-btn">생성하기</button>
       </form>
 
-    {/* 5. 모임 생성 완료 모달 추가 */}
-      <Modal
-        show={showModal}
-        onClose={handleCloseModal}
-        title="모임 생성 완료!"
-        message="새로운 모임이 성공적으로 만들어졌습니다."
-      >
-        <button onClick={handleCloseModal} className="modal-ok-btn">확인</button>
-      </Modal>
+      {/* 모임 생성 완료 모달 */}
+      <GroupFormModal
+  show={showModal}
+  onClose={handleCloseModal}
+  message="새로운 모임이 성공적으로 만들어졌습니다."
+>
+  <div
+    className="modal-content"
+    style={{
+      padding: '40px 30px',       // 위아래 패딩 늘리기
+      borderRadius: '12px',
+      backgroundColor: '#fff',
+      textAlign: 'center',
+    }}
+  >
+    {/* 문구 영역 */}
+    <p style={{ 
+      fontSize: '18px', 
+      marginBottom: '30px',       // 버튼과 문구 사이 간격 조정
+    }}>
+      새로운 모임이 성공적으로 만들어졌습니다.
+    </p>
+
+    {/* 확인 버튼 */}
+    <button
+      onClick={handleCloseModal}
+      style={{
+        backgroundColor: '#3CD0B5',
+        color: '#fff',
+        fontWeight: 'bold',
+        border: 'none',
+        borderRadius: '8px',
+        padding: '12px 20px',    // 버튼 위아래 폭 늘림
+        fontSize: '16px',
+        cursor: 'pointer',
+      }}
+    >
+      확인
+    </button>
+  </div>
+</GroupFormModal>
+
     </>
   );
 }
