@@ -19,7 +19,7 @@ export default function GroupDetail() {
       {
         id: 1,
         name: '아침마다 함께 뛰어요! 조깅 크루',
-        region: '서울',
+        region: '강남구',
         sport: '조깅',
         currentMembers: 5,
         maxMembers: 10,
@@ -29,7 +29,7 @@ export default function GroupDetail() {
       {
         id: 2,
         name: '주말 저녁 농구 한판 하실 분?',
-        region: '경기',
+        region: '관악구',
         sport: '농구',
         currentMembers: 8,
         maxMembers: 12,
@@ -39,7 +39,7 @@ export default function GroupDetail() {
       {
         id: 3,
         name: '등산 초보 모여라! 관악산 등반',
-        region: '서울',
+        region: '강동구',
         sport: '등산',
         currentMembers: 3,
         maxMembers: 8,
@@ -49,7 +49,7 @@ export default function GroupDetail() {
       {
         id: 4,
         name: '한강 자전거 라이딩 모임',
-        region: '서울',
+        region: '종로구',
         sport: '자전거',
         currentMembers: 12,
         maxMembers: 20,
