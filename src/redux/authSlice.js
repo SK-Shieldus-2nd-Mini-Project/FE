@@ -44,7 +44,7 @@ const authSlice = createSlice({
         const state = JSON.parse(localStorage.getItem('state'));
         state.auth = initialState;
         localStorage.setItem('state', JSON.stringify(state));
-      } catch (err) {
+      } catch (error) {
         // 에러 처리
       }
     },
