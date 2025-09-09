@@ -40,7 +40,7 @@ export default function MyActivities() {
   }
 
   const handleCardClick = (groupId) => {
-    navigate(`/grouplist/${groupId}`); // 클릭 시 해당 그룹 상세/목록 페이지 이동
+    navigate(`/groups/${groupId}`); // 클릭 시 해당 그룹 상세/목록 페이지 이동
   }
 
   return (
