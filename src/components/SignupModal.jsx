@@ -54,7 +54,7 @@ const SignupCompleteModal = ({ show, onClose }) => {
               fontWeight: 'bold',
               border: 'none',
               borderRadius: '8px',
-              padding: '8px 16px', // 버튼 크기 줄임
+              padding: '10px 16px', // 버튼 크기 줄임
               cursor: 'pointer',
               fontSize: '16px',    // 글자 크기 적당히
             }}
