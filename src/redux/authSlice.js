@@ -40,6 +40,13 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
+      try {
+        const state = JSON.parse(localStorage.getItem('state'));
+        state.auth = initialState;
+        localStorage.setItem('state', JSON.stringify(state));
+      } catch (err) {
+        // 에러 처리
+      }
     },
     signup(state, action) {
         const { username, password, nickname, birthdate, profileImage } = action.payload;
