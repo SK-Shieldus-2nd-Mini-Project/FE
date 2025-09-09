@@ -56,7 +56,7 @@
 .filters input {
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 12px;
   font-size: 1rem;
   user-select: none;  
 }
@@ -65,7 +65,7 @@
 .create-group-btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: bold;
   transition: background-color 0.3s;
   text-decoration: none;

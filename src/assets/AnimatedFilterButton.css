@@ -6,7 +6,7 @@
 .filter-button {
   padding: 10px 20px;
   border: 1px solid #ddd;
-  border-radius: 20px; /* 둥근 버튼 */
+  border-radius: 12px; /* 둥근 버튼 */
   background-color: white;
   font-size: 1rem;
   font-weight: 500;
@@ -33,7 +33,7 @@
   display: flex; /* 가로로 나열 */
   flex-wrap: wrap; /* 내용이 많으면 줄바꿈 */
   gap: 8px;
-  width: 400px; /* 고정 너비를 주어 균일한 모양 유지 */
+  width: 500px; /* 고정 너비를 주어 균일한 모양 유지 */
   justify-content: center; /* 아이템들을 가운데 정렬 */
   z-index: 10;
 }
