@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../assets/MainPage.css';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import TypewriterEffect from '../components/TypewriterEffect.jsx';
 import GroupForm from '../components/GroupForm.jsx';
 import { motion } from 'framer-motion';
 import AnimatedFilterButton from '../components/AnimatedFilterButton';
 import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
+import { useSelector } from "react-redux";
 
 const regionOptions = [
     "전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
@@ -41,7 +42,10 @@ export default function MainPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedSport, setSelectedSport] = useState(null);
-
+   
+    // 로그인 인증
+    const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
+    const navigate = useNavigate();
     // ✅ 입력 값과 실제 검색어 분리
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
@@ -115,9 +119,22 @@ export default function MainPage() {
             <button className="search-btn" onClick={handleSearch}>찾기</button>
         </div>
 
-        <button className="create-group-btn" onClick={() => setIsModalOpen(true)}>
-            모임 모집하기
-        </button>
+        {/* 모임 모집하기 버튼 */}
+                <button
+                    className="create-group-btn"
+                    onClick={() => {
+                        if (!isLoggedIn) {
+                            // 로그인 안 됐으면 alert 후 로그인 페이지로 이동
+                            alert("로그인이 필요합니다.");
+                            navigate("/login");
+                        } else {
+                            // 로그인 되어 있으면 모달 열기
+                            setIsModalOpen(true);
+                        }
+                    }}
+                >
+                    모임 모집하기
+                </button>
     </motion.section>
 
     {/* 추천 모임 */ }
