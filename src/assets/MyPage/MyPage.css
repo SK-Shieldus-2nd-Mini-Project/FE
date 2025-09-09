@@ -5,6 +5,7 @@
   margin: 40px auto;
   gap: 30px;
   min-height: 600px; /* 헤더, 푸터 높이 제외 */
+  user-select: none;
   
 }
 
@@ -16,6 +17,7 @@
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  user-select: none;
 }
 
 .profile-summary {
