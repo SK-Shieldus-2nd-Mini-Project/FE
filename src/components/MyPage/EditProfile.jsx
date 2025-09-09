@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateUser, deleteAccount } from '../../redux/authSlice';
+import { updateUser, deleteAccountUser } from '../../redux/authSlice';
 import '../../assets/MyPage/EditProfile.css';
 
 export default function EditProfile() {
@@ -44,7 +44,7 @@ export default function EditProfile() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
       alert('새 비밀번호가 일치하지 않습니다.');
@@ -53,29 +53,34 @@ export default function EditProfile() {
 
     const imageUrl = newProfileImageFile ? URL.createObjectURL(newProfileImageFile) : profileImage;
 
-    dispatch(updateUser({
-      username: user.username,
+    const updateData = {
       nickname: formData.nickname,
       birthdate: formData.birthdate,
+      newPassword: formData.newPassword,
       profileImage: imageUrl,
-    }));
+    };
 
-    // TODO: 비밀번호 변경은 별도의 API 호출이 필요함 (현재는 시뮬레이션)
-    if (formData.newPassword) {
-      console.log("비밀번호 변경 시도:", formData.newPassword);
-    }
-
-    alert('회원정보가 성공적으로 수정되었습니다.');
-  };
-
-  const handleDeleteAccount = () => {
-    // 사용자에게 탈퇴 의사를 재확인
-    if (window.confirm('정말로 계정을 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-      dispatch(deleteAccount({ username: user.username }));
-      alert('계정이 성공적으로 삭제되었습니다.');
-      navigate('/'); // 홈페이지로 이동
+    try {
+      // ✅ dispatch에 updateUser Thunk를 사용하고 unwrap()으로 결과를 처리
+      await dispatch(updateUser(updateData)).unwrap();
+      alert('회원정보가 성공적으로 수정되었습니다.');
+    } catch (error) {
+      alert(error.message || "정보 수정 중 오류가 발생했습니다.");
     }
   };
+
+   const handleDeleteAccount = async () => {
+        if (window.confirm('정말로 계정을 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+            try {
+                // ✅ dispatch하는 액션을 deleteAccountUser로 변경합니다.
+                await dispatch(deleteAccountUser()).unwrap();
+                alert('계정이 성공적으로 삭제되었습니다.');
+                navigate('/'); // 홈페이지로 이동
+            } catch (error) {
+                alert(error.message || "계정 삭제 중 오류가 발생했습니다.");
+            }
+        }
+    };
 
   return (
     <div className="content-panel">
