@@ -75,9 +75,20 @@ const authSlice = createSlice({
             state.users[username].birthdate = birthdate;
             state.users[username].profileImage = profileImage;
         }
+    },
+
+    deleteAccount(state, action) {
+      const { username } = action.payload;
+      if (state.users[username]) {
+        delete state.users[username]; // 사용자 목록에서 해당 유저 삭제
+      }
+      // 로그아웃 처리
+      state.isAuthenticated = false;
+      state.user = null;
+      state.token = null;
     }
   },
 });
 
-export const { loginSuccess, logout, signup, updateUser } = authSlice.actions;
+export const { loginSuccess, logout, signup, updateUser, deleteAccount } = authSlice.actions;
 export default authSlice.reducer;

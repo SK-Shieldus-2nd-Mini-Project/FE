@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUser } from '../../redux/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { updateUser, deleteAccount } from '../../redux/authSlice';
 import '../../assets/MyPage/EditProfile.css';
 
 export default function EditProfile() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
@@ -57,16 +59,25 @@ export default function EditProfile() {
       birthdate: formData.birthdate,
       profileImage: imageUrl,
     }));
-    
+
     // TODO: 비밀번호 변경은 별도의 API 호출이 필요함 (현재는 시뮬레이션)
     if (formData.newPassword) {
-        console.log("비밀번호 변경 시도:", formData.newPassword);
+      console.log("비밀번호 변경 시도:", formData.newPassword);
     }
 
     alert('회원정보가 성공적으로 수정되었습니다.');
   };
 
-return (
+  const handleDeleteAccount = () => {
+    // 사용자에게 탈퇴 의사를 재확인
+    if (window.confirm('정말로 계정을 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+      dispatch(deleteAccount({ username: user.username }));
+      alert('계정이 성공적으로 삭제되었습니다.');
+      navigate('/'); // 홈페이지로 이동
+    }
+  };
+
+  return (
     <div className="content-panel">
       <h2>회원정보 수정</h2>
       <form className="edit-profile-form" onSubmit={handleSubmit}>
@@ -74,11 +85,11 @@ return (
           <label>프로필 이미지</label>
           <div className="profile-image-preview">
             <img src={profileImage} alt="Profile Preview" />
-            <input 
-              type="file" 
-              id="profileImageUpload" 
-              accept="image/*" 
-              onChange={handleImageChange} 
+            <input
+              type="file"
+              id="profileImageUpload"
+              accept="image/*"
+              onChange={handleImageChange}
             />
             <label htmlFor="profileImageUpload" className="image-upload-button">
               이미지 변경
@@ -143,12 +154,19 @@ return (
             onChange={handleInputChange}
           />
         </div>
-        
+
         <div className="form-actions">
-            <button type="submit" className="save-button">저장하기</button>
-            <button type="button" className="cancel-button">취소</button>
+          <button type="submit" className="save-button">저장하기</button>
+          <button type="button" className="cancel-button">취소</button>
         </div>
       </form>
+      <div className="delete-account-section">
+        <h3 className="delete-account-title">계정 탈퇴</h3>
+        <p>계정을 탈퇴하시면 모든 정보가 영구적으로 삭제되며, 복구할 수 없습니다.</p>
+        <button type="button" className="delete-button" onClick={handleDeleteAccount}>
+          계정 탈퇴하기
+        </button>
+      </div>
     </div>
   );
 }
