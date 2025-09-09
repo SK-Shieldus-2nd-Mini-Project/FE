@@ -161,3 +161,7 @@
   color: inherit;       /* 부모 색상 상속 */
   display: block;       /* 카드 전체 클릭 영역 확보 */
 }
+
+.focus-keywords-section {
+  margin: 50px 0;
+}

@@ -2,9 +2,9 @@ import React from 'react';
 
 // 임시 데이터
 const myApplications = [
-    { groupName: '아침마다 함께 뛰어요!', status: '승인 대기중' },
+    { groupName: '아침마다 함께 뛰어요!', status: '승인 대기' },
     { groupName: '한강 자전거 라이딩', status: '승인 완료' },
-    { groupName: '주말 저녁 농구 한판', status: '거절됨' },
+    { groupName: '주말 저녁 농구 한판', status: '승인 거절' },
 ];
 
 export default function MyActivities() {
