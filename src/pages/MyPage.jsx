@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import MyPageSidebar from '../components/MyPage/MyPageSidebar';
 import EditProfile from '../components/MyPage/EditProfile';
 import MyActivities from '../components/MyPage/MyActivities';
 import ManageRecruitment from '../components/MyPage/ManageRecruitment';
 import AdminPanel from '../components/MyPage/AdminPanel';
 import '../assets/MyPage/MyPage.css';
-import { useSelector } from 'react-redux';
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState('editProfile');
@@ -14,20 +14,20 @@ export default function MyPage() {
   const renderContent = () => {
     switch (activeTab) {
       case 'editProfile':
-        return <EditProfile />;
+        return <EditProfile user={user} />;
       case 'myActivities':
-        return <MyActivities />;
+        return <MyActivities user={user} />; // 새로 만든 MyActivities 컴포넌트
       case 'manageRecruitment':
-        return <ManageRecruitment />;
+        return <ManageRecruitment user={user} />;
       case 'adminPanel':
-        return <AdminPanel />;
+        return <AdminPanel user={user} />;
       default:
-        return <EditProfile />;
+        return <EditProfile user={user} />;
     }
   };
 
-  if(!user) {
-    return <div>로그인 후 이용해주세요.</div>
+  if (!user) {
+    return <div>로그인 후 이용해주세요.</div>;
   }
 
   return (
