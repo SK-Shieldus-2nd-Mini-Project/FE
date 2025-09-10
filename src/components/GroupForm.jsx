@@ -1,88 +1,99 @@
 // src/components/GroupForm.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import InputField from "./InputField";
-import GroupFormModal from "./GroupFormModal"; 
-import { validateGroupForm } from "../utils//validateGroupForm"; // 검증 함수 import
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { createGroup } from '../redux/groupSlice.js';
+import InputField from './InputField';
+import GroupFormModal from './GroupFormModal';
+import { validateGroupForm } from '../utils/validateGroupForm';
 import '../assets/Modal.css';
 
 function GroupForm() {
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    maxMembers: "",
-    region: "",
-    sport: "",
+    name: '',
+    description: '',
+    maxMembers: '',
+    region: '',
+    sport: '',
   });
+  const [showModal, setShowModal] = useState(false);
 
-  const [showModal, setShowModal] = useState(false); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { status, createdGroup, error } = useSelector((state) => state.group);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ 검증 함수 사용
-    const error = validateGroupForm(formData);
-    if (error) {
-      alert(error);
+    const validationError = validateGroupForm(formData);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 
-    console.log("모임 생성 데이터:", formData);
-    setShowModal(true); // 모달 열기
+    // Redux Thunk dispatch
+    const resultAction = await dispatch(createGroup(formData));
+    if (createGroup.fulfilled.match(resultAction)) {
+      setShowModal(true);
+    } else {
+      alert(resultAction.payload?.message || '모임 생성 실패');
+    }
   };
-  
+
   const handleCloseModal = () => {
-    setShowModal(false); 
-    navigate("/");       
+    setShowModal(false);
+    navigate('/');
   };
 
   return (
     <>
       <form className="group-form" onSubmit={handleSubmit}>
         <h2 className="form-title">모임 모집하기</h2>
-        
+
         <InputField label="모임 이름" name="name" value={formData.name} onChange={handleChange} />
-        <InputField label="모임 설명" name="description" value={formData.description} onChange={handleChange} type="textarea" />
+        <InputField
+          label="모임 설명"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          type="textarea"
+        />
         <InputField label="최대 인원" name="maxMembers" value={formData.maxMembers} onChange={handleChange} type="number" />
 
         <div className="input-field">
           <label htmlFor="region">지역</label>
           <select id="region" name="region" value={formData.region} onChange={handleChange}>
             <option value="">지역 선택</option>
-            <option value="강남구">강남구</option>
-            <option value="강동구">강동구</option>
-            <option value="강북구">강북구</option>
-            <option value="강서구">강서구</option>
-            <option value="관악구">관악구</option>
-            <option value="광진구">광진구</option>
-            <option value="구로구">구로구</option>
-            <option value="금천구">금천구</option>
-            <option value="노원구">노원구</option>
-            <option value="도봉구">도봉구</option>
-            <option value="동대문구">동대문구</option>
-            <option value="동작구">동작구</option>
-            <option value="마포구">마포구</option>
-            <option value="서대문구">서대문구</option>
-            <option value="서초구">서초구</option>
-            <option value="성동구">성동구</option>
-            <option value="성북구">성북구</option>
-            <option value="송파구">송파구</option>
-            <option value="양천구">양천구</option>
-            <option value="영등포구">영등포구</option>
-            <option value="용산구">용산구</option>
-            <option value="은평구">은평구</option>
-            <option value="종로구">종로구</option>
-            <option value="중구">중구</option>
-            <option value="중량구">중량구</option>
+            <option value="1">강남구</option>
+            <option value="2">강동구</option>
+            <option value="3">강북구</option>
+            <option value="4">강서구</option>
+            <option value="5">관악구</option>
+            <option value="6">광진구</option>
+            <option value="7">구로구</option>
+            <option value="8">금천구</option>
+            <option value="9">노원구</option>
+            <option value="10">도봉구</option>
+            <option value="11">동대문구</option>
+            <option value="12">동작구</option>
+            <option value="13">마포구</option>
+            <option value="14">서대문구</option>
+            <option value="15">서초구</option>
+            <option value="16">성동구</option>
+            <option value="17">성북구</option>
+            <option value="18">송파구</option>
+            <option value="19">양천구</option>
+            <option value="20">영등포구</option>
+            <option value="21">용산구</option>
+            <option value="22">은평구</option>
+            <option value="23">종로구</option>
+            <option value="24">중구</option>
+            <option value="25">중량구</option>
           </select>
         </div>
 
@@ -90,39 +101,30 @@ function GroupForm() {
           <label htmlFor="sport">종목</label>
           <select id="sport" name="sport" value={formData.sport} onChange={handleChange}>
             <option value="">종목 선택</option>
-            <option value="러닝">러닝</option>
-            <option value="자전거">자전거</option>
-            <option value="농구">농구</option>
-            <option value="야구">야구</option>
-            <option value="축구">축구</option>
-            <option value="배드민턴">배드민턴</option>
-            <option value="족구">족구</option>
-            <option value="테니스">테니스</option>
-            <option value="볼링">볼링</option>
-            <option value="탁구">탁구</option>
+            <option value="1">농구</option>
+            <option value="2">등산</option>
+            <option value="3">러닝</option>
+            <option value="4">배드민턴</option>
+            <option value="5">볼링</option>
+            <option value="6">야구</option>
+            <option value="7">자전거</option>
+            <option value="8">족구</option>
+            <option value="9">축구</option>
+            <option value="10">탁구</option>
           </select>
         </div>
 
-        <button type="submit" className="submit-btn">생성하기</button>
+        <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+          {status === 'loading' ? '생성 중...' : '생성하기'}
+        </button>
       </form>
 
-      <GroupFormModal
-        show={showModal}
-        onClose={handleCloseModal}
-        message="새로운 모임이 성공적으로 만들어졌습니다."
-      >
+      <GroupFormModal show={showModal} onClose={handleCloseModal} message="새로운 모임이 성공적으로 만들어졌습니다.">
         <div
           className="modal-content"
-          style={{
-            padding: '40px 30px',       
-            borderRadius: '12px',
-            backgroundColor: '#fff',
-            textAlign: 'center',
-          }}
+          style={{ padding: '40px 30px', borderRadius: '12px', backgroundColor: '#fff', textAlign: 'center' }}
         >
-          <p style={{ fontSize: '18px', marginBottom: '30px' }}>
-            새로운 모임이 성공적으로 만들어졌습니다.
-          </p>
+          <p style={{ fontSize: '18px', marginBottom: '30px' }}>새로운 모임이 성공적으로 만들어졌습니다.</p>
           <button
             onClick={handleCloseModal}
             style={{
@@ -131,7 +133,7 @@ function GroupForm() {
               fontWeight: 'bold',
               border: 'none',
               borderRadius: '8px',
-              padding: '12px 20px',    
+              padding: '12px 20px',
               fontSize: '16px',
               cursor: 'pointer',
             }}
@@ -140,6 +142,8 @@ function GroupForm() {
           </button>
         </div>
       </GroupFormModal>
+
+      {status === 'failed' && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
     </>
   );
 }

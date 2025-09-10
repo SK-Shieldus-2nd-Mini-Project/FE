@@ -34,6 +34,7 @@
     text-decoration: none;
     color: #222;
     transition: 0.3s;
+    user-select: none; /* 추가: 텍스트 선택 불가 */
 }
 
 .logout-btn {
@@ -41,4 +42,5 @@
     color: #222;
     background: none;
     border: none;
+    user-select: none; /* 추가 */
 }
