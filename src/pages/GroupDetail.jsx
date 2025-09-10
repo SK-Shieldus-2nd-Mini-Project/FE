@@ -38,13 +38,13 @@ export default function GroupDetail() {
       },
       {
         id: 3,
-        name: '등산 초보 모여라! 관악산 등반',
+        name: '볼링 초보 모여라!',
         region: '강동구',
-        sport: '등산',
+        sport: '볼링',
         currentMembers: 3,
         maxMembers: 8,
-        imageUrl: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?q=80&w=2070&auto=format&fit=crop',
-        description: '등산 초보자를 위한 안전한 관악산 등반 모임입니다.',
+        imageUrl: 'https://images.unsplash.com/photo-1551500357-f50395bb3f75?q=80&w=2070&auto=format&fit=crop',
+        description: '주말에 함께 볼링하실 분들 모십니다.',
       },
       {
         id: 4,

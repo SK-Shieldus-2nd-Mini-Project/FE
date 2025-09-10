@@ -10,28 +10,71 @@
   user-select: none;
 }
 
-/* --- 배너 섹션 --- */
-.banner {
-  width: 100%;
-  height: 300px;
-  background: linear-gradient(to right, #6dd5ed, #2193b0); /* 그라데이션 배경 */
-  border-radius: 12px;
+
+
+/* --- 필터 섹션 --- */
+.filter-section {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  flex-wrap: wrap;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.filters input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filters select:focus,
+.filters input:focus {
+  border-color: #2f71ff;
+  box-shadow: 0 0 8px rgba(47,113,255,0.3);
+  outline: none;
+}
+
+.search-btn,
+.create-group-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+  text-decoration: none;
   color: white;
   text-align: center;
-  padding: 20px;
+  cursor: pointer;
 }
 
-.banner-content h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+.search-btn {
+  background-color: #2f71ff;
+}
+.search-btn:hover {
+  background-color: #1d5ddb;
+  transform: translateY(-2px);
 }
 
-.banner-content p {
-  font-size: 1.2rem;
+.create-group-btn {
+  background-color: #2f71ff;
+}
+.create-group-btn:hover {
+  background-color: #1d5ddb;
+  transform: translateY(-2px);
 }
 
 /* --- 필터 섹션 --- */

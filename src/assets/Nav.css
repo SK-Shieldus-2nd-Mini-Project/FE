@@ -1,54 +1,44 @@
 .main-nav {
-    background-color: #ffffff;
-    /* A dark slate blue color */
-    padding: 0 200px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative; /* 로고 위치를 절대값으로 잡기 위해 */
     width: 100%;
     height: 70px;
-    user-select: none;
-}
-
-.main-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 0 200px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    height: 100%;
 }
 
-.main-nav ul li a {
-    display: block;
-    color: rgb(34, 34, 34);
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    height: 100%;
-}
-
-.main-nav ul li a.active {
-    background-color: #2980b9;
-}
-
-.right-nav {
-    margin-left: auto;
+.logo-container {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 70px;
     display: flex;
-    height: 100%;
-    align-items: center;
-    gap: 20px;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
+    align-items: flex-start; /* 위쪽 정렬 */
 }
 
 .logo {
     height: 60px;
 }
-.logo-li {
-    padding: 0 !important;
+
+.nav-links {
+    margin-left: auto; /* 오른쪽 정렬 */
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #222;
+    transition: 0.3s;
+}
+
+.logout-btn {
+    cursor: pointer;
+    color: #222;
+    background: none;
+    border: none;
 }

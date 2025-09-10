@@ -17,25 +17,23 @@ function Nav() {
 
     return (
         <nav className='main-nav'>
-            <ul>
-                <li>
-                    <Link to="/" className='logo-li'>
-                        <img src="/public/logo.png" alt="오운고" className='logo' />
-                    </Link>
-                    </li>
-                <div className='right-nav'>
-                    {isAuthenticated ? (
-                        <>
-                            <li><Link to="/mypage">마이페이지</Link></li>
-                            <li><a onClick={handleLogout} className="logout-btn">로그아웃</a></li>
-                        </>
-                    ) : (
-                        <>
-                            <li><Link to="/login">로그인</Link></li>
-                            <li><Link to="/signup">회원가입</Link></li>
-                        </>
-                    )}
-                </div>
+            <div className='logo-container'>
+                <Link to="/">
+                    <img src="/logo.png" alt="오운고" className='logo' />
+                </Link>
+            </div>
+            <ul className='nav-links'>
+                {isAuthenticated ? (
+                    <>
+                        <li><Link to="/mypage">마이페이지</Link></li>
+                        <li><a onClick={handleLogout} className="logout-btn">로그아웃</a></li>
+                    </>
+                ) : (
+                    <>
+                        <li><Link to="/login">로그인</Link></li>
+                        <li><Link to="/signup">회원가입</Link></li>
+                    </>
+                )}
             </ul>
         </nav>
     );

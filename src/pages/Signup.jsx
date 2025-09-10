@@ -55,13 +55,10 @@ export default function Signup() {
     <div className="signup-container">
       <h2>회원가입</h2>
       <form onSubmit={handleSignup}>
-        <label htmlFor="username">아이디</label>
         <input type="text" id="username" name="username" placeholder="아이디" onChange={handleChange} required />
 
-        <label htmlFor="password">비밀번호</label>
         <input type="password" id="password" name="password" placeholder="비밀번호" onChange={handleChange} required />
 
-        <label htmlFor="nickname">닉네임</label>
         <input type="text" id="nickname" name="nickname" placeholder="닉네임" onChange={handleChange} required />
 
         <label htmlFor="birthdate">생년월일</label>
