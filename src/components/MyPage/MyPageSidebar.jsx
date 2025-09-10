@@ -1,12 +1,14 @@
 import React from 'react';
 
 export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
+  const profileImageUrl = user.profileImage || '/public/mymelody.png';
+
   return (
     <aside className="mypage-sidebar">
       <div className="profile-summary">
-        <img src={user.profileImage || '/public/mymelody.png'} alt="Profile" className="profile-image" />
+        <img src={profileImageUrl} alt="Profile" className="profile-image" />
         <h3>{user.nickname}</h3>
-        <p>{user.role === 'admin' ? '관리자' : '일반 회원'}</p>
+        <p>{user.role === 'admin' ? '일반 회원' : '관리자'}</p>
       </div>
       <nav>
         <ul>

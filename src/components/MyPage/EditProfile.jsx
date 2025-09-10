@@ -5,74 +5,73 @@ import { updateUser, deleteAccountUser } from '../../redux/authSlice';
 import '../../assets/MyPage/EditProfile.css';
 
 export default function EditProfile() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
 
-  const [formData, setFormData] = useState({
-    nickname: '',
-    birthdate: '',
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
-  const [profileImage, setProfileImage] = useState('/public/mymelody.png');
-  const [newProfileImageFile, setNewProfileImageFile] = useState(null);
+    const [formData, setFormData] = useState({
+        nickname: '',
+        birthdate: '',
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+    });
+    const [profileImage, setProfileImage] = useState('/public/mymelody.png');
+    const [newProfileImageFile, setNewProfileImageFile] = useState(null);
 
-  // 컴포넌트 마운트 시 Redux의 사용자 정보로 폼 초기화
-  useEffect(() => {
-    if (user) {
-      setFormData(prev => ({
-        ...prev,
-        nickname: user.nickname,
-        birthdate: user.birthdate,
-      }));
-      setProfileImage(user.profileImage || '/public/mymelody.png');
-    }
-  }, [user]);
+    useEffect(() => {
+        if (user) {
+            setFormData(prev => ({
+                ...prev,
+                nickname: user.nickname,
+                birthdate: user.birthdate,
+            }));
+            const imageUrl = user.profileImage || '/public/mymelody.png';
+            setProfileImage(imageUrl);
+        }
+    }, [user]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setNewProfileImageFile(file);
-      setProfileImage(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
-      alert('새 비밀번호가 일치하지 않습니다.');
-      return;
-    }
-
-    const imageUrl = newProfileImageFile ? URL.createObjectURL(newProfileImageFile) : profileImage;
-
-    const updateData = {
-      nickname: formData.nickname,
-      birthdate: formData.birthdate,
-      newPassword: formData.newPassword,
-      profileImage: imageUrl,
-    };
-
-    try {
-      // ✅ dispatch에 updateUser Thunk를 사용하고 unwrap()으로 결과를 처리
-      await dispatch(updateUser(updateData)).unwrap();
-      alert('회원정보가 성공적으로 수정되었습니다.');
-    } catch (error) {
-      alert(error.message || "정보 수정 중 오류가 발생했습니다.");
-    }
-  };
-
-   const handleDeleteAccount = async () => {
+    // ... (나머지 핸들러 함수들은 이전 답변과 동일)
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+    
+      const handleImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          setNewProfileImageFile(file);
+          setProfileImage(URL.createObjectURL(file));
+        }
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
+          alert('새 비밀번호가 일치하지 않습니다.');
+          return;
+        }
+    
+        const imageUrl = newProfileImageFile ? URL.createObjectURL(newProfileImageFile) : profileImage;
+    
+        const updateData = {
+          nickname: formData.nickname,
+          birthdate: formData.birthdate,
+          newPassword: formData.newPassword,
+          profileImage: imageUrl,
+        };
+    
+        try {
+          await dispatch(updateUser(updateData)).unwrap();
+          alert('회원정보가 성공적으로 수정되었습니다.');
+        } catch (error) {
+          alert(error.message || "정보 수정 중 오류가 발생했습니다.");
+        }
+      };
+    
+      const handleDeleteAccount = async () => {
         if (window.confirm('정말로 계정을 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
             try {
-                // ✅ dispatch하는 액션을 deleteAccountUser로 변경합니다.
                 await dispatch(deleteAccountUser()).unwrap();
                 alert('계정이 성공적으로 삭제되었습니다.');
                 navigate('/'); // 홈페이지로 이동
@@ -82,8 +81,8 @@ export default function EditProfile() {
         }
     };
 
-  return (
-    <div className="content-panel">
+    return (
+        <div className="content-panel">
       <h2>회원정보 수정</h2>
       <form className="edit-profile-form" onSubmit={handleSubmit}>
         <div className="form-group profile-image-group">
@@ -173,5 +172,5 @@ export default function EditProfile() {
         </button>
       </div>
     </div>
-  );
+    );
 }

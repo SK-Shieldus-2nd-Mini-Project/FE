@@ -1,6 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const mapUserResponseToState = (userData) => {
+  return {
+    userId: userData.userId,
+    username: userData.username,
+    nickname: userData.nickname,
+    birthdate: userData.birthdate,
+    profileImage: userData.profileImageUrl,
+    role: userData.role,
+  };
+};
+
 // --- Thunk Actions ---
 
 // 1. 회원가입 Thunk
@@ -8,13 +19,22 @@ export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async (userData, { rejectWithValue }) => {
     try {
-      // multipart/form-data 대신 우선 JSON으로 전송
-      // TODO: 이미지 파일 업로드는 별도 로직 필요 (e.g., S3에 업로드 후 URL 받기)
-      const requestData = {
-        ...userData,
-        profileImageUrl: null, // 우선 null 또는 기본 이미지 URL로 처리
-      };
-      const response = await axios.post('/api/auth/signup', requestData);
+      const { profileImageFile, ...otherData } = userData;
+      const formData = new FormData();
+
+      // 1. JSON 데이터를 Blob으로 변환하여 추가
+      formData.append('signupRequest', new Blob([JSON.stringify(otherData)], { type: "application/json" }));
+
+      // 2. 이미지 파일이 있으면 추가
+      if (profileImageFile) {
+        formData.append('file', profileImageFile);
+      }
+
+      const response = await axios.post('/api/auth/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -30,15 +50,20 @@ export const loginUser = createAsyncThunk(
       // 2-1. 로그인 요청으로 토큰 받기
       const tokenResponse = await axios.post('/api/auth/login', loginData);
       const { accessToken } = tokenResponse.data;
-      
+
       // 2-2. 받은 토큰을 헤더에 설정
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
       // 2-3. 사용자 정보 요청
       const userResponse = await axios.get('/api/users/me');
 
+      // ===============================
+      console.log("Raw User Response:", userResponse.data); // 디버깅용 로그
+      // ===============================
+
+      const mappedUser = mapUserResponseToState(userResponse.data);
       // 2-4. 토큰과 사용자 정보를 함께 반환
-      return { token: accessToken, user: userResponse.data };
+      return { token: accessToken, user: mappedUser };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -85,9 +110,8 @@ export const updateUser = createAsyncThunk(
         },
       });
 
-      // 백엔드가 수정된 정보를 반환하지 않으므로, 기존 정보와 업데이트된 정보를 조합하여 state를 업데이트
-      const currentUser = getState().auth.user;
-      return { ...currentUser, ...requestData };
+      const userResponse = await axios.get('/api/users/me');
+      return mapUserResponseToState(userResponse.data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -165,15 +189,15 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.user = action.payload; // state에 있는 user 정보를 업데이트
-      })
+                state.status = 'succeeded';
+                state.user = action.payload; 
+            })
       .addCase(updateUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload.message || '정보 수정에 실패했습니다.';
-      });
+      })
   },
-  
+
 });
 
 export const { logout } = authSlice.actions;

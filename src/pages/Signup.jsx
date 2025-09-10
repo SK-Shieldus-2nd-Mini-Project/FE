@@ -14,21 +14,28 @@ export default function Signup() {
     birthdate: "",
     // profileImage는 현재 백엔드에서 처리하지 않으므로 제외
   });
+  const [profileImageFile, setProfileImageFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === "profileImage") {
+      // ✅ 파일 자체를 state에 저장
+      setProfileImageFile(files[0]);
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(signupUser(formData)).unwrap();
-      setShowModal(true); // 성공 시 모달 표시
+      // ✅ formData와 파일 객체를 함께 넘겨줌
+      await dispatch(signupUser({ ...formData, profileImageFile })).unwrap();
+      setShowModal(true);
     } catch (error) {
       alert(error.message || "회원가입 중 오류가 발생했습니다.");
     }
