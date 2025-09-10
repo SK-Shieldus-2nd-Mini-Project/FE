@@ -42,3 +42,26 @@
   font-size: 1rem;
   color: #888;
 }
+
+/* ------------------------------- */
+/* role-badge 추가 */
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.role-badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.role-badge.leader {
+  background-color: #f39c12; /* 주황색 */
+}
+
+.role-badge.participant {
+  background-color: #3498db; /* 파란색 */
+}
