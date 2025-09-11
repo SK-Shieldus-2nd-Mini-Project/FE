@@ -24,6 +24,10 @@
   font-size: 0.85rem;
 }
 
+.status-list li.status-leader .status-badge { 
+  background-color: #3498db; /* 파란색 */
+}
+
 /* 상태별 색상 */
 .activity-card.approved .status-badge {
   background-color: #4caf50; /* 초록: 완료 */

@@ -3,8 +3,11 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import '../../assets/MyPage/MyActivities.css';
 
-const getStatusInfo = (status) => {
-    switch (status) {
+const getStatusInfo = (application) => {
+    if (application.leader) {
+        return { text: '모임장', className: 'leader' };
+    }
+    switch (application.status) {
         case 'APPROVED':
             return { text: '승인 완료', className: 'approved' };
         case 'REJECTED':
@@ -47,16 +50,16 @@ export default function MyActivities() {
     if (loading) return <p>로딩 중...</p>;
     if (error) return <p>{error}</p>;
 
-    return (
+     return (
         <div className="content-panel">
             <h2>내 활동</h2>
-            <p>모임 가입 신청 현황을 확인합니다.</p>
+            <p>내가 만들었거나 가입 신청한 모임의 현황을 확인합니다.</p>
             {applications.length === 0 ? (
                 <p className="no-activities">아직 활동 내역이 없습니다.</p>
             ) : (
                 <ul className="status-list">
                     {applications.map((app) => {
-                        const statusInfo = getStatusInfo(app.status);
+                        const statusInfo = getStatusInfo(app); // [수정] app 객체 전체를 전달
                         return (
                             <li key={app.groupId} className={`status-${statusInfo.className}`}>
                                 <span className="group-name">{app.groupName}</span>
