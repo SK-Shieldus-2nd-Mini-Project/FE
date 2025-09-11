@@ -86,7 +86,6 @@ const groupSlice = createSlice({
       .addCase(createGroup.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.createdGroup = action.payload;
-        state.groups.push(action.payload); // 생성한 그룹을 전체 그룹 배열에도 추가
       })
       .addCase(createGroup.rejected, (state, action) => {
         state.status = 'failed';
