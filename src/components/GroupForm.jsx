@@ -1,125 +1,136 @@
 // src/components/GroupForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import InputField from "./InputField";
-import GroupFormModal from "./GroupFormModal"; 
-import { validateGroupForm } from "../utils//validateGroupForm"; // 검증 함수 import
+import GroupFormModal from "./GroupFormModal";
+import { validateGroupForm } from "../utils/validateGroupForm";
+import { createGroup } from "../redux/groupSlice";
 import '../assets/Modal.css';
 
 function GroupForm() {
   const [formData, setFormData] = useState({
-    name: "",
+    groupName: "",
     description: "",
     maxMembers: "",
-    region: "",
-    sport: "",
+    regionId: "",
+    sportId: "",
   });
 
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { status, error } = useSelector(state => state.group || { status: 'idle', error: null });
+
+  const regionOptions = [
+    { id: 1, name: "강남구" },
+    { id: 2, name: "강동구" },
+    { id: 3, name: "강북구" },
+    { id: 4, name: "강서구" },
+    { id: 5, name: "관악구" },
+    { id: 6, name: "광진구" },
+    { id: 7, name: "구로구" },
+    { id: 8, name: "금천구" },
+    { id: 9, name: "노원구" },
+    { id: 10, name: "도봉구" },
+    { id: 11, name: "동대문구" },
+    { id: 12, name: "동작구" },
+    { id: 13, name: "마포구" },
+    { id: 14, name: "서대문구" },
+    { id: 15, name: "서초구" },
+    { id: 16, name: "성동구" },
+    { id: 17, name: "성북구" },
+    { id: 18, name: "송파구" },
+    { id: 19, name: "양천구" },
+    { id: 20, name: "영등포구" },
+    { id: 21, name: "용산구" },
+    { id: 22, name: "은평구" },
+    { id: 23, name: "종로구" },
+    { id: 24, name: "중구" },
+    { id: 25, name: "중량구" },
+  ];
+
+  const sportOptions = [
+    { id: 1, name: "농구" },
+    { id: 2, name: "등산" },
+    { id: 3, name: "러닝" },
+    { id: 4, name: "배드민턴" },
+    { id: 5, name: "볼링" },
+    { id: 6, name: "야구" },
+    { id: 7, name: "자전거" },
+    { id: 8, name: "족구" },
+    { id: 9, name: "축구" },
+    { id: 10, name: "탁구" },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ 검증 함수 사용
-    const error = validateGroupForm(formData);
-    if (error) {
-      alert(error);
+    const validationError = validateGroupForm(formData);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 
-    console.log("모임 생성 데이터:", formData);
-    setShowModal(true); // 모달 열기
+    try {
+      await dispatch(createGroup({
+        groupName: formData.groupName,
+        description: formData.description,
+        maxMembers: Number(formData.maxMembers),
+        regionId: Number(formData.regionId),
+        sportId: Number(formData.sportId)
+      })).unwrap();
+
+      setShowModal(true);
+    } catch (err) {
+      alert(err.message || "모임 생성 실패");
+    }
   };
-  
+
   const handleCloseModal = () => {
-    setShowModal(false); 
-    navigate("/");       
+    setShowModal(false);
+    navigate("/");
   };
 
   return (
     <>
       <form className="group-form" onSubmit={handleSubmit}>
         <h2 className="form-title">모임 모집하기</h2>
-        
-        <InputField label="모임 이름" name="name" value={formData.name} onChange={handleChange} />
+
+        <InputField label="모임 이름" name="groupName" value={formData.groupName} onChange={handleChange} />
         <InputField label="모임 설명" name="description" value={formData.description} onChange={handleChange} type="textarea" />
         <InputField label="최대 인원" name="maxMembers" value={formData.maxMembers} onChange={handleChange} type="number" />
 
         <div className="input-field">
-          <label htmlFor="region">지역</label>
-          <select id="region" name="region" value={formData.region} onChange={handleChange}>
+          <label htmlFor="regionId">지역</label>
+          <select id="regionId" name="regionId" value={formData.regionId} onChange={handleChange}>
             <option value="">지역 선택</option>
-            <option value="강남구">강남구</option>
-            <option value="강동구">강동구</option>
-            <option value="강북구">강북구</option>
-            <option value="강서구">강서구</option>
-            <option value="관악구">관악구</option>
-            <option value="광진구">광진구</option>
-            <option value="구로구">구로구</option>
-            <option value="금천구">금천구</option>
-            <option value="노원구">노원구</option>
-            <option value="도봉구">도봉구</option>
-            <option value="동대문구">동대문구</option>
-            <option value="동작구">동작구</option>
-            <option value="마포구">마포구</option>
-            <option value="서대문구">서대문구</option>
-            <option value="서초구">서초구</option>
-            <option value="성동구">성동구</option>
-            <option value="성북구">성북구</option>
-            <option value="송파구">송파구</option>
-            <option value="양천구">양천구</option>
-            <option value="영등포구">영등포구</option>
-            <option value="용산구">용산구</option>
-            <option value="은평구">은평구</option>
-            <option value="종로구">종로구</option>
-            <option value="중구">중구</option>
-            <option value="중량구">중량구</option>
+            {regionOptions.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
           </select>
         </div>
 
         <div className="input-field">
-          <label htmlFor="sport">종목</label>
-          <select id="sport" name="sport" value={formData.sport} onChange={handleChange}>
+          <label htmlFor="sportId">종목</label>
+          <select id="sportId" name="sportId" value={formData.sportId} onChange={handleChange}>
             <option value="">종목 선택</option>
-            <option value="러닝">러닝</option>
-            <option value="자전거">자전거</option>
-            <option value="농구">농구</option>
-            <option value="야구">야구</option>
-            <option value="축구">축구</option>
-            <option value="배드민턴">배드민턴</option>
-            <option value="족구">족구</option>
-            <option value="테니스">테니스</option>
-            <option value="볼링">볼링</option>
-            <option value="탁구">탁구</option>
+            {sportOptions.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </div>
 
-        <button type="submit" className="submit-btn">생성하기</button>
+        <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+          {status === 'loading' ? "생성 중..." : "생성하기"}
+        </button>
+        {status === 'failed' && <p style={{ color: "red" }}>{error}</p>}
       </form>
 
-      <GroupFormModal
-        show={showModal}
-        onClose={handleCloseModal}
-        message="새로운 모임이 성공적으로 만들어졌습니다."
-      >
-        <div
-          className="modal-content"
-          style={{
-            padding: '40px 30px',       
-            borderRadius: '12px',
-            backgroundColor: '#fff',
-            textAlign: 'center',
-          }}
-        >
+      <GroupFormModal show={showModal} onClose={handleCloseModal}>
+        <div style={{ padding: '40px 30px', borderRadius: '12px', backgroundColor: '#fff', textAlign: 'center' }}>
           <p style={{ fontSize: '18px', marginBottom: '30px' }}>
             새로운 모임이 성공적으로 만들어졌습니다.
           </p>
@@ -131,7 +142,7 @@ function GroupForm() {
               fontWeight: 'bold',
               border: 'none',
               borderRadius: '8px',
-              padding: '12px 20px',    
+              padding: '12px 20px',
               fontSize: '16px',
               cursor: 'pointer',
             }}

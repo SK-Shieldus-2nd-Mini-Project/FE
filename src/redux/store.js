@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
+import groupReducer from "./groupSlice";
 import applicationReducer from "./applicationSlice";
 
 // 1. 로컬 스토리지에서 상태를 불러오는 함수
@@ -31,6 +32,7 @@ const persistedState = loadState();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    group: groupReducer,
     applications: applicationReducer,
   },
   preloadedState: persistedState, // 여기를 수정해주세요.
@@ -40,6 +42,7 @@ export const store = configureStore({
 store.subscribe(() => {
   saveState({
     auth: store.getState().auth,
+    group: store.getState().group,
     applications: store.getState().applications,
   });
 });
