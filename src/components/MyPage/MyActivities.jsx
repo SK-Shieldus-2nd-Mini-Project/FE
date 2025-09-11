@@ -4,37 +4,24 @@ import axios from 'axios';
 export default function MyActivities({ user }) {
   const [myApplications, setMyApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('user 객체:', user);
     if (!user) return;
 
-    const fetchApplications = async () => {
-      try {
-        setLoading(true);
-
-        // 백엔드 API 예시: 사용자의 활동 가져오기
-        // 각 활동에 role 필드 포함 ('leader' or 'participant')
-        const userId = user?.userId;
-        if (!userId) return;
-
-        const response = await axios.get(`/api/users/${userId}/activities`);
-        console.log('백엔드 응답 데이터:', response.data); 
-        setMyApplications(response.data);
-      } catch (err) {
-        console.error(err);
-        setError('활동 정보를 불러오는 중 오류가 발생했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplications();
+    // API 호출: 내 활동 정보 조회
+    axios
+      .get(`/api/users/${user.userId}/applications`)
+      .then((res) => {
+        // API 응답 예시: [{ groupName, status, role }, ...]
+        setMyApplications(res.data);
+      })
+      .catch((err) => {
+        console.error('내 활동 불러오기 실패:', err);
+      })
+      .finally(() => setLoading(false));
   }, [user]);
 
   if (loading) return <div>활동 정보를 불러오는 중...</div>;
-  if (error) return <div>{error}</div>;
   if (myApplications.length === 0) return <div>참여 중인 활동이 없습니다.</div>;
 
   return (
@@ -48,18 +35,15 @@ export default function MyActivities({ user }) {
             : app.status.includes('대기')
             ? 'pending'
             : 'rejected';
+
+          const roleText = app.role === 'leader' ? '리더' : '참여자';
+
           return (
-            <li key={index} className={`status-${statusClass}`}>
-              <div className="group-header">
-                <span className="group-name">{app.groupName}</span>
-                <span
-                  className={`role-badge ${
-                    app.role === 'leader' ? 'leader' : 'participant'
-                  }`}
-                >
-                  {app.role === 'leader' ? '리더' : '참여자'}
-                </span>
-              </div>
+            <li key={index} className={`activity-card ${statusClass}`}>
+              {/* 롤 배지 우측 상단 */}
+              <span className={`role-badge ${app.role}`}>{roleText}</span>
+
+              <span className="group-name">{app.groupName}</span>
               <span className="status-badge">{app.status}</span>
             </li>
           );

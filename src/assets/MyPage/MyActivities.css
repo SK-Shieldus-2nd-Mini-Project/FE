@@ -1,23 +1,15 @@
-.content-panel {
-  padding: 20px;
-}
-
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.card-image img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px 12px 0 0;
-  display: block; /* 추가하면 img가 block으로 나와서 카드 영역에 맞게 표시 */
+.activity-card {
+  position: relative; /* 롤 배지 위치를 위해 필요 */
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  list-style: none;
 }
 
 .status-badge {
+  display: inline-block;
+  margin-top: 8px;
   padding: 4px 8px;
   border-radius: 8px;
   color: #fff;
@@ -26,42 +18,30 @@
 
 /* 상태별 색상 */
 .activity-card.approved .status-badge {
-  background-color: #4caf50; /* 초록: 완료 */
+  background-color: #4caf50;
 }
-
 .activity-card.pending .status-badge {
-  background-color: #ff9800; /* 주황: 대기 */
+  background-color: #ff9800;
 }
-
 .activity-card.rejected .status-badge {
-  background-color: #f44336; /* 빨강: 거절 */
+  background-color: #f44336;
 }
 
-.no-activities {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #888;
-}
-
-/* ------------------------------- */
-/* role-badge 추가 */
-.group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* 롤 배지 우측 상단 */
 .role-badge {
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  color: white;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #fff;
 }
 
+/* 역할별 색상 */
 .role-badge.leader {
-  background-color: #f39c12; /* 주황색 */
+  background-color: #007bff; /* 파랑: 리더 */
 }
-
 .role-badge.participant {
-  background-color: #3498db; /* 파란색 */
+  background-color: #6c757d; /* 회색: 참여자 */
 }
