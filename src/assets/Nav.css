@@ -15,7 +15,7 @@
     left: 20px;
     height: 70px;
     display: flex;
-    align-items: flex-start; /* 위쪽 정렬 */
+    align-items: center; /* 위쪽 정렬 */
 }
 
 .logo {
