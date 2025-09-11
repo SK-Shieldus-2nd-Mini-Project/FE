@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
-import { applyToGroup } from "../redux/applicationSlice";
+import { joinGroup } from "../redux/groupSlice";
 import '../assets/Group/GroupDetail.css';
 import axios from "axios";
 
@@ -38,19 +38,21 @@ export default function GroupDetail() {
   }, [id, token]);
 
   //로그인 확인 
-  const handleJoinClick = () => {
+  const handleJoinClick = async () => {
     if (!isLoggedIn) {
-      // modal로 변경
       alert("로그인이 필요합니다.");
       navigate("/login");
+      return;
     }
-    // modal로 변경
-    else {
-      alert(`${currentUser.nickname}님, "${group.name}" 모임에 참가 신청되었습니다!`);
-      dispatch(applyToGroup({ groupId: group.id, groupName: group.name }));
+    
+    try {
+      await dispatch(joinGroup(group.groupId)).unwrap();
+      alert(`"${group.groupName}" 모임에 참가 신청되었습니다!`);
       navigate("/mypage");
+    } catch (error) {
+      alert(error.message || '가입 신청에 실패했습니다.');
     }
-  }
+  };
 
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>{error}</p>;

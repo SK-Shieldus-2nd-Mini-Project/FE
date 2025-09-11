@@ -49,6 +49,23 @@ export const fetchAllGroups = createAsyncThunk(
   }
 );
 
+export const joinGroup = createAsyncThunk(
+  'group/joinGroup',
+  async (groupId, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth;
+      await axios.post(`/api/groups/${groupId}/join`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      return groupId;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: '모임 가입 신청 실패' });
+    }
+  }
+);
+
 // --- Slice ---
 const groupSlice = createSlice({
   name: 'group',
@@ -88,7 +105,17 @@ const groupSlice = createSlice({
       .addCase(fetchAllGroups.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload.message || '그룹 조회 실패';
-      });
+      })
+      .addCase(joinGroup.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(joinGroup.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(joinGroup.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload.message || '가입 신청 처리 중 오류가 발생했습니다.';
+      })
   },
 });
 
