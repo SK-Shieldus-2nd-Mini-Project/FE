@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
+  const [hasCreatedGroup, setHasCreatedGroup] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken'); // JWT 토큰 저장 위치 확인
+
+    if (!token) return;
+
+    axios.get('/api/users/me/groups', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        const created = res.data.some(group => group.leader_id === user.userId);
+        setHasCreatedGroup(created);
+      })
+      .catch(err => console.error(err));
+  }, [user.userId]);
+
   return (
     <aside className="mypage-sidebar">
       <div className="profile-summary">
@@ -15,7 +35,6 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
 
       <nav>
         <ul>
-          {/* 공통 메뉴: 회원정보 수정 */}
           <li
             className={activeTab === 'editProfile' ? 'active' : ''}
             onClick={() => setActiveTab('editProfile')}
@@ -23,7 +42,6 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
             회원정보 수정
           </li>
 
-          {/* 일반 사용자 메뉴 */}
           {user.role !== 'ADMIN' && (
             <>
               <li
@@ -33,8 +51,7 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
                 내 활동
               </li>
 
-              {/* 모임장 메뉴 */}
-              {user.hasCreatedGroup && (
+              {hasCreatedGroup || (
                 <li
                   className={activeTab === 'manageRecruitment' ? 'active' : ''}
                   onClick={() => setActiveTab('manageRecruitment')}
@@ -45,7 +62,6 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
             </>
           )}
 
-          {/* 관리자 메뉴 */}
           {user.role === 'ADMIN' && (
             <li
               className={activeTab === 'adminPanel' ? 'active' : ''}
