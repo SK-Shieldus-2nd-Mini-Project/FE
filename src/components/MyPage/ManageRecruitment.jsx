@@ -23,12 +23,12 @@ export default function ManageRecruitment() {
     const [applicants, setApplicants] = useState([]);
     const [selectedGroup, setSelectedGroup] = useState(null);
 
-    // [변경] 수정폼 상태 (모달 대신)
     const [editForm, setEditForm] = useState({ groupName: "", description: "", maxMembers: "" });
     const [isEditing, setIsEditing] = useState(false);
 
     const token = useSelector(state => state.auth.token);
 
+    // 내 그룹 목록 불러오기
     useEffect(() => {
         if (!token) {
             setLoading(false);
@@ -52,9 +52,26 @@ export default function ManageRecruitment() {
         fetchGroups();
     }, [token]);
 
+    // 그룹 상세 조회
+    const fetchGroupDetail = async (groupId) => {
+        try {
+            const res = await axios.get(`/api/groups/${groupId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setSelectedGroup(res.data);
+            return res.data;
+        } catch (err) {
+            alert('그룹 상세 정보를 불러오는데 실패했습니다.');
+            return null;
+        }
+    };
+
+    // 신청자 + 상세 그룹 조회
     const fetchApplicants = async (group) => {
-        setSelectedGroup(group);
-        setIsEditing(false); // 기본은 수정 모드 아님
+        setIsEditing(false);
+        const groupDetail = await fetchGroupDetail(group.groupId);
+        if (!groupDetail) return;
+
         try {
             const res = await axios.get(`/api/groups/${group.groupId}/applicants`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -66,6 +83,77 @@ export default function ManageRecruitment() {
         }
     };
 
+    // 수정 모드 진입
+    const startEdit = async (group) => {
+        const groupDetail = await fetchGroupDetail(group.groupId);
+        if (!groupDetail) return;
+
+        setEditForm({
+            groupName: groupDetail.groupName || "",
+            description: groupDetail.description || "",
+            maxMembers: groupDetail.maxMembers !== undefined ? String(groupDetail.maxMembers) : ""
+        });
+        setIsEditing(true);
+    };
+
+    // 수정 폼 입력 변경
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditForm(prev => ({ ...prev, [name]: value }));
+    };
+
+    // 수정 요청
+    const handleEditSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.put(`/api/groups/${selectedGroup.groupId}`, {
+                ...editForm,
+                maxMembers: parseInt(editForm.maxMembers, 10),
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('모임 정보가 수정되었습니다.');
+
+            // 내 그룹 목록 다시 불러오기
+            const res = await axios.get('/api/users/me/groups', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setMyGroups(res.data.filter(group => group.leader));
+
+            // 선택 그룹 업데이트
+            setSelectedGroup(prev => ({
+                ...prev,
+                ...editForm,
+                maxMembers: parseInt(editForm.maxMembers, 10),
+            }));
+
+            setIsEditing(false);
+        } catch (err) {
+            console.error(err);
+            alert('모임 수정에 실패했습니다.');
+        }
+    };
+
+    // 삭제 요청
+    const handleDelete = async () => {
+        if (!window.confirm("정말 이 모임을 삭제하시겠습니까?")) return;
+
+        try {
+            await axios.delete(`/api/groups/${selectedGroup.groupId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert('모임이 삭제되었습니다.');
+            setMyGroups(prev => prev.filter(g => g.groupId !== selectedGroup.groupId));
+            setSelectedGroup(null);
+            setApplicants([]);
+            setIsEditing(false);
+        } catch (err) {
+            console.error(err);
+            alert("모임 삭제에 실패했습니다.");
+        }
+    };
+
+    // 승인 / 거절
     const handleApprove = async (userId) => {
         if (!window.confirm('가입을 승인하시겠습니까?')) return;
         try {
@@ -92,70 +180,6 @@ export default function ManageRecruitment() {
         }
     };
 
-    // 수정 모드 진입
-    const startEdit = (group) => {
-        setEditForm({
-            groupName: group.groupName || "",
-            description: group.description || "",
-            maxMembers: group.maxMembers || ""
-        });
-        setIsEditing(true);
-    };
-
-    // 수정 폼 입력 변경
-    const handleEditChange = (e) => {
-        const { name, value } = e.target;
-        setEditForm(prev => ({ ...prev, [name]: value }));
-    };
-
-    // 수정 요청
-    const handleEditSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.put(`/api/groups/${selectedGroup.groupId}`, editForm, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            alert('모임 정보가 수정되었습니다.');
-
-            // 내 그룹 목록 다시 불러오기
-            const res = await axios.get('/api/users/me/groups', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setMyGroups(res.data.filter(group => group.leader));
-
-            // 선택된 그룹도 업데이트
-            setSelectedGroup(prev => ({ ...prev, ...editForm }));
-
-            setIsEditing(false);
-        } catch (err) {
-            console.error(err);
-            alert('모임 수정에 실패했습니다.');
-        }
-    };
-
-    // 삭제 요청
-    const handleDelete = async () => {
-        if (!window.confirm("정말 이 모임을 삭제하시겠습니까?")) return;
-
-        try {
-            await axios.delete(`/api/groups/${selectedGroup.groupId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            alert('모임이 삭제되었습니다.');
-
-            // 그룹 목록에서 제거
-            setMyGroups(prev => prev.filter(g => g.groupId !== selectedGroup.groupId));
-
-            // 선택된 그룹/신청자 초기화
-            setSelectedGroup(null);
-            setApplicants([]);
-            setIsEditing(false);
-        } catch (err) {
-            console.error(err);
-            alert("모임 삭제에 실패했습니다.");
-        }
-    };
-
     if (loading) return <p>로딩 중...</p>;
     if (error) return <p>{error}</p>;
 
@@ -165,6 +189,7 @@ export default function ManageRecruitment() {
             <p>내가 만든 모임의 가입 신청자들을 관리할 수 있습니다.</p>
 
             <div className="recruitment-container">
+                {/* 내 모임 목록 */}
                 <div className="my-groups-list">
                     <h4>내 모임 목록</h4>
                     {myGroups.length === 0 ? (
@@ -181,11 +206,12 @@ export default function ManageRecruitment() {
                                 <div className="group-item-info">
                                     <span><strong>지역:</strong> {group.regionName}</span>
                                     <span><strong>종목:</strong> {group.sportName}</span>
+                                    <span><strong>최대 인원:</strong> {group.maxMembers ?? '정보 없음'}</span>
                                 </div>
                                 {group.approvalStatus === 'APPROVED' && (
                                     <>
                                         <button className="groupmembers-btn" onClick={() => fetchApplicants(group)}>신청자 보기</button>
-                                        <button className="modify-btn" onClick={() => { fetchApplicants(group); startEdit(group); }}>모임 수정하기</button>
+                                        <button className="modify-btn" onClick={() => startEdit(group)}>모임 수정하기</button>
                                     </>
                                 )}
                             </div>
@@ -193,10 +219,9 @@ export default function ManageRecruitment() {
                     )}
                 </div>
 
+                {/* 신청자 / 수정 폼 */}
                 <div className="applicants-list">
-                    <h4>
-                        {selectedGroup ? `"${selectedGroup.groupName}" 상세` : "가입 신청자 / 모임 정보"}
-                    </h4>
+                    <h4>{selectedGroup ? `"${selectedGroup.groupName}" 상세` : "가입 신청자 / 모임 정보"}</h4>
 
                     {!selectedGroup && <p>모임을 선택하여 신청자나 수정 화면을 확인하세요.</p>}
 
@@ -227,6 +252,7 @@ export default function ManageRecruitment() {
                                     name="maxMembers"
                                     value={editForm.maxMembers}
                                     onChange={handleEditChange}
+                                    placeholder={selectedGroup?.maxMembers ?? ""}
                                     required
                                 />
                             </label>
