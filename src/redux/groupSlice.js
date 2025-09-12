@@ -9,17 +9,8 @@ export const createGroup = createAsyncThunk(
     try {
       const { token } = getState().auth; // JWT 토큰 가져오기
 
-      const payload = {
-        groupName: formData.groupName,
-        regionId: Number(formData.regionId),
-        sportId: Number(formData.sportId),
-        description: formData.description,
-        maxMembers: Number(formData.maxMembers),
-      };
-
-      const response = await axios.post('/api/groups', payload, {
+      const response = await axios.post('/api/groups', formData, {
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
       });
