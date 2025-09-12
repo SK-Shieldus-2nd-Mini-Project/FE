@@ -4,9 +4,8 @@
   max-width: 1200px;
   margin: 40px auto;
   gap: 30px;
-  min-height: 600px; /* 헤더, 푸터 높이 제외 */
+  min-height: 600px;
   user-select: none;
-  
 }
 
 /* --- 사이드바 --- */
@@ -96,20 +95,36 @@
     list-style: none;
     padding: 0;
 }
+
 .status-list li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* 상단 정렬 후 badge는 absolute로 위치 */
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
     background-color: #f8f9fa;
-    
+    position: relative; /* badge 절대 위치 기준 */
+    min-height: 80px; /* badge와 버튼 겹치지 않도록 높이 확보 */
 }
+
+.status-list li .status-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.group-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
 .status-list .group-name {
     font-weight: 500;
-    
 }
+
 .status-badge {
     padding: 5px 12px;
     border-radius: 20px;
@@ -118,10 +133,42 @@
     color: white;
     user-select: none;
 }
+
 .status-list li.status-approved .status-badge { background-color: #2ecc71; }
 .status-list li.status-pending .status-badge { background-color: #f39c12; }
 .status-list li.status-rejected .status-badge { background-color: #e74c3c; }
 
+/* 모임장 뱃지 */
+.leader-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+/* 모임 탈퇴 버튼 - 뱃지 스타일과 통일 */
+.leave-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: none; /* 외곽선 제거 */
+    font-size: 0.8rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.leave-button:hover {
+    background-color: #c0392b;
+}
 
 /* '관리자' 탭 메뉴 스타일 */
 .admin-menu {
@@ -130,19 +177,23 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+
 .admin-menu-item {
     border: 1px solid #e9ecef;
     border-radius: 8px;
     padding: 20px;
 }
+
 .admin-menu-item h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
+
 .admin-menu-item p {
     color: #6c757d;
     margin-bottom: 15px;
 }
+
 .admin-menu-item button {
     padding: 8px 16px;
     border: none;
