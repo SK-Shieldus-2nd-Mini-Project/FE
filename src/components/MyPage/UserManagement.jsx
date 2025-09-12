@@ -180,56 +180,6 @@ export default function UserManagement() {
               />
             </label>
             <label>
-              프로필 이미지:
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {/* 업로드된 이미지 미리보기 */}
-                {formData.profileImageUrl && (
-                  <img
-                    src={formData.profileImageUrl}
-                    alt="profile preview"
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    // FormData 준비
-                    const uploadData = new FormData();
-                    uploadData.append("file", file);
-
-                    try {
-                      // 서버 업로드 요청 (회원가입처럼 백엔드에서 url 반환)
-                      const res = await axios.post("/api/upload", uploadData, {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                          "Content-Type": "multipart/form-data",
-                        },
-                      });
-
-                      // 서버가 업로드된 이미지 URL 반환한다고 가정
-                      setFormData((prev) => ({
-                        ...prev,
-                        profileImageUrl: res.data.url,
-                      }));
-                    } catch (err) {
-                      console.error(err);
-                      alert("이미지 업로드에 실패했습니다.");
-                    }
-                  }}
-                />
-              </div>
-            </label>
-            <label>
               비밀번호:
               <input
                 type="password"
