@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
   const [hasCreatedGroup, setHasCreatedGroup] = useState(false);
+  const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken'); // JWT 토큰 저장 위치 확인
-
-    if (!token) return;
+    if (!token || !user) return;
 
     axios.get('/api/users/me/groups', {
       headers: {
@@ -15,11 +15,15 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
       }
     })
       .then(res => {
-        const created = res.data.some(group => group.leader_id === user.userId);
+        const created = res.data.some(group => group.leader === true);
         setHasCreatedGroup(created);
+        console.log(res.data);
       })
-      .catch(err => console.error(err));
-  }, [user.userId]);
+      .catch(err => {
+        console.error("모임장 여부 확인 실패:", err);
+        setHasCreatedGroup(false); // 에러 발생 시 탭 숨김 처리
+      });
+  }, [user, token]);
 
   return (
     <aside className="mypage-sidebar">
@@ -51,7 +55,7 @@ export default function MyPageSidebar({ user, activeTab, setActiveTab }) {
                 내 활동
               </li>
 
-              {hasCreatedGroup || (
+              {hasCreatedGroup && (
                 <li
                   className={activeTab === 'manageRecruitment' ? 'active' : ''}
                   onClick={() => setActiveTab('manageRecruitment')}
