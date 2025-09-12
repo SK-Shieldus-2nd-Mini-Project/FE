@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk(
     try {
       // 1. 토큰 발급
       const tokenResponse = await axios.post('/api/auth/login', loginData);
-      const { accessToken } = tokenResponse.data;
+      const { accessToken, refreshToken } = tokenResponse.data;
 
       // 2. Axios 헤더 세팅
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -50,7 +50,7 @@ export const loginUser = createAsyncThunk(
       const mappedUser = mapUserResponseToState(userResponse.data);
 
       // 4. 토큰과 사용자 정보 반환
-      return { token: accessToken, user: mappedUser };
+      return { accessToken, refreshToken, user: mappedUser };
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: '로그인 실패' });
     }
@@ -99,16 +99,18 @@ export const deleteAccountUser = createAsyncThunk(
 );
 
 // --- 초기 상태 ---
-const initialToken = localStorage.getItem('accessToken');
+const initialAccessToken = localStorage.getItem('accessToken');
+const initialRefreshToken = localStorage.getItem('refreshToken');
 
-if (initialToken) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${initialToken}`;
+if (initialAccessToken) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${initialAccessToken}`;
 }
 
 const initialState = {
-  isAuthenticated: !!initialToken,
+  isAuthenticated: !!initialAccessToken,
   user: null,
-  token: initialToken,
+  token: initialAccessToken,
+  refreshToken: initialRefreshToken,
   status: 'idle',
   error: null,
 };
@@ -122,8 +124,17 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
+      state.refreshToken = null;
       axios.defaults.headers.common['Authorization'] = null;
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    },
+    setTokens(state, action) {
+        state.token = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload.accessToken}`;
     },
     setUser(state, action) {
       state.user = action.payload;
@@ -133,12 +144,14 @@ const authSlice = createSlice({
     builder
       // 로그인
       .addCase(loginUser.pending, (state) => { state.status = 'loading'; state.error = null; })
-      .addCase(loginUser.fulfilled, (state, action) => {
+       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.isAuthenticated = true;
-        state.token = action.payload.token;
+        state.token = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
         state.user = action.payload.user;
-        localStorage.setItem('accessToken', action.payload.token);
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
@@ -181,5 +194,5 @@ const authSlice = createSlice({
   }
 });
 
-export const { logout, setUser } = authSlice.actions;
+export const { logout, setTokens, setUser } = authSlice.actions;
 export default authSlice.reducer;
