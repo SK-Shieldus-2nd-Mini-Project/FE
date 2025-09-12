@@ -74,16 +74,10 @@
   font-size: 0.9rem;
   border: none;
   border-radius: 5px;
-  background-color: #3498db;
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
 }
-
-.my-group-item-detailed button:hover {
-  background-color: #2980b9;
-}
-
 
 .applicant-item {
   display: flex;
@@ -111,7 +105,7 @@
 }
 
 .applicant-info span {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .applicant-actions {
@@ -126,21 +120,141 @@
   color: white;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .applicant-actions .approve {
   background-color: #28a745;
 }
 
-.applicant-actions .approve:hover {
-  background-color: #218838;
-}
-
 .applicant-actions .reject {
   background-color: #dc3545;
 }
 
+.groupmembers-btn { 
+  background-color: #3498db;
+}
+
+.modify-btn {
+  background-color: #68a6cf;
+}
+
+/* ===== 수정폼 ===== */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.edit-form input,
+.edit-form textarea {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: none;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-color: #4dabf7;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.25);
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+/* ===== 저장 버튼 ===== */
+.edit-actions button[type="submit"] {
+  background-color: #4dabf7;
+  color: white;
+}
+
+/* ===== 기본 버튼 ===== */
+.edit-actions button[type="button"] {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+/* ===== 삭제 버튼 ===== */
+.edit-actions button.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-actions button.delete-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* ===== 공통 hover 스타일 ===== */
+.my-group-item-detailed button:hover,
+.groupmembers-btn:hover,
+.modify-btn:hover,
+.applicant-actions button:hover,
+.edit-actions button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.applicant-actions .approve:hover {
+  background-color: #218838;
+}
+
 .applicant-actions .reject:hover {
   background-color: #c82333;
+}
+
+.groupmembers-btn:hover {
+  background-color: #2980b9;
+}
+
+.modify-btn:hover {
+  background-color: #133c5a;
+}
+
+.edit-actions button[type="submit"]:hover {
+  background-color: #339af0;
+}
+
+.edit-actions button[type="button"]:hover {
+  background-color: #dee2e6;
+}
+
+/* 부드러운 등장 효과 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
