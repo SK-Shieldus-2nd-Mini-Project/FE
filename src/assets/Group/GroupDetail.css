@@ -90,3 +90,195 @@
 .group-posts p {
   color: #7f8c8d;
 }
+
+.group-schedules {
+  margin-top: 40px;
+  background-color: #f8f9fa; /* 부드러운 배경색 */
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.schedule-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #343a40;
+  margin: 0;
+}
+
+.add-schedule-btn {
+  padding: 10px 18px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-schedule-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.schedule-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schedule-item {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  transition: box-shadow 0.2s;
+}
+
+.schedule-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.schedule-item p {
+  margin: 0 0 8px 0;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.schedule-item p strong {
+  color: #343a40;
+  font-weight: 600;
+}
+
+.schedule-item .description {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #6c757d;
+  white-space: pre-wrap;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+
+/* --- 일정 추가 모달 --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.modal-content textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #e9ecef;
+  color: #495057;
+}
+.modal-actions button[type="button"]:hover {
+  background-color: #dee2e6;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #3498db;
+  color: white;
+}
+.modal-actions button[type="submit"]:hover {
+  background-color: #2980b9;
+}
