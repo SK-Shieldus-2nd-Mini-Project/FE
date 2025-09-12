@@ -157,7 +157,7 @@ export default function GroupDetail() {
             <div className="group-detail-main-content">
                 <Link to="/" className="back-btn">← 홈으로 가기</Link>
                 <div className="group-header">
-        <img src={'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
+        <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
         <div className="group-header-info">
           <h2>{group.groupName}</h2>
           <p>{group.description}</p>

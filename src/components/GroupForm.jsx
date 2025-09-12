@@ -20,7 +20,7 @@ function GroupForm() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [imageFile, setImageFile] = useState(null);
   const { status, error } = useSelector(state => state.group || { status: 'idle', error: null });
 
   const regionOptions = [
@@ -69,6 +69,12 @@ function GroupForm() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,15 +84,22 @@ function GroupForm() {
       return;
     }
 
-    try {
-      await dispatch(createGroup({
-        groupName: formData.groupName,
-        description: formData.description,
-        maxMembers: Number(formData.maxMembers),
-        regionId: Number(formData.regionId),
-        sportId: Number(formData.sportId)
-      })).unwrap();
+    const formDataToSubmit = new FormData();
+    const groupData = {
+      groupName: formData.groupName,
+      description: formData.description,
+      maxMembers: Number(formData.maxMembers),
+      regionId: Number(formData.regionId),
+      sportId: Number(formData.sportId),
+    };
 
+    formDataToSubmit.append('request', new Blob([JSON.stringify(groupData)], { type: "application/json" }));
+    if (imageFile) {
+      formDataToSubmit.append('image', imageFile);
+    }
+
+    try {
+      await dispatch(createGroup(formDataToSubmit)).unwrap(); // 수정된 formData 전달
       setShowModal(true);
     } catch (err) {
       alert(err.message || "모임 생성 실패");
@@ -121,6 +134,11 @@ function GroupForm() {
             <option value="">종목 선택</option>
             {sportOptions.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
+        </div>
+
+        <div className="input-field">
+          <label htmlFor="image">대표 이미지</label>
+          <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} />
         </div>
 
         <button type="submit" className="submit-btn" disabled={status === 'loading'}>

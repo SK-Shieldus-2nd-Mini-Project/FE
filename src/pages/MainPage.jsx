@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAllGroups } from '../redux/groupSlice.js';
 
 const regionOptions = [
-    "전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
+    "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
     "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구",
     "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"
 ];
@@ -144,8 +144,7 @@ export default function MainPage() {
                         filteredGroups.map(group => (
                             <Link to={`/groups/${group.groupId}`} key={group.groupId} className="group-card-link">
                                 <div className="group-card">
-                                    <img src={'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
-                                    <div className="group-info">
+                                    <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />                                    <div className="group-info">
                                         <h3>{group.groupName}</h3>
                                         <p># {group.regionName} # {group.sportName}</p>
                                     </div>
