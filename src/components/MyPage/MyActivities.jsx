@@ -84,19 +84,27 @@ export default function MyActivities() {
                   <span className="status-badge leader-badge">{statusInfo.text}</span>
                 )}
 
-                {/* 일반 회원 모임 탈퇴 버튼 */}
+                {/* 승인 상태별 UI */}
                 {!app.leader && (
-                  <button
-                    className="leave-button"
-                    onClick={(e) => { e.stopPropagation(); handleLeaveGroup(app.groupId); }}
-                  >
-                    모임 탈퇴
-                  </button>
-                )}
-
-                {/* 승인 완료 등 뱃지 */}
-                {!app.leader && statusInfo.className === 'approved' && (
-                  <span className="status-badge approved-badge">{statusInfo.text}</span>
+                  <>
+                    {statusInfo.className === 'pending' && (
+                      <span className="status-badge pending-badge">{statusInfo.text}</span>
+                    )}
+                    {statusInfo.className === 'approved' && (
+                      <>
+                        <span className="status-badge approved-badge">{statusInfo.text}</span>
+                        <button
+                          className="leave-button"
+                          onClick={(e) => { e.stopPropagation(); handleLeaveGroup(app.groupId); }}
+                        >
+                          모임 탈퇴
+                        </button>
+                      </>
+                    )}
+                    {statusInfo.className === 'rejected' && (
+                      <span className="status-badge rejected-badge">{statusInfo.text}</span>
+                    )}
+                  </>
                 )}
               </li>
             );
