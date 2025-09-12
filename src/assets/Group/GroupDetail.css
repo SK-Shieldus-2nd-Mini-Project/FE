@@ -1,9 +1,71 @@
-.group-detail-container {
-  max-width: 900px;
+.group-detail-page-container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
   font-family: 'Noto Sans KR', sans-serif;
-  user-select: none; 
+  user-select: none;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.group-detail-main-content {
+  flex-grow: 1; /* 메인 콘텐츠가 남은 공간을 차지 */
+}
+
+.group-members-sidebar {
+  width: 280px;
+  flex-shrink: 0; /* 사이드바 너비 고정 */
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.group-members-sidebar h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #343a40;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 10px;
+}
+
+.members-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.member-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.member-item span {
+  font-weight: 500;
+  color: #495057;
+}
+
+.leader-badge {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #fff !important;
+  background-color: #007bff;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: auto; /* 오른쪽 끝으로 밀어내기 */
 }
 
 .back-btn {

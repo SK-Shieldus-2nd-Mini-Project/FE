@@ -25,7 +25,7 @@ export default function GroupDetail() {
   const [editingSchedule, setEditingSchedule] = useState(null);
 
   const { user: currentUser, token } = useSelector(state => state.auth);
-  const isLeader = currentUser?.nickname === group?.leaderNickname;
+  const isLeader = currentUser?.userId === group?.leaderInfo?.userId;
 
   useEffect(() => {
     const fetchGroupDetail = async () => {
@@ -112,10 +112,10 @@ export default function GroupDetail() {
     }
 
     const updateData = {
-            location: editingSchedule.location,
-            meetingTime: editingSchedule.meetingTime,
-            description: editingSchedule.description,
-        };
+      location: editingSchedule.location,
+      meetingTime: editingSchedule.meetingTime,
+      description: editingSchedule.description,
+    };
 
     try {
       await axios.put(`/api/groups/${groupId}/schedules/${editingSchedule.scheduleId}`, updateData, {
@@ -123,7 +123,7 @@ export default function GroupDetail() {
       });
       // 화면의 일정 목록 상태 업데이트
       setSchedules(prev => prev.map(s => s.scheduleId === editingSchedule.scheduleId ? { ...s, ...editingSchedule, meetingTime: editingSchedule.meetingTime + ":00" } : s));
-            setIsEditModalOpen(false);
+      setIsEditModalOpen(false);
       setEditingSchedule(null);
       alert('일정이 성공적으로 수정되었습니다.');
     } catch (err) {
@@ -153,10 +153,10 @@ export default function GroupDetail() {
   if (!group) return <p>모임 정보를 찾을 수 없습니다.</p>;
 
   return (
-    <div className="group-detail-container">
-      <Link to="/" className="back-btn">← 홈으로 가기</Link>
-
-      <div className="group-header">
+    <div className="group-detail-page-container">
+            <div className="group-detail-main-content">
+                <Link to="/" className="back-btn">← 홈으로 가기</Link>
+                <div className="group-header">
         <img src={'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
         <div className="group-header-info">
           <h2>{group.groupName}</h2>
@@ -168,39 +168,59 @@ export default function GroupDetail() {
       </div>
 
       <section className="group-schedules">
-                <div className="schedule-header">
-                    <h3>모임 일정</h3>
-                    {isLeader && (
-                        <button className="add-schedule-btn" onClick={() => setIsCreateModalOpen(true)}>
-                            일정 추가
-                        </button>
-                    )}
+        <div className="schedule-header">
+          <h3>모임 일정</h3>
+          {isLeader && (
+            <button className="add-schedule-btn" onClick={() => setIsCreateModalOpen(true)}>
+              일정 추가
+            </button>
+          )}
+        </div>
+
+        {schedules.length > 0 ? (
+          <ul className="schedule-list">
+            {schedules.map(schedule => (
+              <li key={schedule.scheduleId} className="schedule-item">
+                <div>
+                  <p><strong>시간:</strong> {formatDateTime(schedule.meetingTime)}</p>
+                  <p><strong>장소:</strong> {schedule.location}</p>
+                  {schedule.description && <p className="description">{schedule.description}</p>}
                 </div>
-
-                {schedules.length > 0 ? (
-                    <ul className="schedule-list">
-                        {schedules.map(schedule => (
-                            <li key={schedule.scheduleId} className="schedule-item">
-                                <div>
-                                    <p><strong>시간:</strong> {formatDateTime(schedule.meetingTime)}</p>
-                                    <p><strong>장소:</strong> {schedule.location}</p>
-                                    {schedule.description && <p className="description">{schedule.description}</p>}
-                                </div>
-                                {/* [추가] 모임장에게만 수정/삭제 버튼 표시 */}
-                                {isLeader && (
-                                    <div className="schedule-actions">
-                                        <button onClick={() => openEditModal(schedule)}>수정</button>
-                                        <button className="delete" onClick={() => handleDeleteSchedule(schedule.scheduleId)}>삭제</button>
-                                    </div>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>등록된 일정이 아직 없습니다.</p>
+                {/* [추가] 모임장에게만 수정/삭제 버튼 표시 */}
+                {isLeader && (
+                  <div className="schedule-actions">
+                    <button onClick={() => openEditModal(schedule)}>수정</button>
+                    <button className="delete" onClick={() => handleDeleteSchedule(schedule.scheduleId)}>삭제</button>
+                  </div>
                 )}
-            </section>
-
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>등록된 일정이 아직 없습니다.</p>
+        )}
+      </section>
+      </div>
+      <aside className="group-members-sidebar">
+        <h4>멤버 목록</h4>
+        <ul className="members-list">
+          {/* 모임장 표시 */}
+          {group.leaderInfo && (
+            <li className="member-item leader">
+              <img src={group.leaderInfo.profileImageUrl || '/public/mymelody.png'} alt={group.leaderInfo.nickname} />
+              <span>{group.leaderInfo.nickname}</span>
+              <span className="leader-badge">모임장</span>
+            </li>
+          )}
+          {/* 멤버 목록 표시 */}
+          {group.members && group.members.map(member => (
+            <li key={member.userId} className="member-item">
+              <img src={member.profileImageUrl || '/public/mymelody.png'} alt={member.nickname} />
+              <span>{member.nickname}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
       {isCreateModalOpen && (
         <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -218,22 +238,22 @@ export default function GroupDetail() {
         </div>
       )}
       {/* [추가] 일정 수정 모달 */}
-            {isEditModalOpen && editingSchedule && (
-                <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <h3>일정 수정</h3>
-                        <form onSubmit={handleUpdateSchedule}>
-                            <input type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
-                            <input type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />
-                            <textarea name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={editingSchedule.description} onChange={handleEditFormChange}></textarea>
-                            <div className="modal-actions">
-                                <button type="button" onClick={() => setIsEditModalOpen(false)}>취소</button>
-                                <button type="submit">저장하기</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
+      {isEditModalOpen && editingSchedule && (
+        <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h3>일정 수정</h3>
+            <form onSubmit={handleUpdateSchedule}>
+              <input type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
+              <input type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />
+              <textarea name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={editingSchedule.description} onChange={handleEditFormChange}></textarea>
+              <div className="modal-actions">
+                <button type="button" onClick={() => setIsEditModalOpen(false)}>취소</button>
+                <button type="submit">저장하기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
