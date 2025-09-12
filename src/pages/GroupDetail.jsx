@@ -67,7 +67,7 @@ export default function GroupDetail() {
         <div className="group-header-info">
           <h2>{group.groupName}</h2>
           <p>{group.description}</p>
-          <p><strong>지역:</strong> {group.region} | <strong>종목:</strong> {group.sport}</p>
+          <p><strong>지역:</strong> {group.regionName} | <strong>종목:</strong> {group.sportName}</p>
           <p><strong>참여 인원:</strong> {group.currentMembers} / {group.maxMembers}명</p>
           <button className="join-btn" onClick={handleJoinClick}>참여하기</button>
         </div>
