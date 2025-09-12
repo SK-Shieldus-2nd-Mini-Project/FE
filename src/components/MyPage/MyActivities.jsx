@@ -77,27 +77,25 @@ export default function MyActivities() {
                     {applications.map((app) => {
                         const statusInfo = getStatusInfo(app);
                         return (
-                            <li key={app.groupId} className={`status-${statusInfo.className}`}>
-                                <div
-                                    className="group-info"
-                                    onClick={() => navigate(`/groups/${app.groupId}`)}
-                                >
+                            <li key={app.groupId} className="status-item">
+                                <div className="group-info" onClick={() => navigate(`/groups/${app.groupId}`)}>
                                     <span className="group-name">{app.groupName}</span>
+                                </div>
 
-                                    {/* 승인 완료 모임 탈퇴 버튼 */}
+                                {/* 맨 끝으로 이동: 버튼 위, 상태 아래 */}
+                                <div className="group-actions">
                                     {(!app.leader && app.status === 'APPROVED') && (
                                         <button
                                             className="leave-btn"
                                             onClick={(e) => {
-                                                e.stopPropagation(); // 클릭 이벤트 버블링 방지
+                                                e.stopPropagation();
                                                 handleLeaveGroup(app.groupId);
                                             }}
                                         >
                                             탈퇴
                                         </button>
                                     )}
-
-                                    <span className="status-badge">{statusInfo.text}</span>
+                                    <span className={`status-badge ${statusInfo.className}`}>{statusInfo.text}</span>
                                 </div>
                             </li>
                         );
