@@ -5,7 +5,7 @@ import TypewriterEffect from '../components/TypewriterEffect.jsx';
 import GroupForm from '../components/GroupForm.jsx';
 import { motion } from 'framer-motion';
 import AnimatedFilterButton from '../components/AnimatedFilterButton';
-import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
+import { filterGroups } from "../utils/filterGroups.js"; // ✅ 커스텀 훅
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllGroups } from '../redux/groupSlice.js';
 
@@ -56,7 +56,7 @@ export default function MainPage() {
     };
 
     // ✅ 필터링 적용 (searchQuery만 반영됨)
-    const filteredGroups = useFilteredGroups(groups, {
+    const filteredGroups = filterGroups(groups, {
         region: selectedRegion,
         sport: selectedSport,
         searchText: searchQuery,

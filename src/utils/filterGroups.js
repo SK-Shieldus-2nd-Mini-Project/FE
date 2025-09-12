@@ -1,10 +1,9 @@
 export function filterGroups(groups, { region, sport, searchText }) {
   return groups.filter(group => {
-    const matchRegion = region ? group.region === region : true;
-    const matchSport = sport ? group.sport === sport : true;
-    const matchText = searchText
-      ? group.name.toLowerCase().includes(searchText.toLowerCase())
-      : true;
+    const matchRegion = !region || region === "전체" || group.regionName === region;
+    const matchSport = !sport || sport === "전체" || group.sportName === sport;
+    const matchText = !searchText || group.groupName.toLowerCase().includes(searchText.toLowerCase());
+
     return matchRegion && matchSport && matchText;
   });
 }
