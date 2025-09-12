@@ -1,48 +1,71 @@
 .content-panel {
-  padding: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
 }
 
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 20px;
+.status-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.card-image img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px 12px 0 0;
-  display: block; /* 추가하면 img가 block으로 나와서 카드 영역에 맞게 표시 */
+.status-list li {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.group-name {
+    font-weight: 500;
 }
 
 .status-badge {
-  padding: 4px 8px;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 0.85rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
 }
 
-.status-list li.status-leader .status-badge { 
-  background-color: #3498db; /* 파란색 */
+.leave-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-/* 상태별 색상 */
-.activity-card.approved .status-badge {
-  background-color: #4caf50; /* 초록: 완료 */
+.leave-btn:hover {
+    background-color: #c0392b;
 }
 
-.activity-card.pending .status-badge {
-  background-color: #ff9800; /* 주황: 대기 */
+/* 상태별 색상 예시 */
+.status-approved .status-badge {
+    background-color: #2ecc71;
+    color: #fff;
 }
 
-.activity-card.rejected .status-badge {
-  background-color: #f44336; /* 빨강: 거절 */
+.status-rejected .status-badge {
+    background-color: #e74c3c;
+    color: #fff;
 }
 
-.no-activities {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #888;
+.status-pending .status-badge {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+.status-leader .status-badge {
+    background-color: #3498db;
+    color: #fff;
 }

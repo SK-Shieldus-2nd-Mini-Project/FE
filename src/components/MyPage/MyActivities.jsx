@@ -24,8 +24,8 @@ export default function MyActivities() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = useSelector(state => state.auth.token);
-
     const navigate = useNavigate();
+
     useEffect(() => {
         if (!token) {
             setLoading(false);
@@ -49,10 +49,24 @@ export default function MyActivities() {
         fetchApplications();
     }, [token]);
 
+    const handleLeaveGroup = async (groupId) => {
+        if (!window.confirm('정말 이 모임에서 탈퇴하시겠습니까?')) return;
+
+        try {
+            await axios.delete(`/api/groups/${groupId}/leave`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setApplications(applications.filter(app => app.groupId !== groupId));
+        } catch (err) {
+            console.error('Failed to leave group:', err);
+            alert('모임 탈퇴에 실패했습니다.');
+        }
+    };
+
     if (loading) return <p>로딩 중...</p>;
     if (error) return <p>{error}</p>;
 
-     return (
+    return (
         <div className="content-panel">
             <h2>내 활동</h2>
             <p>내가 만들었거나 가입 신청한 모임의 현황을 확인합니다.</p>
@@ -61,17 +75,31 @@ export default function MyActivities() {
             ) : (
                 <ul className="status-list">
                     {applications.map((app) => {
-                        const statusInfo = getStatusInfo(app); // [수정] app 객체 전체를 전달
+                        const statusInfo = getStatusInfo(app);
                         return (
-                          <li
-                            key={app.groupId}
-                            className={`status-${statusInfo.className}`}
-                            onClick={() => navigate(`/groups/${app.groupId}`)}
-                            style={{ cursor: 'pointer' }}
-                          >
-                            <span className="group-name">{app.groupName}</span>
-                            <span className="status-badge">{statusInfo.text}</span>
-                          </li>
+                            <li key={app.groupId} className={`status-${statusInfo.className}`}>
+                                <div
+                                    className="group-info"
+                                    onClick={() => navigate(`/groups/${app.groupId}`)}
+                                >
+                                    <span className="group-name">{app.groupName}</span>
+
+                                    {/* 승인 완료 모임 탈퇴 버튼 */}
+                                    {(!app.leader && app.status === 'APPROVED') && (
+                                        <button
+                                            className="leave-btn"
+                                            onClick={(e) => {
+                                                e.stopPropagation(); // 클릭 이벤트 버블링 방지
+                                                handleLeaveGroup(app.groupId);
+                                            }}
+                                        >
+                                            탈퇴
+                                        </button>
+                                    )}
+
+                                    <span className="status-badge">{statusInfo.text}</span>
+                                </div>
+                            </li>
                         );
                     })}
                 </ul>
