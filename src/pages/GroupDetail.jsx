@@ -209,7 +209,7 @@ export default function GroupDetail() {
             <li className="member-item leader">
               <img src={group.leaderInfo.profileImageUrl || '/public/mymelody.png'} alt={group.leaderInfo.nickname} />
               <span>{group.leaderInfo.nickname}</span>
-              <span className="leader-badge">모임장</span>
+              <span className="detail-leader-badge">모임장</span>
             </li>
           )}
           {/* 멤버 목록 표시 */}
