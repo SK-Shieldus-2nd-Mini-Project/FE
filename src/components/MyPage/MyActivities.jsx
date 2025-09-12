@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import '../../assets/MyPage/MyActivities.css';
+import { useNavigate } from 'react-router-dom';
 
 const getStatusInfo = (application) => {
     if (application.leader) {
@@ -24,6 +25,7 @@ export default function MyActivities() {
     const [error, setError] = useState(null);
     const token = useSelector(state => state.auth.token);
 
+    const navigate = useNavigate();
     useEffect(() => {
         if (!token) {
             setLoading(false);
@@ -61,10 +63,15 @@ export default function MyActivities() {
                     {applications.map((app) => {
                         const statusInfo = getStatusInfo(app); // [수정] app 객체 전체를 전달
                         return (
-                            <li key={app.groupId} className={`status-${statusInfo.className}`}>
-                                <span className="group-name">{app.groupName}</span>
-                                <span className="status-badge">{statusInfo.text}</span>
-                            </li>
+                          <li
+                            key={app.groupId}
+                            className={`status-${statusInfo.className}`}
+                            onClick={() => navigate(`/groups/${app.groupId}`)}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <span className="group-name">{app.groupName}</span>
+                            <span className="status-badge">{statusInfo.text}</span>
+                          </li>
                         );
                     })}
                 </ul>
