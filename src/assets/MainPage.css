@@ -1,211 +1,153 @@
-/* --- 메인 컨테이너 --- */
 .main-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px; /* 섹션 간 간격 */
-  user-select: none;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
+.focus-keywords-section {
+  margin-left: 20px;
+  margin-bottom: 50px;
+}
 
-
-/* --- 필터 섹션 --- */
 .filter-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  flex-wrap: wrap;
   gap: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.filters {
-  display: flex;
-  gap: 12px;
+  margin-bottom: 50px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   flex-wrap: wrap;
 }
 
-.filters select,
 .filters input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-size: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.filters select:focus,
-.filters input:focus {
-  border-color: #2f71ff;
-  box-shadow: 0 0 8px rgba(47,113,255,0.3);
-  outline: none;
-}
-
-.search-btn,
-.create-group-btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s;
-  text-decoration: none;
-  color: white;
-  text-align: center;
-  cursor: pointer;
-}
-
-.search-btn {
-  background-color: #2f71ff;
-}
-.search-btn:hover {
-  background-color: #1d5ddb;
-  transform: translateY(-2px);
-}
-
-.create-group-btn {
-  background-color: #2f71ff;
-}
-.create-group-btn:hover {
-  background-color: #1d5ddb;
-  transform: translateY(-2px);
-}
-
-/* --- 필터 섹션 --- */
-.filter-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 20px;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
   border-radius: 8px;
-  flex-wrap: wrap; /* 창 크기가 작을 때 줄바꿈 */
-  gap: 15px;
-  user-select: none;  
+  font-size: 1rem;
 }
-
 .filters {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.filters select,
-.filters input {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-size: 1rem;
-  user-select: none;  
+  gap: 15px;
+  margin-right: auto;
+  margin-left: 20px;
 }
 
 .search-btn,
 .create-group-btn {
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-  text-decoration: none;
-  color: white;
-  text-align: center;
-  user-select: none;  
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .search-btn {
-  background-color: #2f71ff;
+  background-color: #007bff;
+  color: white;
 }
+
 .search-btn:hover {
-  background-color: rgb(93, 144, 255);
+    background-color: #0056b3;
 }
 
 .create-group-btn {
-  background-color: #2f71ff;
+  background-color: #3CD0B5;
+  color: white;
 }
+
 .create-group-btn:hover {
-  background-color: rgb(93, 144, 255);
+  background-color: #32b49c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(60, 208, 181, 0.3);
 }
 
-
-/* --- 모임 목록 섹션 --- */
 .group-list-section h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  user-select: none;  
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #212529;
 }
 
 .group-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* --- 모임 카드 --- */
-.group-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-decoration: none;
-  color: inherit;
-  user-select: none;  
-  cursor: pointer;
-}
-
-.group-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.group-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover; /* 이미지가 비율에 맞게 채워지도록 */
-}
-
-.group-card .group-info {
-  padding: 15px;
-}
-
-.group-card h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 8px;
-  /* 텍스트가 길어지면 ...으로 표시 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.group-card p {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 12px;
-}
-
-.group-card span {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #333;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 }
 
 .group-card-link {
-  text-decoration: none; /* 밑줄 제거 */
-  color: inherit;       /* 부모 색상 상속 */
-  display: block;       /* 카드 전체 클릭 영역 확보 */
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-.focus-keywords-section {
-  margin: 50px 0 15px 0;
+/* --- 모임 카드 (새로운 디자인) --- */
+.group-card {
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 내용을 아래로 정렬 */
+}
+
+.group-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.card-image-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.group-card:hover .card-image-wrapper img {
+    transform: scale(1.1);
+}
+
+/* 그라데이션 오버레이 */
+.card-image-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+}
+
+.group-info {
+    position: absolute;
+    z-index: 2;
+    padding: 20px;
+    bottom: 5%;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.group-info h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.group-info p {
+    margin: 0;
+    opacity: 0.9;
 }

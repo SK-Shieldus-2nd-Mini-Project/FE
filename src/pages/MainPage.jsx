@@ -81,12 +81,6 @@ export default function MainPage() {
             <motion.section className="focus-keywords-section" variants={itemVariants}>
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#2c3e50', fontFamily: 'KakaoSmallSans-Bold, sans-serif' }}>
                     오늘&nbsp;
-                    {/* <span style={{
-                        background: '#beefffff',
-                        color: '#fff',
-                        borderRadius: '3px',
-                        padding: '5px'
-                    }}> */}
                     <TypewriterEffect
                         words={typewriterWords}
                         typingSpeed={150}
@@ -136,26 +130,28 @@ export default function MainPage() {
             </motion.section>
 
 
-            {/* 전체 모임 */}
             <motion.section className="group-list-section" variants={itemVariants}>
-                <h2>전체 모임</h2>
-                <div className="group-grid">
-                    {filteredGroups.length > 0 ? (
-                        filteredGroups.map(group => (
-                            <Link to={`/groups/${group.groupId}`} key={group.groupId} className="group-card-link">
-                                <div className="group-card">
-                                    <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />                                    <div className="group-info">
-                                        <h3>{group.groupName}</h3>
-                                        <p># {group.regionName} # {group.sportName}</p>
-                                    </div>
+            <h2>함께할 모임을 찾아보세요</h2>
+            <div className="group-grid">
+                {filteredGroups.length > 0 ? (
+                    filteredGroups.map(group => (
+                        <Link to={`/groups/${group.groupId}`} key={group.groupId} className="group-card-link">
+                            <div className="group-card">
+                                <div className="card-image-wrapper">
+                                    <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
                                 </div>
-                            </Link>
-                        ))
-                    ) : (
-                        <p>검색 결과가 없습니다.</p>
-                    )}
-                </div>
-            </motion.section>
+                                <div className="group-info">
+                                    <h3>{group.groupName}</h3>
+                                    <p># {group.regionName} # {group.sportName}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))
+                ) : (
+                    <p>검색 결과가 없습니다.</p>
+                )}
+            </div>
+        </motion.section>
 
             {/* 모달 */}
             {
