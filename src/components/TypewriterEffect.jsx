@@ -83,7 +83,7 @@ export default function TypewriterEffect({
                 width: cursorWidth,
                 height: font.fontSize ? font.fontSize : "1em",
                 marginLeft: 4,
-                verticalAlign: "bottom",
+                verticalAlign: "-12%",
                 opacity: showCursor ? 1 : 0,
                 transition: "opacity 0.1s",
                 borderRadius: 2,
