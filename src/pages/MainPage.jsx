@@ -18,8 +18,8 @@ const sportOptions = ["러닝", "자전거", "농구", "야구", "축구", "배�
 
 const focusFont = {
     fontSize: "2.5rem",
-    fontWeight: "1000",
-    fontFamily: "'KakaoSmallSans-Bold', sans-serif",
+    fontWeight: "400",
+    fontFamily: "'Noto Sans KR', sans-serif",
 };
 
 const containerVariants = {
@@ -79,7 +79,7 @@ export default function MainPage() {
 
             {/* 키워드 애니메이션 */}
             <motion.section className="focus-keywords-section" variants={itemVariants}>
-                <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#2c3e50', fontFamily: 'KakaoSmallSans-Bold, sans-serif' }}>
+                <span style={{ fontSize: '2.5rem', fontWeight: '400', color: '#ffffffff', fontFamily: 'Noto Sans KR, sans-serif' }}>
                     오늘&nbsp;
                     <TypewriterEffect
                         words={typewriterWords}
@@ -87,21 +87,23 @@ export default function MainPage() {
                         deletingSpeed={100}
                         pauseDuration={4000}
                         font={focusFont}
-                        textColor="#2f71ff"
-                        cursorColor="#2f71ff"
+                        textColor="#8bbeffff"
+                        cursorColor="#8bbeffff"
                     />
                     {/* </span> */}
                     &nbsp;어때요?
                 </span>
             </motion.section>
 
-            {/* 필터 섹션 */}
-            <motion.section className="filter-section" variants={itemVariants}>
+            {/* 전체 모임 (필터 포함) */}
+        <motion.section className="group-list-section" variants={itemVariants}>
+            <div className="list-header">
+                <h2 style={{ fontWeight: '400' }}>모집중인 모임</h2>
+
+                {/* 필터 UI */}
                 <div className="filters">
                     <AnimatedFilterButton buttonText="지역" options={regionOptions} onSelect={setSelectedRegion} />
                     <AnimatedFilterButton buttonText="종목 선택" options={sportOptions} onSelect={setSelectedSport} />
-
-                    {/* 검색창 + 버튼 */}
                     <input
                         type="text"
                         placeholder="모임 이름으로 검색"
@@ -109,10 +111,7 @@ export default function MainPage() {
                         onChange={(e) => setSearchText(e.target.value)}
                     />
                     <button className="search-btn" onClick={handleSearch}>찾기</button>
-                </div>
-
-                {/* 모임 모집하기 버튼 */}
-                <button
+                    <button
                     className="create-group-btn"
                     onClick={() => {
                         if (!isLoggedIn) {
@@ -127,11 +126,9 @@ export default function MainPage() {
                 >
                     모임 모집하기
                 </button>
-            </motion.section>
+                </div>
+            </div>
 
-
-            <motion.section className="group-list-section" variants={itemVariants}>
-            <h2>함께할 모임을 찾아보세요</h2>
             <div className="group-grid">
                 {filteredGroups.length > 0 ? (
                     filteredGroups.map(group => (

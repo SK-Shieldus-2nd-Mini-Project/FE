@@ -73,11 +73,6 @@ export default function TypewriterEffect({
         return () => clearInterval(blinkRef.current);
     }, []);
 
-    const cursorHeight = useMemo(() => {
-        const fontSizeStr = font.fontSize || "32px";
-        return parseFloat(fontSizeStr);
-    }, [font.fontSize]);
-
 
     return (
         <span style={{ ...style, ...font, color: textColor, whiteSpace: "pre" }}>
