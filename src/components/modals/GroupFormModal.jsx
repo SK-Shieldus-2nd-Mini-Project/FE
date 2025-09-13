@@ -1,7 +1,7 @@
 // src/components/GroupFormModal.jsx
 import React from "react";
-import '../assets/Modal.css'; // 공통 CSS 사용
-import '../assets/Group/GroupFormModal.css'; // 모임 생성 모달 전용 CSS
+import '../../assets/modals/Modal.css'; // 공통 CSS 사용
+import '../../assets/modals/FormModal.css'; // 모임 생성 모달 전용 CSS
 
 const GroupFormModal = ({ show, onClose, message }) => {
   if (!show) return null;
@@ -11,7 +11,6 @@ const GroupFormModal = ({ show, onClose, message }) => {
       <div 
         className="form-modal-content" 
         onClick={(e) => e.stopPropagation()}
-        
       >
         {/* 문구 영역 */}
         <div>

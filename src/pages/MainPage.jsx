@@ -9,7 +9,7 @@ import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllGroups } from '../redux/groupSlice.js';
 import GroupConfirmModal from '../components/modals/GroupConfirmModal.jsx';
-import '../assets/Modal.css'
+import '../assets/modals/Modal.css'
 
 const regionOptions = [
     "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",

@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "./InputField";
-import GroupFormModal from "./GroupFormModal";
+import GroupFormModal from "./modals/GroupFormModal";
 import { validateGroupForm } from "../utils/validateGroupForm";
 import { createGroup } from "../redux/groupSlice";
-import '../assets/Modal.css';
-import '../assets/Group/GroupFormModal.css';
+import '../assets/modals/Modal.css';
+import '../assets/modals/GroupFormModal.css';
 
 export default function GroupForm({ onSuccess }) {
   const [formData, setFormData] = useState({

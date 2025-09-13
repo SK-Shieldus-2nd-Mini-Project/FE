@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { joinGroup } from "../redux/groupSlice";
 import '../assets/Group/GroupDetail.css';
-import '../assets/Group/GroupFormModal.css'
+import '../assets/modals/GroupFormModal.css'
 import axios from "axios";
 
 export default function GroupDetail() {
