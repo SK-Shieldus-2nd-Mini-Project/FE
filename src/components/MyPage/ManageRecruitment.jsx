@@ -206,7 +206,6 @@ export default function ManageRecruitment() {
                                 <div className="group-item-info">
                                     <span><strong>지역:</strong> {group.regionName}</span>
                                     <span><strong>종목:</strong> {group.sportName}</span>
-                                    <span><strong>최대 인원:</strong> {group.maxMembers ?? '정보 없음'}</span>
                                 </div>
                                 {group.approvalStatus === 'APPROVED' && (
                                     <>

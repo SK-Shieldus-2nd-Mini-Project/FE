@@ -4,7 +4,7 @@ import MainPage from '../pages/MainPage.jsx'
 import Login from "../pages/Login.jsx"
 import Signup from '../pages/Signup.jsx'
 import MyPage from '../pages/MyPage.jsx'
-import GroupCreation from '../pages/GroupCreation.jsx'
+import GroupForm from '../components/GroupForm.jsx'
 import GroupDetail from '../pages/GroupDetail.jsx'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
@@ -35,7 +35,7 @@ export default function Router() {
         </Route>
         <Route
           path="/groupcreation"
-          element={<GroupCreation />}
+          element={<GroupForm />}
         />
         <Route
           path="/groups/:id"

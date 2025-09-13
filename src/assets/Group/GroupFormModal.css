@@ -1,0 +1,82 @@
+/* src/assets/Group/GroupFormModal.css */
+
+.form-modal-content {
+  background-color: rgba(20, 20, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  width: 500px;
+  max-width: 90%;
+  position: relative;
+}
+
+.form-modal-content h3 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.form-modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-modal-content input,
+.form-modal-content textarea,
+.form-modal-content select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.form-modal-content input::placeholder,
+.form-modal-content textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-modal-content .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.form-modal-content .modal-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.form-modal-content .modal-actions button[type="button"] {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.form-modal-content .modal-actions button[type="submit"] {
+  background-color: #3CD0B5;
+  color: white;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    cursor: pointer;
+}

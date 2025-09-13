@@ -51,6 +51,10 @@
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 15px;
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .my-group-item-detailed button {

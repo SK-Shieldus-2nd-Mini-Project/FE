@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { joinGroup } from "../redux/groupSlice";
 import '../assets/Group/GroupDetail.css';
+import '../assets/Group/GroupFormModal.css'
 import axios from "axios";
 
 export default function GroupDetail() {
@@ -227,9 +228,9 @@ export default function GroupDetail() {
       </aside>
       </div>
       {isCreateModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>새 일정 등록</h3>
+            <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
+                <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+                    <h3>새 일정 등록</h3>
             <form onSubmit={handleScheduleSubmit}>
               <input type="text" name="location" placeholder="모임 장소" value={newSchedule.location} onChange={handleScheduleChange} required />
               <input type="datetime-local" name="meetingTime" value={newSchedule.meetingTime} onChange={handleScheduleChange} required />
@@ -244,9 +245,9 @@ export default function GroupDetail() {
       )}
       {/* [추가] 일정 수정 모달 */}
       {isEditModalOpen && editingSchedule && (
-        <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>일정 수정</h3>
+            <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
+                <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+                    <h3>일정 수정</h3>
             <form onSubmit={handleUpdateSchedule}>
               <input type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
               <input type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />

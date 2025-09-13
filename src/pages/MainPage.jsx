@@ -8,6 +8,8 @@ import AnimatedFilterButton from '../components/AnimatedFilterButton';
 import useFilteredGroups from '../hooks/useFilteredGroups'; // ✅ 커스텀 훅
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllGroups } from '../redux/groupSlice.js';
+import GroupConfirmModal from '../components/modals/GroupConfirmModal.jsx';
+import '../assets/Modal.css'
 
 const regionOptions = [
     "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구",
@@ -32,7 +34,8 @@ const itemVariants = {
 };
 
 export default function MainPage() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedSport, setSelectedSport] = useState(null);
 
@@ -53,6 +56,11 @@ export default function MainPage() {
     // ✅ 검색 버튼 누를 때만 searchQuery 업데이트
     const handleSearch = () => {
         setSearchQuery(searchText);
+    };
+
+    const handleCreationSuccess = () => {
+        setIsCreateModalOpen(false); // 생성 모달 닫고
+        setIsConfirmModalOpen(true); // 완료 모달 열기
     };
 
     // ✅ 필터링 적용 (searchQuery만 반영됨)
@@ -96,71 +104,75 @@ export default function MainPage() {
             </motion.section>
 
             {/* 전체 모임 (필터 포함) */}
-        <motion.section className="group-list-section" variants={itemVariants}>
-            <div className="list-header">
-                <h2 style={{ fontWeight: '400' }}>모집중인 모임</h2>
+            <motion.section className="group-list-section" variants={itemVariants}>
+                <div className="list-header">
+                    <h2 style={{ fontWeight: '400' }}>모집중인 모임</h2>
 
-                {/* 필터 UI */}
-                <div className="filters">
-                    <AnimatedFilterButton buttonText="지역" options={regionOptions} onSelect={setSelectedRegion} />
-                    <AnimatedFilterButton buttonText="종목 선택" options={sportOptions} onSelect={setSelectedSport} />
-                    <input
-                        type="text"
-                        placeholder="모임 이름으로 검색"
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
-                    <button className="search-btn" onClick={handleSearch}>찾기</button>
-                    <button
-                    className="create-group-btn"
-                    onClick={() => {
-                        if (!isLoggedIn) {
-                            // 로그인 안 됐으면 alert 후 로그인 페이지로 이동
-                            alert("로그인이 필요합니다.");
-                            navigate("/login");
-                        } else {
-                            // 로그인 되어 있으면 모달 열기
-                            setIsModalOpen(true);
-                        }
-                    }}
-                >
-                    모임 모집하기
-                </button>
+                    {/* 필터 UI */}
+                    <div className="filters">
+                        <AnimatedFilterButton buttonText="지역" options={regionOptions} onSelect={setSelectedRegion} />
+                        <AnimatedFilterButton buttonText="종목 선택" options={sportOptions} onSelect={setSelectedSport} />
+                        <input
+                            type="text"
+                            placeholder="모임 이름으로 검색"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <button className="search-btn" onClick={handleSearch}>찾기</button>
+                        <button
+                            className="create-group-btn"
+                            onClick={() => {
+                                if (!isLoggedIn) {
+                                    // 로그인 안 됐으면 alert 후 로그인 페이지로 이동
+                                    alert("로그인이 필요합니다.");
+                                    navigate("/login");
+                                } else {
+                                    // 로그인 되어 있으면 모달 열기
+                                    setIsCreateModalOpen(true);
+                                }
+                            }}
+                        >
+                            모임 모집하기
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div className="group-grid">
-                {filteredGroups.length > 0 ? (
-                    filteredGroups.map(group => (
-                        <Link to={`/groups/${group.groupId}`} key={group.groupId} className="group-card-link">
-                            <div className="group-card">
-                                <div className="card-image-wrapper">
-                                    <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
+                <div className="group-grid">
+                    {filteredGroups.length > 0 ? (
+                        filteredGroups.map(group => (
+                            <Link to={`/groups/${group.groupId}`} key={group.groupId} className="group-card-link">
+                                <div className="group-card">
+                                    <div className="card-image-wrapper">
+                                        <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
+                                    </div>
+                                    <div className="group-info">
+                                        <h3>{group.groupName}</h3>
+                                        <p># {group.regionName} # {group.sportName}</p>
+                                    </div>
                                 </div>
-                                <div className="group-info">
-                                    <h3>{group.groupName}</h3>
-                                    <p># {group.regionName} # {group.sportName}</p>
-                                </div>
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    <p>검색 결과가 없습니다.</p>
-                )}
-            </div>
-        </motion.section>
+                            </Link>
+                        ))
+                    ) : (
+                        <p>검색 결과가 없습니다.</p>
+                    )}
+                </div>
+            </motion.section>
 
             {/* 모달 */}
-            {
-                isModalOpen && (
-                    <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
-                            <button className="close-btn" onClick={() => setIsModalOpen(false)}>&times;</button>
-                            <GroupForm />
-                        </div>
+            {isCreateModalOpen && (
+                <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
+                    <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="close-btn" onClick={() => setIsCreateModalOpen(false)}>&times;</button>
+                        <GroupForm onSuccess={handleCreationSuccess} />
                     </div>
-                )
-            }
+                </div>
+            )}
+            {/* 모임 생성 완료 모달 */}
+            <GroupConfirmModal
+                show={isConfirmModalOpen}
+                onClose={() => setIsConfirmModalOpen(false)}
+                message="새로운 모임이 관리자 승인 대기 중입니다."
+            />
         </motion.main >
     );
 }

@@ -29,13 +29,13 @@
     color: #ffffff;
 }
 
-.status-badge {
+.status-badge{
     padding: 5px 12px;
     border-radius: 6px;
     font-size: 0.8rem;
     font-weight: bold;
     color: white;
-    margin-left: 10px;
+    margin-left: 20px;
     margin-right: auto;
 }
 
