@@ -36,11 +36,11 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   padding: 8px;
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  width: 500px;
-  justify-content: center;
+  width: 400px;
+  justify-items: center;
   z-index: 10;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
