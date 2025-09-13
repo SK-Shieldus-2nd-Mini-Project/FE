@@ -3,19 +3,67 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "./InputField";
+import Select from "react-select";
 import GroupFormModal from "./modals/GroupFormModal";
 import { validateGroupForm } from "../utils/validateGroupForm";
 import { createGroup } from "../redux/groupSlice";
 import '../assets/modals/Modal.css';
 import '../assets/modals/GroupFormModal.css';
+import { label } from "framer-motion/client";
+
+const customSelectStyles = {
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '8px',
+    minHeight: '48px',
+    boxShadow: 'none',
+    '&:hover': {
+      borderColor: 'rgba(255, 255, 255, 0.4)',
+    },
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    padding: '0 12px',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#ffffff',
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: 'rgba(255, 255, 255, 0.6)',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: 'rgba(30, 30, 30, 0.9)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '8px',
+    backdropFilter: 'blur(5px)',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+    color: '#ffffff',
+    padding: '12px 15px',
+  }),
+  indicatorSeparator: () => ({
+    display: 'none',
+  }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    color: 'rgba(255, 255, 255, 0.6)',
+  }),
+};
 
 export default function GroupForm({ onSuccess }) {
   const [formData, setFormData] = useState({
     groupName: "",
     description: "",
     maxMembers: "",
-    regionId: "",
-    sportId: "",
+    regionId: null,
+    sportId: null,
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -25,44 +73,44 @@ export default function GroupForm({ onSuccess }) {
   const { status, error } = useSelector(state => state.group || { status: 'idle', error: null });
 
   const regionOptions = [
-    { id: 1, name: "강남구" },
-    { id: 2, name: "강동구" },
-    { id: 3, name: "강북구" },
-    { id: 4, name: "강서구" },
-    { id: 5, name: "관악구" },
-    { id: 6, name: "광진구" },
-    { id: 7, name: "구로구" },
-    { id: 8, name: "금천구" },
-    { id: 9, name: "노원구" },
-    { id: 10, name: "도봉구" },
-    { id: 11, name: "동대문구" },
-    { id: 12, name: "동작구" },
-    { id: 13, name: "마포구" },
-    { id: 14, name: "서대문구" },
-    { id: 15, name: "서초구" },
-    { id: 16, name: "성동구" },
-    { id: 17, name: "성북구" },
-    { id: 18, name: "송파구" },
-    { id: 19, name: "양천구" },
-    { id: 20, name: "영등포구" },
-    { id: 21, name: "용산구" },
-    { id: 22, name: "은평구" },
-    { id: 23, name: "종로구" },
-    { id: 24, name: "중구" },
-    { id: 25, name: "중량구" },
+    { value: 1, label: "강남구" },
+    { value: 2, label: "강동구" },
+    { value: 3, label: "강북구" },
+    { value: 4, label: "강서구" },
+    { value: 5, label: "관악구" },
+    { value: 6, label: "광진구" },
+    { value: 7, label: "구로구" },
+    { value: 8, label: "금천구" },
+    { value: 9, label: "노원구" },
+    { value: 10, label: "도봉구" },
+    { value: 11, label: "동대문구" },
+    { value: 12, label: "동작구" },
+    { value: 13, label: "마포구" },
+    { value: 14, label: "서대문구" },
+    { value: 15, label: "서초구" },
+    { value: 16, label: "성동구" },
+    { value: 17, label: "성북구" },
+    { value: 18, label: "송파구" },
+    { value: 19, label: "양천구" },
+    { value: 20, label: "영등포구" },
+    { value: 21, label: "용산구" },
+    { value: 22, label: "은평구" },
+    { value: 23, label: "종로구" },
+    { value: 24, label: "중구" },
+    { value: 25, label: "중량구" },
   ];
 
   const sportOptions = [
-    { id: 1, name: "농구" },
-    { id: 2, name: "등산" },
-    { id: 3, name: "러닝" },
-    { id: 4, name: "배드민턴" },
-    { id: 5, name: "볼링" },
-    { id: 6, name: "야구" },
-    { id: 7, name: "자전거" },
-    { id: 8, name: "족구" },
-    { id: 9, name: "축구" },
-    { id: 10, name: "탁구" },
+    { value: 1, label: "농구" },
+    { value: 2, label: "등산" },
+    { value: 3, label: "러닝" },
+    { value: 4, label: "배드민턴" },
+    { value: 5, label: "볼링" },
+    { value: 6, label: "야구" },
+    { value: 7, label: "자전거" },
+    { value: 8, label: "족구" },
+    { value: 9, label: "축구" },
+    { value: 10, label: "탁구" },
   ];
 
   const handleChange = (e) => {
@@ -79,7 +127,11 @@ export default function GroupForm({ onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationError = validateGroupForm(formData);
+    const validationError = validateGroupForm({
+        ...formData,
+        regionId: formData.regionId?.value,
+        sportId: formData.sportId?.value
+    });
     if (validationError) {
       alert(validationError);
       return;
@@ -90,8 +142,8 @@ export default function GroupForm({ onSuccess }) {
       groupName: formData.groupName,
       description: formData.description,
       maxMembers: Number(formData.maxMembers),
-      regionId: Number(formData.regionId),
-      sportId: Number(formData.sportId),
+      regionId: Number(formData.regionId.value),
+      sportId: Number(formData.sportId.value),
     };
 
     formDataToSubmit.append('request', new Blob([JSON.stringify(groupData)], { type: "application/json" }));
@@ -122,20 +174,30 @@ export default function GroupForm({ onSuccess }) {
         <InputField label="최대 인원" name="maxMembers" value={formData.maxMembers} onChange={handleChange} type="number" />
 
         <div className="input-field">
-          <label htmlFor="regionId">지역</label>
-          <select id="regionId" name="regionId" value={formData.regionId} onChange={handleChange}>
-            <option value="">지역 선택</option>
-            {regionOptions.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-          </select>
-        </div>
+        <label htmlFor="regionId">지역</label>
+        <Select
+          id="regionId"
+          name="regionId"
+          options={regionOptions}
+          value={formData.regionId}
+          onChange={(selectedOption) => setFormData({...formData, regionId: selectedOption})}
+          placeholder="지역을 선택하세요..."
+          styles={customSelectStyles}
+        />
+      </div>
 
         <div className="input-field">
-          <label htmlFor="sportId">종목</label>
-          <select id="sportId" name="sportId" value={formData.sportId} onChange={handleChange}>
-            <option value="">종목 선택</option>
-            {sportOptions.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
-        </div>
+        <label htmlFor="sportId">종목</label>
+        <Select
+          id="sportId"
+          name="sportId"
+          options={sportOptions}
+          value={formData.sportId}
+          onChange={(selectedOption) => setFormData({...formData, sportId: selectedOption})}
+          placeholder="종목을 선택하세요..."
+          styles={customSelectStyles}
+        />
+      </div>
 
         <div className="input-field">
           <label htmlFor="image">대표 이미지</label>
