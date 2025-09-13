@@ -1,3 +1,5 @@
+/* sk-shieldus-2nd-mini-project/fe/FE-f7b7a7eaaf7a387b6e035cd5d69110b93b4beab9/src/assets/MyPage/MyPage.css */
+
 .mypage-container {
   display: flex;
   width: 100%;
@@ -5,45 +7,46 @@
   margin: 40px auto;
   gap: 30px;
   min-height: 600px;
-  user-select: none;
+  padding: 0 20px;
 }
 
 /* --- 사이드바 --- */
 .mypage-sidebar {
   width: 240px;
   flex-shrink: 0;
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  user-select: none;
+  background-color: rgba(20, 20, 20, 0.5); /* 반투명 배경 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .profile-summary {
   text-align: center;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #e9ecef;
-  padding-bottom: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 25px;
 }
 
 .profile-summary .profile-image {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   object-fit: cover;
-  border: 3px solid #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .profile-summary h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
 }
 
 .profile-summary p {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
 }
 
@@ -55,150 +58,42 @@
 
 .mypage-sidebar nav li {
   padding: 15px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 8px;
   cursor: pointer;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
   transition: background-color 0.2s, color 0.2s;
 }
 
 .mypage-sidebar nav li:hover {
-  background-color: #e9ecef;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .mypage-sidebar nav li.active {
-  background-color: #3498db;
+  background-color: #3CD0B5; /* 포인트 색상 */
   color: white;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* --- 콘텐츠 영역 --- */
 .mypage-content {
   flex-grow: 1;
-  background-color: #ffffff;
-  border-radius: 12px;
+  background-color: rgba(20, 20, 20, 0.5); /* 반투명 배경 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   padding: 30px 40px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .content-panel h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0;
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #e9ecef;
-  user-select: none;
-}
-
-/* '내 활동' 탭 리스트 스타일 */
-.status-list {
-    list-style: none;
-    padding: 0;
-}
-
-.status-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* 상단 정렬 후 badge는 absolute로 위치 */
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #f8f9fa;
-    position: relative; /* badge 절대 위치 기준 */
-    min-height: 80px; /* badge와 버튼 겹치지 않도록 높이 확보 */
-}
-
-.status-list li .status-badge {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-
-.group-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.status-list .group-name {
-    font-weight: 500;
-}
-
-.status-badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    user-select: none;
-}
-
-.status-list li.status-approved .status-badge { background-color: #2ecc71; }
-.status-list li.status-pending .status-badge { background-color: #f39c12; }
-.status-list li.status-rejected .status-badge { background-color: #e74c3c; }
-
-/* 모임장 뱃지 */
-.leader-badge {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: #3498db;
-    color: white;
-    font-weight: bold;
-    padding: 5px 12px;
-    border-radius: 20px;
-}
-
-/* 모임 탈퇴 버튼 - 뱃지 스타일과 통일 */
-.leave-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #e74c3c;
-    color: white;
-    font-weight: bold;
-    padding: 5px 12px;
-    border-radius: 20px;
-    border: none; /* 외곽선 제거 */
-    font-size: 0.8rem;
-    cursor: pointer;
-    z-index: 1;
-}
-
-.leave-button:hover {
-    background-color: #c0392b;
-}
-
-/* '관리자' 탭 메뉴 스타일 */
-.admin-menu {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.admin-menu-item {
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-.admin-menu-item h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.admin-menu-item p {
-    color: #6c757d;
-    margin-bottom: 15px;
-}
-
-.admin-menu-item button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #3498db;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }

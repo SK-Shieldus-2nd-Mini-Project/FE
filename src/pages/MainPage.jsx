@@ -87,8 +87,8 @@ export default function MainPage() {
                         deletingSpeed={100}
                         pauseDuration={4000}
                         font={focusFont}
-                        textColor="#8bbeffff"
-                        cursorColor="#8bbeffff"
+                        textColor="#52ffdfff"
+                        cursorColor="#52ffdfff"
                     />
                     {/* </span> */}
                     &nbsp;어때요?

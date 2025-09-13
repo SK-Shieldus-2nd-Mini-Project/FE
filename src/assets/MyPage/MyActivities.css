@@ -1,82 +1,70 @@
-.content-panel {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-}
+/* sk-shieldus-2nd-mini-project/fe/FE-f7b7a7eaaf7a387b6e035cd5d69110b93b4beab9/src/assets/MyPage/MyActivities.css */
+
 .status-list {
     list-style: none;
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-
-.status-item {
+.status-list li {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* 상단 정렬 */
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    transition: box-shadow 0.2s;
-}
-
-.status-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.group-info {
-    flex: 1;
-    cursor: pointer;
-}
-
-.group-name {
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.group-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem; /* 버튼과 상태 간격 */
-}
-
-/* 버튼 위, 상태 아래 */
-.leave-btn {
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: background-color 0.2s;
 }
 
-.leave-btn:hover {
-    background-color: #ff7875;
+.status-list li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
 }
 
-/* 상태 배지 */
+.status-list .group-name {
+    font-weight: 500;
+    color: #ffffff;
+}
+
 .status-badge {
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
     font-size: 0.8rem;
-    color: #fff;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+    margin-right: auto;
 }
 
-.status-badge.leader {
-    background-color: #2f71ff;
+/* 상태별 색상 */
+.status-list li.status-approved .status-badge { background-color: #2ecc71; }
+.status-list li.status-pending .status-badge { background-color: #f39c12; }
+.status-list li.status-rejected .status-badge { background-color: #e74c3c; }
+.status-list li.status-leader .status-badge { background-color: #3498db; }
+
+.no-activities {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
 }
-.status-badge.approved {
-    background-color: #2ecc71;
+
+.leave-button {
+    padding: 6px 14px;
+    border: 1px solid rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.3);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-left: 20px;
 }
-.status-badge.rejected {
-    background-color: #e74c3c;
-}
-.status-badge.pending {
-    background-color: #f39c12;
+
+.leave-button:hover {
+    background-color: rgba(231, 76, 60, 0.5);
+    border-color: rgba(231, 76, 60, 0.7);
 }
