@@ -1,4 +1,4 @@
-/* src/assets/Group/GroupFormModal.css */
+/* src/assets/FormModal.css */
 
 .form-modal-content {
   background-color: rgba(20, 20, 20, 0.7);
@@ -12,20 +12,29 @@
   width: 500px;
   max-width: 90%;
   position: relative;
+  
+  /* [추가] 모달의 최대 높이를 지정하고 내부 레이아웃을 flex로 설정합니다. */
+  max-height: 90vh; /* 화면 높이의 90%를 넘지 않도록 설정 */
+  display: flex;
+  flex-direction: column;
 }
 
-.form-modal-content h3 {
+.form-modal-content h3, .form-modal-content h2 {
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
+  flex-shrink: 0; /* 제목은 높이가 줄어들지 않도록 고정 */
 }
 
 .form-modal-content form {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  overflow-y: auto; /* [추가] 폼 내용이 길어지면 세로 스크롤 생성 */
+  padding-right: 15px; /* 스크롤바와 콘텐츠 사이 여백 */
+  margin-right: -15px; /* 스크롤바가 차지하는 공간만큼 당겨서 레이아웃 유지 */
 }
 
 .form-modal-content input,
@@ -50,6 +59,7 @@
   justify-content: flex-end;
   gap: 10px;
   margin-top: 15px;
+  flex-shrink: 0; /* 버튼 영역은 높이가 줄어들지 않도록 고정 */
 }
 
 .form-modal-content .modal-actions button {
@@ -58,16 +68,24 @@
   border: none;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s;
 }
 
 .form-modal-content .modal-actions button[type="button"] {
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
 }
+.form-modal-content .modal-actions button[type="button"]:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
 
 .form-modal-content .modal-actions button[type="submit"] {
   background-color: #3CD0B5;
   color: white;
+}
+/* [추가] 생성하기 버튼 호버 효과 */
+.form-modal-content .modal-actions button[type="submit"]:hover {
+  background-color: #32b49c;
 }
 
 .close-btn {

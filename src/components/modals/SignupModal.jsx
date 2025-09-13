@@ -1,8 +1,8 @@
 // src/components/SignupCompleteModal.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import '../assets/Modal.css';
-import '../assets/SignupModal.css';
+import '../../assets/modals/Modal.css';
+import '../../assets/modals/SignupModal.css';
 
 const SignupCompleteModal = ({ show, onClose }) => {
   const navigate = useNavigate();

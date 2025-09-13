@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/Modal.css'; // 공용 오버레이
+import '../../assets/modals/Modal.css'; // 공용 오버레이
 import '../../assets/modals/ConfirmModal.css'; // 확인 모달 전용 스타일
 
 const GroupConfirmModal = ({ show, onClose, message }) => {

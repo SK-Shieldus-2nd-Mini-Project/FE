@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signupUser } from "../redux/authSlice"; // Thunk 액션 import
-import SignupModal from "../components/SignupModal";
+import SignupModal from "../components/modals/SignupModal";
 import '../assets/signup.css';
-import '../assets/Modal.css';
+import '../assets/modals/Modal.css';
 
 export default function Signup() {
   const [formData, setFormData] = useState({

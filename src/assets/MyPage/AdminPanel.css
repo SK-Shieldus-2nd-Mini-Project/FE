@@ -55,6 +55,7 @@
 .item-detail {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
+  margin-left: 20px;
 }
 
 .item-actions button {
