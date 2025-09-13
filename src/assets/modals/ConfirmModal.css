@@ -1,0 +1,44 @@
+/* src/assets/modals/ConfirmModal.css */
+.confirm-modal-content {
+  background-color: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-align: center;
+  width: 450px;
+  max-width: 90%;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.confirm-modal-content h2 {
+  font-size: 3rem;
+  margin: 0 0 15px 0;
+}
+
+.confirm-modal-content h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.confirm-modal-content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+}
+
+.confirm-modal-content button {
+  padding: 12px 25px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #3CD0B5;
+  color: white;
+  transition: all 0.2s;
+}

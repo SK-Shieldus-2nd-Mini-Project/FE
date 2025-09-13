@@ -1,90 +1,108 @@
-/* login.css */
+/* src/assets/login.css 및 src/assets/signup.css */
 
-/* 로그인 폼 카드 */
-.login-container {
-  background-color: #ffffff;
-  padding: 50px 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  width: 380px;
+.login-container,
+.signup-container {
+  width: 450px;
   max-width: 90%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 100px auto;
-  user-select: none; 
+  padding: 40px;
+
+  /* 반투명 스타일 */
+  background-color: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
 }
 
-.login-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-}
-
-/* 제목 */
-.login-container h2 {
+.login-container h2,
+.signup-container h2 {
   text-align: center;
-  margin-bottom: 35px;
-  color: #333;
+  margin-bottom: 30px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* 입력창 */
-.login-container input[type="text"],
-.login-container input[type="password"] {
+.login-container form,
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-container input,
+.signup-container input {
   width: 100%;
   padding: 14px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
+  color: #ffffff;
+  transition: all 0.2s;
 }
 
-.login-container input:focus {
-  border-color: #74ebd5;
+.login-container input::placeholder,
+.signup-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.login-container input:focus,
+.signup-container input:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(116, 235, 213, 0.5);
+  border-color: #3CD0B5;
+  box-shadow: 0 0 0 3px rgba(60, 208, 181, 0.3);
 }
 
-/* 버튼 */
-.login-container button {
+/* 회원가입 페이지의 label 스타일 */
+.signup-container label {
+    margin-top: 5px;
+    margin-bottom: -15px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.login-container button,
+.signup-container button {
   width: 100%;
   padding: 14px;
-  background: #37e2c2;
+  background: #3CD0B5;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #fff;
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.2s ease-in-out;
+  margin-top: 10px;
 }
 
-.login-container button:hover {
-  background: #4ac2b1;
+.login-container button:hover,
+.signup-container button:hover {
+  background: #32b49c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(60, 208, 181, 0.3);
 }
 
-/* 링크 및 안내 문구 */
-.login-container p {
+.login-container p,
+.signup-container p {
   text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #555;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.login-container .link {
-  color: #74ebd5;
+.login-container p a,
+.signup-container p a {
+  color: #3CD0B5;
   text-decoration: none;
-  font-weight: 500;
-  cursor: pointer;
+  font-weight: 600;
 }
 
-.login-container .link:hover {
+.login-container p a:hover,
+.signup-container p a:hover {
   text-decoration: underline;
-}
-
-/* 반응형 처리 */
-@media (max-width: 400px) {
-  .login-container {
-    padding: 40px 20px;
-  }
 }

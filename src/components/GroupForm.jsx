@@ -7,8 +7,9 @@ import GroupFormModal from "./GroupFormModal";
 import { validateGroupForm } from "../utils/validateGroupForm";
 import { createGroup } from "../redux/groupSlice";
 import '../assets/Modal.css';
+import '../assets/Group/GroupFormModal.css';
 
-function GroupForm() {
+export default function GroupForm({ onSuccess }) {
   const [formData, setFormData] = useState({
     groupName: "",
     description: "",
@@ -100,7 +101,7 @@ function GroupForm() {
 
     try {
       await dispatch(createGroup(formDataToSubmit)).unwrap(); // 수정된 formData 전달
-      setShowModal(true);
+      onSuccess();
     } catch (err) {
       alert(err.message || "모임 생성 실패");
     }
@@ -144,8 +145,7 @@ function GroupForm() {
         <button type="submit" className="submit-btn" disabled={status === 'loading'}>
           {status === 'loading' ? "생성 중..." : "생성하기"}
         </button>
-        {status === 'failed' && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+        {status === 'failed' && <p style={{ color: "red" }}>{error}</p>}      </form>
 
       <GroupFormModal show={showModal} onClose={handleCloseModal}>
         <div style={{ padding: '40px 30px', borderRadius: '12px', backgroundColor: '#fff', textAlign: 'center' }}>
@@ -172,5 +172,3 @@ function GroupForm() {
     </>
   );
 }
-
-export default GroupForm;

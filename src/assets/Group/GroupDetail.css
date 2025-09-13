@@ -1,36 +1,104 @@
-.group-detail-page-container {
+/* sk-shieldus-2nd-mini-project/fe/FE-f7b7a7eaaf7a387b6e035cd5d69110b93b4beab9/src/assets/Group/GroupDetail.css */
+
+.group-detail-container {
   max-width: 1200px;
-  min-height: 90vh;
-  margin: 0 auto;
-  padding: 30px 20px;
-  font-family: 'Noto Sans KR', sans-serif;
-  user-select: none;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* --- 메인 반투명 컨테이너 --- */
+.detail-content-wrapper {
+  background-color: rgba(20, 20, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   gap: 30px;
   align-items: flex-start;
 }
 
 .group-detail-main-content {
-  flex-grow: 1; /* 메인 콘텐츠가 남은 공간을 차지 */
+  flex-grow: 1;
 }
 
+/* --- 모임 헤더 --- */
+.group-header {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 30px;
+}
+
+.group-header img {
+  width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.group-header-info h2 {
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.group-header-info p {
+  margin: 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.join-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.2s;
+}
+
+.join-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- 멤버 목록 사이드바 --- */
 .group-members-sidebar {
   width: 280px;
-  flex-shrink: 0; /* 사이드바 너비 고정 */
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 36px;
+  flex-shrink: 0;
 }
 
 .group-members-sidebar h4 {
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.2rem;
-  color: #343a40;
-  border-bottom: 1px solid #dee2e6;
   padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .members-list {
@@ -57,144 +125,30 @@
 
 .member-item span {
   font-weight: 500;
-  color: #495057;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .detail-leader-badge {
   font-size: 0.75rem;
   font-weight: bold;
-  color: #fff !important;
-  background-color: #007bff;
+  color: #fff;
+  background-color: rgba(0, 123, 255, 0.7);
   padding: 3px 8px;
   border-radius: 10px;
-  margin-left: auto; /* 오른쪽 끝으로 밀어내기 */
+  margin-right: auto;
 }
 
-.back-btn {
-  display: inline-block;
-  margin-bottom: 20px;
-  text-decoration: none;
-  color: #3498db;
-  font-weight: bold;
-  transition: color 0.2s;
-}
-
-.back-btn:hover {
-  color: #2c3e50;
-}
-
-.group-detail-container {
-  user-select: none;
-}
-
-.group-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 40px;
-  background-color: #fdfdfd;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-  user-select: none;
-}
-
-.group-header img {
-  width: 320px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
-  user-select: none;  
-}
-
-.group-header-info {
-  flex: 1;
-  min-width: 250px;
-}
-
-.group-header-info h2 {
-  margin-top: 0;
-  color: #2c3e50;
-  font-size: 1.8rem;
-}
-
-.group-header-info p {
-  margin: 10px 0;
-  color: #7f8c8d;
-  line-height: 1.5;
-}
-
-.join-btn {
-  margin-top: 20px;
-  padding: 12px 25px;
-  background-color: #3498db;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.join-btn:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-}
-
-.group-posts {
-  margin-top: 30px;
-}
-
-.group-posts h3 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  color: #2c3e50;
-}
-
-.group-posts p {
-  color: #7f8c8d;
-}
-
-.group-schedules {
-  margin-top: 40px;
-  background-color: #f8f9fa; /* 부드러운 배경색 */
-  border: 1px solid #e9ecef;
-  border-radius: 12px;
-  padding: 25px;
-}
-
+/* --- 일정 섹션 --- */
 .schedule-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 15px;
   margin-bottom: 20px;
 }
 
 .schedule-header h3 {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: #343a40;
   margin: 0;
-}
-
-.add-schedule-btn {
-  padding: 10px 18px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.add-schedule-btn:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .schedule-list {
@@ -202,148 +156,91 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px; /* 일정 간 간격 */
 }
 
 .schedule-item {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05); /* 은은한 반투명 배경 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
-  transition: box-shadow 0.2s;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  transition: background-color 0.2s;
 }
 
 .schedule-item:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .schedule-item p {
   margin: 0 0 8px 0;
-  color: #495057;
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .schedule-item p strong {
-  color: #343a40;
+  color: #ffffff;
   font-weight: 600;
 }
 
 .schedule-item .description {
   margin-top: 12px;
-  font-size: 0.95rem;
-  color: #6c757d;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
   white-space: pre-wrap;
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 6px;
+  line-height: 1.5;
 }
 
-
-/* --- 일정 추가 모달 --- */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.schedule-actions {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
+  gap: 8px;
+  flex-shrink: 0;
 }
 
-.modal-content {
-  background: rgba(255, 255, 255, 0.595);
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 450px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  animation: modal-fade-in 0.3s ease-out;
-}
-
-@keyframes modal-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.modal-content h3 {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 25px;
-  color: #333;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.modal-content input,
-.modal-content textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  background-color: #f8f9fa9d;
-}
-
-.modal-content input:focus,
-.modal-content textarea:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-.modal-content textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.modal-actions button {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: background-color 0.2s;
-}
-
-.modal-actions button[type="button"] {
-  background-color: #e9ecef;
-  color: #495057;
-}
-.modal-actions button[type="button"]:hover {
-  background-color: #dee2e6;
-}
-
-.modal-actions button[type="submit"] {
-  background-color: #3498db;
+.schedule-actions button {
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
 }
-.modal-actions button[type="submit"]:hover {
-  background-color: #2980b9;
+
+.schedule-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.schedule-actions button.delete {
+  background-color: rgba(231, 76, 60, 0.3);
+  border-color: rgba(231, 76, 60, 0.5);
+}
+
+.schedule-actions button.delete:hover {
+  background-color: rgba(231, 76, 60, 0.5);
+  border-color: rgba(231, 76, 60, 0.7);
+}
+
+.add-schedule-btn {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-schedule-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }

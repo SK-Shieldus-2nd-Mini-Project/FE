@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { joinGroup } from "../redux/groupSlice";
 import '../assets/Group/GroupDetail.css';
+import '../assets/Group/GroupFormModal.css'
 import axios from "axios";
 
 export default function GroupDetail() {
@@ -153,21 +154,25 @@ export default function GroupDetail() {
   if (!group) return <p>모임 정보를 찾을 수 없습니다.</p>;
 
   return (
-    <div className="group-detail-page-container">
-            <div className="group-detail-main-content">
-                <Link to="/" className="back-btn">← 홈으로 가기</Link>
-                <div className="group-header">
-        <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
-        <div className="group-header-info">
-          <h2>{group.groupName}</h2>
-          <p>{group.description}</p>
-          <p><strong>지역:</strong> {group.regionName} | <strong>종목:</strong> {group.sportName}</p>
-          <p><strong>참여 인원:</strong> {group.currentMembers} / {group.maxMembers}명</p>
-          <button className="join-btn" onClick={handleJoinClick}>참여하기</button>
-        </div>
-      </div>
+    // [수정] 전체를 감싸는 div 추가
+    <div className="group-detail-container">
+      <Link to="/" className="back-btn">←</Link>
+      
+      {/* 메인 반투명 컨테이너 */}
+      <div className="detail-content-wrapper">
+        <div className="group-detail-main-content">
+          <div className="group-header">
+            <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
+            <div className="group-header-info">
+              <h2>{group.groupName}</h2>
+              <p>{group.description}</p>
+              <p><strong>지역:</strong> {group.regionName} | <strong>종목:</strong> {group.sportName}</p>
+              <p><strong>참여 인원:</strong> {group.currentMembers} / {group.maxMembers}명</p>
+              <button className="join-btn" onClick={handleJoinClick}>참여하기</button>
+            </div>
+          </div>
 
-      <section className="group-schedules">
+          <section className="group-schedules">
         <div className="schedule-header">
           <h3>모임 일정</h3>
           {isLeader && (
@@ -221,10 +226,11 @@ export default function GroupDetail() {
           ))}
         </ul>
       </aside>
+      </div>
       {isCreateModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>새 일정 등록</h3>
+            <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
+                <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+                    <h3>새 일정 등록</h3>
             <form onSubmit={handleScheduleSubmit}>
               <input type="text" name="location" placeholder="모임 장소" value={newSchedule.location} onChange={handleScheduleChange} required />
               <input type="datetime-local" name="meetingTime" value={newSchedule.meetingTime} onChange={handleScheduleChange} required />
@@ -239,9 +245,9 @@ export default function GroupDetail() {
       )}
       {/* [추가] 일정 수정 모달 */}
       {isEditModalOpen && editingSchedule && (
-        <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>일정 수정</h3>
+            <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
+                <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+                    <h3>일정 수정</h3>
             <form onSubmit={handleUpdateSchedule}>
               <input type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
               <input type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />
