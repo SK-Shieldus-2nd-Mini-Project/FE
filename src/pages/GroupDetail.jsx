@@ -5,6 +5,16 @@ import { joinGroup } from "../redux/groupSlice";
 import '../assets/Group/GroupDetail.css';
 import '../assets/modals/GroupFormModal.css'
 import axios from "axios";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2, duration: 0.5 } },
+};
+const itemVariants = {
+    hidden: { y: 15, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+};
 
 export default function GroupDetail() {
   const { id: groupId } = useParams();
@@ -154,12 +164,17 @@ export default function GroupDetail() {
   if (!group) return <p>모임 정보를 찾을 수 없습니다.</p>;
 
   return (
-    // [수정] 전체를 감싸는 div 추가
-    <div className="group-detail-container">
+    <motion.div 
+    className="group-detail-container"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    >
+      <motion.div variants={itemVariants}>
       <Link to="/" className="back-btn">←</Link>
-      
+      </motion.div>
       {/* 메인 반투명 컨테이너 */}
-      <div className="detail-content-wrapper">
+      <motion.div className="detail-content-wrapper" variants={itemVariants}>
         <div className="group-detail-main-content">
           <div className="group-header">
             <img src={group.imageUrl || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'} alt={group.groupName} />
@@ -226,7 +241,7 @@ export default function GroupDetail() {
           ))}
         </ul>
       </aside>
-      </div>
+      </motion.div>
       {isCreateModalOpen && (
             <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
                 <div className="form-modal-content" onClick={e => e.stopPropagation()}>
@@ -260,6 +275,6 @@ export default function GroupDetail() {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

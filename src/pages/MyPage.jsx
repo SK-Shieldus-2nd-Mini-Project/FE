@@ -6,6 +6,16 @@ import ManageRecruitment from '../components/MyPage/ManageRecruitment';
 import AdminPanel from '../components/MyPage/AdminPanel';
 import '../assets/MyPage/MyPage.css';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2, duration: 0.5 } },
+};
+const itemVariants = {
+    hidden: { y: 15, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+};
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState('editProfile');
@@ -31,15 +41,21 @@ export default function MyPage() {
   }
 
   return (
-    <div className="mypage-container">
+    <motion.div className="mypage-container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div variants={itemVariants}>
       <MyPageSidebar
         user={user}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <main className="mypage-content">
+      </motion.div>
+      <motion.main className="mypage-content" variants={itemVariants}>
         {renderContent()}
-      </main>
-    </div>
+      </motion.main>
+    </motion.div>
   );
 }

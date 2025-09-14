@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/authSlice"; // Thunk 액션 import
+import { motion } from "framer-motion";
 import '../assets/login.css';
+
+const containerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -23,7 +29,12 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <motion.div 
+    className="login-container"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    >
       <h2>로그인</h2>
       <form onSubmit={handleLogin}>
         <input
@@ -45,7 +56,7 @@ function Login() {
       <p>
         계정이 없으신가요? <Link to="/signup">회원가입</Link>
       </p>
-    </div>
+    </motion.div>
   );
 }
 

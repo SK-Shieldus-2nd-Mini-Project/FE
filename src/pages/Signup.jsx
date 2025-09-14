@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { signupUser } from "../redux/authSlice"; // Thunk 액션 import
 import SignupModal from "../components/modals/SignupModal";
 import '../assets/signup.css';
 import '../assets/modals/Modal.css';
+
+const containerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -48,7 +54,12 @@ export default function Signup() {
 
   return (
     <div>
-    <div className="signup-container">
+    <motion.div 
+    className="signup-container"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    >
       <h2>회원가입</h2>
       <form onSubmit={handleSignup}>
         <input type="text" id="username" name="username" placeholder="아이디" onChange={handleChange} required />
@@ -69,7 +80,7 @@ export default function Signup() {
       <p>이미 계정이 있으신가요? <Link to="/login">로그인</Link></p>
 
       {/* 회원가입 완료 모달 */}
-    </div>
+    </motion.div>
       <SignupModal
         show={showModal}
         onClose={handleCloseModal}

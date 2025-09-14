@@ -20,7 +20,7 @@ const sportOptions = ["러닝", "자전거", "농구", "야구", "축구", "배�
 
 const focusFont = {
     fontSize: "2.5rem",
-    fontWeight: "400",
+    fontWeight: "500",
     fontFamily: "'Noto Sans KR', sans-serif",
 };
 
@@ -95,8 +95,8 @@ export default function MainPage() {
                         deletingSpeed={100}
                         pauseDuration={4000}
                         font={focusFont}
-                        textColor="#52ffdfff"
-                        cursorColor="#52ffdfff"
+                        textColor="#a8ffb3ff"
+                        cursorColor="#a8ffb3ff"
                     />
                     {/* </span> */}
                     &nbsp;어때요?

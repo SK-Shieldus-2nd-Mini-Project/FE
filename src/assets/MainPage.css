@@ -1,16 +1,16 @@
 body {
-  background-image: url('/public/bg.png');
+  background-image: url('/public/wallpaper5.jpg');
   background-size: cover;
   background-position: top center;
   background-attachment: fixed;
   color: #ffffff;
   min-height: 100vh;
 }
-
+/* 5 11 */
 .main-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 0 20px;
 }
 
 .focus-keywords-section {
