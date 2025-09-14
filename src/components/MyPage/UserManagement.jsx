@@ -1,73 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import '../../assets/modals/Modal.css';
+import '../../assets/modals/GroupFormModal.css'
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [editingUser, setEditingUser] = useState(null); // 수정할 사용자 정보
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({
     nickname: "",
     birthdate: "",
     profileImageUrl: "",
     password: "",
-    role: "",
+    role: "USER",
   });
 
-  const token = localStorage.getItem('accessToken');
+  const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    if (!token) return;
-
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get('/api/admin/users', {
-          headers: { Authorization: `Bearer ${token}` },
-          params: { t: Date.now() }
-        });
-
-        const filteredUsers = Array.isArray(res.data)
-          ? res.data.map(user => ({
-            userId: user.userId,
-            username: user.username,
-            nickname: user.nickname,
-            role: user.role,
-            birthdate: user.birthdate,
-            profileImageUrl: user.profileImageUrl
-          }))
-          : [];
-
-        setUsers(filteredUsers);
-      } catch (err) {
-        console.error('API Error:', err);
-        setError('사용자 목록을 불러오는 데 실패했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    if (!token) {
+      setLoading(false);
+      return;
+    }
     fetchUsers();
   }, [token]);
 
-  // 계정 삭제
-  const handleDelete = async (userId, username) => {
-    if (username === 'admin') {
-      alert('관리자 계정은 삭제할 수 없습니다.');
-      return;
-    }
-
+    const fetchUsers = async () => {
     try {
-      await axios.delete(`/api/admin/users/${userId}`, {
+      setLoading(true);
+      const res = await axios.get('/api/admin/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      setUsers(prev => prev.filter(user => user.userId !== userId));
-      alert(`${username} 회원을 삭제 처리했습니다.`);
+      setUsers(res.data);
     } catch (err) {
-      console.error(err);
-      alert('회원 삭제에 실패했습니다.');
+      setError('사용자 목록을 불러오는 데 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 계정 삭제
+  const handleDelete = async (userId, nickname) => {
+    if (window.confirm(`정말로 '${nickname}' 회원을 탈퇴시키겠습니까?`)) {
+        try {
+            await axios.delete(`/api/admin/users/${userId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            alert(`${nickname} 회원을 삭제 처리했습니다.`);
+            setUsers(prev => prev.filter(user => user.userId !== userId));
+          } catch (err) {
+            alert('회원 삭제에 실패했습니다.');
+          }
     }
   };
 
@@ -76,47 +63,39 @@ export default function UserManagement() {
     setEditingUser(user);
     setFormData({
       nickname: user.nickname || "",
-      birthdate: user.birthdate || "",
-      profileImageUrl: user.profileImageUrl || "",
-      password: "",
+      // birthdate는 YYYY-MM-DD 형식으로 변환해야 input[type="date"]에 표시됩니다.
+      birthdate: user.birthdate ? new Date(user.birthdate).toISOString().split('T')[0] : "",
+      password: "", // 보안을 위해 비밀번호는 비워둡니다.
       role: user.role || "USER",
     });
+    setIsEditModalOpen(true);
   };
 
-  // 모달 닫기
-  const closeEditModal = () => {
-    setEditingUser(null);
-  };
-
-  // 입력 변경 핸들러
-  const handleChange = (e) => {
+  const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   // 수정 저장
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
     if (!editingUser) return;
 
+    // 비밀번호가 비어있으면 전송 객체에서 제외
+    const updateData = { ...formData };
+    if (!updateData.password) {
+        delete updateData.password;
+    }
+
     try {
-      const res = await axios.put(`/api/admin/users/${editingUser.userId}`,
-        { ...formData },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // 상태 갱신
-      setUsers(prev =>
-        prev.map(user =>
-          user.userId === editingUser.userId
-            ? { ...user, ...res.data }
-            : user
-        )
-      );
-
+      await axios.put(`/api/admin/users/${editingUser.userId}`, updateData, {
+          headers: { Authorization: `Bearer ${token}` }
+      });
       alert("회원 정보가 수정되었습니다.");
-      closeEditModal();
+      setIsEditModalOpen(false);
+      setEditingUser(null);
+      fetchUsers(); // 목록 새로고침
     } catch (err) {
-      console.error(err);
       alert("회원 수정에 실패했습니다.");
     }
   };
@@ -138,18 +117,8 @@ export default function UserManagement() {
                 <span className="item-detail">역할: {user.role}</span>
               </div>
               <div className="item-actions">
-                <button
-                  className="edit-btn"
-                  onClick={() => openEditModal(user)}
-                >
-                  정보 수정
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(user.userId, user.username)}
-                >
-                  계정 삭제
-                </button>
+                <button className="edit-btn" onClick={() => openEditModal(user)}>정보 수정</button>
+                <button className="delete-btn" onClick={() => handleDelete(user.userId, user.nickname)}>계정 삭제</button>
               </div>
             </li>
           ))}
@@ -157,53 +126,36 @@ export default function UserManagement() {
       )}
 
       {/* 모달 */}
-      {editingUser && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h3>회원 정보 수정</h3>
-            <label>
-              닉네임:
-              <input
-                type="text"
-                name="nickname"
-                value={formData.nickname}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              생년월일:
-              <input
-                type="date"
-                name="birthdate"
-                value={formData.birthdate}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              비밀번호:
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              역할:
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="USER">USER</option>
-                <option value="ADMIN">ADMIN</option>
-              </select>
-            </label>
-
-            <div className="modal-actions">
-              <button onClick={handleSave}>저장</button>
-              <button onClick={closeEditModal}>취소</button>
-            </div>
+      {isEditModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}>
+          <div className="form-modal-content" onClick={e => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setIsEditModalOpen(false)}>&times;</button>
+            <h3>'{editingUser.nickname}' 정보 수정</h3>
+            <form onSubmit={handleSave}>
+              <div className="input-field">
+                <label htmlFor="nickname">닉네임</label>
+                <input type="text" id="nickname" name="nickname" value={formData.nickname} onChange={handleFormChange} />
+              </div>
+              <div className="input-field">
+                <label htmlFor="birthdate">생년월일</label>
+                <input type="date" id="birthdate" name="birthdate" value={formData.birthdate} onChange={handleFormChange} />
+              </div>
+              <div className="input-field">
+                <label htmlFor="password">새 비밀번호 (변경 시에만 입력)</label>
+                <input type="password" id="password" name="password" placeholder="새 비밀번호" value={formData.password} onChange={handleFormChange} />
+              </div>
+              <div className="input-field">
+                <label htmlFor="role">역할</label>
+                <select id="role" name="role" value={formData.role} onChange={handleFormChange}>
+                  <option value="USER">USER</option>
+                  <option value="ADMIN">ADMIN</option>
+                </select>
+              </div>
+              <div className="modal-actions">
+                <button type="button" onClick={() => setIsEditModalOpen(false)}>취소</button>
+                <button type="submit">저장하기</button>
+              </div>
+            </form>
           </div>
         </div>
       )}

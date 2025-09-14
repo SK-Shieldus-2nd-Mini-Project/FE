@@ -71,7 +71,7 @@ export default function MainPage() {
     });
 
     const typewriterWords = [
-        { word: "런닝" },
+        { word: "러닝" },
         { word: "자전거" },
         { word: "농구" },
         { word: "축구" },

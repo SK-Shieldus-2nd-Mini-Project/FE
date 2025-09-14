@@ -74,8 +74,8 @@ export default function MyActivities() {
           {applications.map((app) => {
             const statusInfo = getStatusInfo(app);
             return (
-              <li key={app.groupId} className={`status-${statusInfo.className}`}>
-                <div className="group-content" onClick={() => navigate(`/groups/${app.groupId}`)}>
+              <li key={app.groupId} className={`status-${statusInfo.className}`} onClick={() => navigate(`/groups/${app.groupId}`)}>
+                <div className="group-content">
                   <span className="group-name">{app.groupName}</span>
                 </div>
 

@@ -84,7 +84,7 @@ export default function GroupDetail() {
     try {
       await dispatch(joinGroup(group.groupId)).unwrap();
       alert(`"${group.groupName}" 모임에 참가 신청되었습니다!`);
-      navigate("/mypage");
+      navigate("/");
     } catch (error) {
       alert(error.message || '가입 신청에 실패했습니다.');
     }
@@ -232,9 +232,9 @@ export default function GroupDetail() {
                 <div className="form-modal-content" onClick={e => e.stopPropagation()}>
                     <h3>새 일정 등록</h3>
             <form onSubmit={handleScheduleSubmit}>
-              <input type="text" name="location" placeholder="모임 장소" value={newSchedule.location} onChange={handleScheduleChange} required />
-              <input type="datetime-local" name="meetingTime" value={newSchedule.meetingTime} onChange={handleScheduleChange} required />
-              <textarea name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={newSchedule.description} onChange={handleScheduleChange}></textarea>
+              <input className='input-field' type="text" name="location" placeholder="모임 장소" value={newSchedule.location} onChange={handleScheduleChange} required />
+              <input className='input-field' type="datetime-local" name="meetingTime" value={newSchedule.meetingTime} onChange={handleScheduleChange} required />
+              <textarea className='input-field' name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={newSchedule.description} onChange={handleScheduleChange}></textarea>
               <div className="modal-actions">
                 <button type="button" onClick={() => setIsCreateModalOpen(false)}>취소</button>
                 <button type="submit">생성하기</button>
@@ -249,9 +249,9 @@ export default function GroupDetail() {
                 <div className="form-modal-content" onClick={e => e.stopPropagation()}>
                     <h3>일정 수정</h3>
             <form onSubmit={handleUpdateSchedule}>
-              <input type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
-              <input type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />
-              <textarea name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={editingSchedule.description} onChange={handleEditFormChange}></textarea>
+              <input className= 'input-field' type="text" name="location" placeholder="모임 장소" value={editingSchedule.location} onChange={handleEditFormChange} required />
+              <input className= 'input-field' type="datetime-local" name="meetingTime" value={editingSchedule.meetingTime} onChange={handleEditFormChange} required />
+              <textarea className= 'input-field' name="description" placeholder="일정에 대한 간단한 설명 (선택)" value={editingSchedule.description} onChange={handleEditFormChange}></textarea>
               <div className="modal-actions">
                 <button type="button" onClick={() => setIsEditModalOpen(false)}>취소</button>
                 <button type="submit">저장하기</button>
