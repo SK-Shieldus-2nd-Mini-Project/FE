@@ -16,7 +16,7 @@ function Login() {
     try {
       await dispatch(loginUser({ username, password })).unwrap();
       alert('로그인 되었습니다.');
-      navigate('/mypage'); // 마이페이지로 이동
+      navigate('/'); // 홈으로 이동
     } catch (error) {
       alert(error.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
     }
