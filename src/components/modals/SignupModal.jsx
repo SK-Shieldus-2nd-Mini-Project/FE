@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import '../../assets/modals/Modal.css';
 import '../../assets/modals/SignupModal.css';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const SignupCompleteModal = ({ show, onClose }) => {
   const navigate = useNavigate();
@@ -16,12 +17,19 @@ const SignupCompleteModal = ({ show, onClose }) => {
 
   return (
     <div className="modal-overlay" onClick={handleNavigate}>
-      <div 
-        className="signup-modal-content" 
+      <div
+        className="signup-modal-content"
         onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않음
       >
         {/* 문구 영역 */}
         <div>
+          <Player
+            autoplay
+            speed={0.7}
+            keepLastFrame={true}
+            src="../../../public/success.json"
+            style={{ height: '100px', width: '100px' }}
+          />
           <h2>
             회원가입 완료
           </h2>
@@ -32,7 +40,7 @@ const SignupCompleteModal = ({ show, onClose }) => {
 
         {/* 로그인 페이지로 이동 버튼 */}
         <div>
-          <button 
+          <button
             onClick={handleNavigate}
           >
             로그인 페이지로 이동
