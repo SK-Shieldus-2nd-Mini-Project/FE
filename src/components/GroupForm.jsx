@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import InputField from "./InputField";
 import Select from "react-select";
 import GroupFormModal from "./modals/GroupFormModal";
-import { validateGroupForm } from "../utils/validateGroupForm";
 import { createGroup } from "../redux/groupSlice";
 import '../assets/modals/Modal.css';
 import '../assets/modals/GroupFormModal.css';
@@ -127,14 +126,25 @@ export default function GroupForm({ onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationError = validateGroupForm({
-        ...formData,
-        regionId: formData.regionId?.value,
-        sportId: formData.sportId?.value
-    });
-    if (validationError) {
-      alert(validationError);
-      return;
+    if (formData.groupName.trim() === "") {
+        alert("그룹 이름을 입력해주세요.");
+        return;
+    }
+    if (formData.description.trim() === "") {
+        alert("모임 설명을 입력해주세요.");
+        return;
+    }
+    if (formData.maxMembers === "" || Number(formData.maxMembers) <= 0) {
+        alert("최대 인원을 올바르게 입력해주세요.");
+        return;
+    }
+    if (!formData.regionId) {
+        alert("지역을 선택해주세요.");
+        return;
+    }
+    if (!formData.sportId) {
+        alert("종목을 선택해주세요.");
+        return;
     }
 
     const formDataToSubmit = new FormData();
